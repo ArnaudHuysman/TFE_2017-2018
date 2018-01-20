@@ -39,7 +39,7 @@ function createScene() {
 
   camera.position.x = 150;
   camera.position.z = 300;
-	camera.position.y = 300;
+	camera.position.y = 30;
 
   //camera.rotation.x = -0.85;
 

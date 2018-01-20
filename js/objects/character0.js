@@ -82,6 +82,21 @@ class Head extends Bodypart {
 
     this.mesh.position.y = 40;
 
+    this.rightEye = new Bodypart(8,8,8,0xFFFFFF, "rightEye");
+    this.rightEye.mesh.position.z += 23;
+    this.rightEye.mesh.position.y += 8;
+    this.rightEye.mesh.position.x += 10;
+
+    this.mesh.add(this.rightEye.mesh);
+
+    this.leftEye = new Bodypart(8,8,8,0xFFFFFFF, "leftEye");
+    this.leftEye.mesh.position.z += 23;
+    this.leftEye.mesh.position.y += 8;
+    this.leftEye.mesh.position.x += -10;
+
+    this.mesh.add(this.leftEye.mesh);
+
+
     this.mvt = "up";
     this.rot = 0.25;
 
