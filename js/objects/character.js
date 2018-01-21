@@ -33,11 +33,11 @@ class Leg extends Bodypart {
 
     if(this.mesh.rotation.x > 0.4 && this.mvt == "forward")
     {
-      this.rot = -0.05;
+      this.rot = -0.1;
       this.mvt ="backward"
     } else if(this.mesh.rotation.x < -0.4 && this.mvt == "backward")
     {
-      this.rot = 0.05;
+      this.rot = 0.1;
       this.mvt ="forward"
     }
 
@@ -62,11 +62,11 @@ class Arm extends Bodypart {
 
     if(this.mesh.rotation.x > 0.4 && this.mvt == "forward")
     {
-      this.rot = -0.05;
+      this.rot = -0.1;
       this.mvt ="backward"
     } else if(this.mesh.rotation.x < -0.4 && this.mvt == "backward")
     {
-      this.rot = 0.05;
+      this.rot = 0.1;
       this.mvt ="forward"
     }
 
@@ -181,10 +181,20 @@ class Char {
     this.body.mesh.position.y += 56;
     this.mesh.add( this.body.mesh );
 
+    this.angle = 0;
+
   }
 
   move(){
     this.body.move();
+
+    this.angle = Math.atan2(mousePos.x - this.body.mesh.position.x, - (mousePos.y-0.2 - this.body.mesh.position.z) );
+
+
+    // this.body.mesh.position.z += -mousePos.y*25;
+    // this.body.mesh.position.x += mousePos.x*25;
+
+    this.body.mesh.rotation.y = this.angle;
 
     switch (direction) {
       case "left":

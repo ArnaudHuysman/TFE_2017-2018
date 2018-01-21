@@ -26,7 +26,7 @@ function createScene() {
   //scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
   aspectRatio = WIDTH/HEIGHT;
-  fieldOfView = 60;
+  fieldOfView = 30;
   nearPlane = 1;
   farPlane = 10000;
 
@@ -37,9 +37,9 @@ function createScene() {
     farPlane
   );
 
-  camera.position.x = 150;
-  camera.position.z = 300;
-	camera.position.y = 30;
+  //camera.position.x = 1200;
+  camera.position.z = 1000;
+	camera.position.y = 1000;
 
   //camera.rotation.x = -0.85;
 
@@ -118,76 +118,99 @@ BoardGame = function(clr){
     shading:THREE.FlatShading
   })
 
-  for (var k = 0; k < 5; k++) {
 
-    for(i=0; i<24; i++){
-      for(j=0; j<24; j++){
+  for(i=0; i<32; i++){
+    for(j=0; j<32; j++){
+
+      var random = Math.floor(Math.random()*10);
+      for (var k = 0; k < random+2; k++) {
         var c = new THREE.Mesh(geom,mat);
-
         c.position.x = i*52;
-        c.position.y = -k*52;
         c.position.z = j*52;
+        c.position.y = -k*52;
 
         c.castShadow = true;
         //c.receiveShadow = true;
 
         this.mesh.add(c);
-
       }
-    }
 
+    }
   }
+
+
 }
 
 var board;
 
 function createBoardGame(){
   board = new BoardGame(Colors.blue);
+  board.mesh.rotation.y = Math.PI/4;
+  board.mesh.translateX(-16*52);
+  board.mesh.translateZ(-16*52);
+
   scene.add(board.mesh);
 }
 
 
 
+var direction = null;
 
-
-function handleKeyBoard(e) {
+function handleKeyBoardDown(e) {
   switch(e.keyCode){
     case 37 :
       e.preventDefault();
-      if(direction != "right"){
         direction = "left";
-      }
       break;
     case 38 :
       e.preventDefault();
-      if(direction != "down"){
+
         direction = "up";
-      }
+
       break;
     case 39 :
       e.preventDefault();
-      if(direction != "left"){
+
         direction = "right";
-      }
+
       break;
     case 40 :
       e.preventDefault();
-      if(direction != "up"){
+
         direction = "down";
-      }
+
       break;
   }
+}
+
+function handleKeyBoardUp(e){
+  //direction = null;
+}
+
+var mousePos = {
+  x : 0,
+  y : 0
+}
+
+function handleMouseMove(event) {
+  var tx = -1 + (event.clientX / WIDTH)*2;
+  var ty = 1 - (event.clientY / HEIGHT)*2;
+  mousePos = {x:tx, y:ty};
 }
 
 
 
 
+
 function init(){
-  document.addEventListener('keydown', handleKeyBoard, false);
+  //document.addEventListener('keydown', handleKeyBoardDown, false);
+  //document.addEventListener('keyup', handleKeyBoardUp, false);
+  document.addEventListener('mousemove', handleMouseMove, false);
+
   createScene();
   createLights();
 
-  //createBoardGame();
+  createBoardGame();
   createCharacter();
 
 

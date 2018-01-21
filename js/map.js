@@ -26,7 +26,7 @@ function createScene() {
   //scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
   aspectRatio = WIDTH/HEIGHT;
-  fieldOfView = 60;
+  fieldOfView = 30;
   nearPlane = 1;
   farPlane = 10000;
 
@@ -38,12 +38,12 @@ function createScene() {
   );
 
   //camera.position.x = 1200;
-  camera.position.z = 1200;
-	camera.position.y = 1400;
+  camera.position.z = 3400;
+	camera.position.y = 2400;
 
   //camera.rotation.x = -0.85;
 
-  camera.lookAt(new THREE.Vector3(0,0,300));
+  camera.lookAt(new THREE.Vector3(0,0,450));
 
   renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -184,15 +184,28 @@ function handleKeyBoardDown(e) {
 }
 
 function handleKeyBoardUp(e){
-  direction = null;
+  //direction = null;
+}
+
+var mousePos = {
+  x : 0,
+  y : 0
+}
+
+function handleMouseMove(event) {
+  var tx = -1 + (event.clientX / WIDTH)*2;
+  var ty = 1 - (event.clientY / HEIGHT)*2;
+  mousePos = {x:tx, y:ty};
 }
 
 
 
 
+
 function init(){
-  document.addEventListener('keydown', handleKeyBoardDown, false);
-  document.addEventListener('keyup', handleKeyBoardUp, false);
+  //document.addEventListener('keydown', handleKeyBoardDown, false);
+  //document.addEventListener('keyup', handleKeyBoardUp, false);
+  document.addEventListener('mousemove', handleMouseMove, false);
 
   createScene();
   createLights();
