@@ -6,15 +6,21 @@ var Colors = {
   blueDark:0x046865,
 }
 
+var Player = {
+  isRightClick: false,
+  isLeftClick: false,
+  targetPos : { x: 0, z: 0 }
+}
+
 window.addEventListener('load', init, false);
 
 /*---------------------------------------------------------------
                            CAMERA
 -----------------------------------------------------------------*/
 
-var scene,
+var scene, scene2,
     camera, fieldOfView, aspectRatio, nearPlane, farPlane, HEIGHT, WIDTH,
-    renderer, container;
+    renderer, container, raycaster;
 
 function createScene() {
 
@@ -22,7 +28,6 @@ function createScene() {
   WIDTH = window.innerWidth;
 
   scene = new THREE.Scene();
-
   //scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
   aspectRatio = WIDTH/HEIGHT;
@@ -38,8 +43,8 @@ function createScene() {
   );
 
   //camera.position.x = 1200;
-  camera.position.z = 1000;
-	camera.position.y = 1000;
+  camera.position.z = 600;
+	camera.position.y = 500;
 
   //camera.rotation.x = -0.85;
 
@@ -51,9 +56,13 @@ function createScene() {
     antialias: true
   });
 
+
+  renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize(WIDTH,HEIGHT);
 
   renderer.shadowMap.enabled = true;
+
+  raycaster = new THREE.Raycaster();
 
   container = document.getElementById('world');
   container.appendChild(renderer.domElement);
@@ -84,17 +93,6 @@ function createLights() {
 
   shadowLight.position.set(150,350,350);
 
-  shadowLight.castShadow = true;
-
-  shadowLight.shadow.camera.left = -400;
-	shadowLight.shadow.camera.right = 400;
-	shadowLight.shadow.camera.top = 400;
-	shadowLight.shadow.camera.bottom = -400;
-	shadowLight.shadow.camera.near = 1;
-	shadowLight.shadow.camera.far = 1000;
-
-  shadowLight.shadow.mapSize.width = 2048;
-	shadowLight.shadow.mapSize.height = 2048;
 
   scene.add(hemisphereLight);
   scene.add(shadowLight);
@@ -104,54 +102,6 @@ function createLights() {
 /*---------------------------------------------------------------
                            OBJECT
 -----------------------------------------------------------------*/
-
-//-------------------------- Board Game -----------------------------//
-
-
-
-BoardGame = function(clr){
-  this.mesh = new THREE.Object3D();
-
-  var geom = new THREE.BoxGeometry(48,48,48);
-  var mat = new THREE.MeshPhongMaterial({
-    color:clr,
-    shading:THREE.FlatShading
-  })
-
-
-  for(i=0; i<32; i++){
-    for(j=0; j<32; j++){
-
-      var random = Math.floor(Math.random()*10);
-      for (var k = 0; k < random+2; k++) {
-        var c = new THREE.Mesh(geom,mat);
-        c.position.x = i*52;
-        c.position.z = j*52;
-        c.position.y = -k*52;
-
-        c.castShadow = true;
-        //c.receiveShadow = true;
-
-        this.mesh.add(c);
-      }
-
-    }
-  }
-
-
-}
-
-var board;
-
-function createBoardGame(){
-  board = new BoardGame(Colors.blue);
-  board.mesh.rotation.y = Math.PI/4;
-  board.mesh.translateX(-16*52);
-  board.mesh.translateZ(-16*52);
-
-  scene.add(board.mesh);
-}
-
 
 
 var direction = null;
@@ -192,11 +142,75 @@ var mousePos = {
   y : 0
 }
 
+var rightClick = {
+  x : 0,
+  z : 0
+}
+
 function handleMouseMove(event) {
   var tx = -1 + (event.clientX / WIDTH)*2;
   var ty = 1 - (event.clientY / HEIGHT)*2;
   mousePos = {x:tx, y:ty};
 }
+
+function toScreenPosition(obj, camera)
+{
+    var vector = new THREE.Vector3();
+
+    var widthHalf = 0.5*renderer.context.canvas.width;
+    var heightHalf = 0.5*renderer.context.canvas.height;
+
+    obj.updateMatrixWorld();
+    vector.setFromMatrixPosition(obj.matrixWorld);
+    vector.project(camera);
+
+    vector.x = ( vector.x * widthHalf ) + widthHalf;
+    vector.y = - ( vector.y * heightHalf ) + heightHalf;
+
+    return {
+        x: vector.x,
+        y: vector.y
+    };
+
+};
+
+function onDocumentMouseDown( event ) {
+
+  event.preventDefault();
+
+    raycaster.setFromCamera( mousePos, camera );
+
+    var intersects = raycaster.intersectObjects( mapTiles );
+
+    if ( intersects.length > 0 ) {
+
+      Player.targetPos.x = intersects[0].point.x;
+      Player.targetPos.z = intersects[0].point.z;
+
+    }
+
+}
+
+function onRightClick(event){
+
+  event.preventDefault();
+
+    raycaster.setFromCamera( mousePos, camera );
+
+    var intersects = raycaster.intersectObjects( mapTiles );
+
+    if ( intersects.length > 0 ) {
+
+      rightClick.x = intersects[0].point.x;
+      rightClick.z = intersects[0].point.z;
+
+    }
+
+    char.bulletFactory.create();
+
+}
+
+
 
 
 
@@ -207,12 +221,40 @@ function init(){
   //document.addEventListener('keyup', handleKeyBoardUp, false);
   document.addEventListener('mousemove', handleMouseMove, false);
 
+  document.body.addEventListener('mousedown', function (e){
+
+      if(e.button === 0){
+          Player.isLeftClick = true;
+          onDocumentMouseDown(e);
+      }
+      else if(e.button === 2){
+          Player.isRightClick = true;
+          onRightClick(e);
+
+      }
+  }, false);
+
+  document.body.addEventListener('mouseup', function (e){
+      if(e.button === 0){
+          Player.isLeftClick = false;
+      }
+      else if(e.button === 2){
+          Player.isRightClick = false;
+      }
+  }, false);
+
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  setTimeout(function(){
+    enemiesSpawn();
+  }, 2000)
+
   createScene();
   createLights();
 
   createBoardGame();
   createCharacter();
-
+  createDrilling();
 
   loop();
 }
@@ -233,6 +275,9 @@ function loop(){
   mvtTime += deltaTime;
 
   animateCharacter(char.body);
+
+  char.bulletFactory.update();
+
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);
