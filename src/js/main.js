@@ -1,4 +1,4 @@
-var Colors = {
+const Colors = {
   orange:0xE53D00,
   yellow:0xFFE900,
   white:0xFCFFF7,
@@ -6,10 +6,14 @@ var Colors = {
   blueDark:0x046865,
 }
 
-var Player = {
+const Player = {
   isRightClick: false,
   isLeftClick: false,
-  targetPos : { x: 0, z: 0 }
+  targetPos : { x: 0, y: 0 }
+}
+
+const Game = {
+  collidableMesh : []
 }
 
 window.addEventListener('load', init, false);
@@ -20,7 +24,8 @@ window.addEventListener('load', init, false);
 
 var scene, scene2,
     camera, fieldOfView, aspectRatio, nearPlane, farPlane, HEIGHT, WIDTH,
-    renderer, container, raycaster;
+    renderer, container, raycaster,
+    plane, intersectPoint;
 
 function createScene() {
 
@@ -42,13 +47,16 @@ function createScene() {
     farPlane
   );
 
-  //camera.position.x = 1200;
-  camera.position.z = 600;
-	camera.position.y = 500;
+
+  camera.position.z = 600 ;
+	camera.position.y = -600;
 
   //camera.rotation.x = -0.85;
 
   camera.lookAt(new THREE.Vector3(0,0,0));
+
+  plane = new THREE.Plane(new THREE.Vector3(1, 0, 0), 10);
+  intersectPoint = new THREE.Vector3();
 
   renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -87,15 +95,19 @@ function handleWindowResize() {
 var hemisphereLight, shadowLight;
 
 function createLights() {
-  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, .9);
+  /*hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, .9);
 
   shadowLight = new THREE.DirectionalLight(0xffffff, .9);
 
   shadowLight.position.set(150,350,350);
+*/
+  var light = new THREE.PointLight(0xffffff);
+  light.position.set(0,-600,600);
+  scene.add(light);
 
 
-  scene.add(hemisphereLight);
-  scene.add(shadowLight);
+  //scene.add(hemisphereLight);
+  //scene.add(shadowLight);
 
 }
 
@@ -137,10 +149,9 @@ function handleKeyBoardUp(e){
   //direction = null;
 }
 
-var mousePos = {
-  x : 0,
-  y : 0
-}
+var mousePos = new THREE.Vector2(0, 0)
+
+var mouseProjectPos = new THREE.Vector3(0, 0, 0);
 
 var rightClick = {
   x : 0,
@@ -151,6 +162,8 @@ function handleMouseMove(event) {
   var tx = -1 + (event.clientX / WIDTH)*2;
   var ty = 1 - (event.clientY / HEIGHT)*2;
   mousePos = {x:tx, y:ty};
+
+  mouseProjectPos = toWorldPosition(event, mousePos);
 }
 
 function toScreenPosition(obj, camera)
@@ -174,6 +187,21 @@ function toScreenPosition(obj, camera)
 
 };
 
+function toWorldPosition(event, mouse){
+  var vector = new THREE.Vector3();
+
+  vector.set( mouse.x, mouse.y, 0.5 );
+
+  vector.unproject( camera );
+
+  var dir = vector.sub( camera.position ).normalize();
+  var distance = - (camera.position.z - 50) / dir.z;
+  var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
+  return pos;
+}
+
+
+
 function onDocumentMouseDown( event ) {
 
   event.preventDefault();
@@ -185,7 +213,7 @@ function onDocumentMouseDown( event ) {
     if ( intersects.length > 0 ) {
 
       Player.targetPos.x = intersects[0].point.x;
-      Player.targetPos.z = intersects[0].point.z;
+      Player.targetPos.y = intersects[0].point.y;
 
     }
 
@@ -202,7 +230,7 @@ function onRightClick(event){
     if ( intersects.length > 0 ) {
 
       rightClick.x = intersects[0].point.x;
-      rightClick.z = intersects[0].point.z;
+      rightClick.y = intersects[0].point.y;
 
     }
 
@@ -211,10 +239,35 @@ function onRightClick(event){
 }
 
 
+function hitTest(){
+
+  var ennemi = blobl;
+  var boxEnnemi = new THREE.Box3().setFromObject(ennemi.mesh);
+
+  for (var i = 0; i < Game.collidableMesh.length; i++) {
+
+    var bullet = Game.collidableMesh[i];
+    var boxBullet = new THREE.Box3().setFromObject(bullet.mesh);
+
+    var collision = boxEnnemi.intersectsBox(boxBullet);
+    
+    if (collision) console.log(collision);
+    
+  }
+  
+  /*var secondObject = ...your second object...
+
+firstBB = new THREE.Box3().setFromObject(firstObject);
+
+secondBB = new THREE.Box3().setFromObject(secondObject);
+
+var collision = firstBB.isIntersectionBox(secondBB);*/
+
+}
 
 
 
-
+var blobl;
 
 function init(){
   //document.addEventListener('keydown', handleKeyBoardDown, false);
@@ -254,10 +307,14 @@ function init(){
 
   createBoardGame();
   createCharacter();
-  createDrilling();
+  //createDrilling();
+
+  
 
   loop();
 }
+
+
 
 var deltaTime,
     mvtTime = 0,
@@ -277,6 +334,9 @@ function loop(){
   animateCharacter(char.body);
 
   char.bulletFactory.update();
+
+  if(blobl !== undefined) hitTest();
+  
 
 
   renderer.render(scene, camera);

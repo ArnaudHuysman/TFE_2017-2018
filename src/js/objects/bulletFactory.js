@@ -2,9 +2,10 @@ class Bullet {
   constructor(width,height,depth,color){
 
     this.geom = new THREE.BoxGeometry(width, height, depth, 1, 1, 1);
-    this.mat = new THREE.MeshPhongMaterial({color, shading:THREE.FlatShading});
+    this.mat = new THREE.MeshPhongMaterial({color, flatShading: true});
 
     this.mesh = new THREE.Mesh(this.geom, this.mat);
+
 
     this.mvt = {
       x :0,
@@ -16,7 +17,7 @@ class Bullet {
 
   update(){
     this.mesh.position.x += this.mvt.x*5;
-    this.mesh.position.z += this.mvt.z*5;
+    this.mesh.position.y += this.mvt.y*5;
 
   }
 
@@ -29,18 +30,21 @@ class BulletFactory {
   create(){
 
     var bullet = new Bullet(2,2,2,0xffffff);
-    bullet.mesh.position.y = 14;
+    bullet.mesh.position.z = 12;
     bullet.mesh.position.x = char.mesh.position.x;
-    bullet.mesh.position.z = char.mesh.position.z;
+    bullet.mesh.position.y = char.mesh.position.y;
     var diffX = rightClick.x - bullet.mesh.position.x;
-    var diffZ = rightClick.z - bullet.mesh.position.z;
+    var diffY = rightClick.y - bullet.mesh.position.y;
 
-    var theta = Math.atan2(diffZ, diffX);
+    var theta = Math.atan2(diffY, diffX);
 
     bullet.mvt.x = Math.cos(theta);
-    bullet.mvt.z = Math.sin(theta);
+    
+    bullet.mvt.y = Math.sin(theta);
+
 
     scene.add(bullet.mesh);
+    Game.collidableMesh.push(bullet);
     this.bullets.push(bullet);
   }
 
