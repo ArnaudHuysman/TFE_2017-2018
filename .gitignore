@@ -2,6 +2,10 @@
 
 node_modules
 
+# Dist
+
+dist
+
 #Mac
 
 .DS_Store

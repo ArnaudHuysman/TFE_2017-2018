@@ -38,10 +38,20 @@ gulp.task('js', function() {
 });
 
 
-
-gulp.task('watch', function() {
-  gulp.watch('src/js/**/*.js', ['js']);
+gulp.task('screen:js', function() {
+  return gulp.src('src/js/screenSystem/**/*.js')
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(concat('screen.js'))
+    .pipe(gulp.dest('dist/js'))
 });
 
 
-gulp.task('default', ['watch', 'js']);
+gulp.task('watch', function() {
+  gulp.watch('src/js/**/*.js', ['js'])
+  gulp.watch('src/js/screenSystem/**/*.js', ['screen:js']);
+});
+
+
+gulp.task('default', ['watch', 'js', 'screen:js']);
