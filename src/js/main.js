@@ -13,7 +13,8 @@ const Player = {
 }
 
 const Game = {
-  collidableMesh : []
+  collidableMesh : [],
+  enemies: []
 }
 
 window.addEventListener('load', init, false);
@@ -239,7 +240,7 @@ function onRightClick(event){
 }
 
 
-function hitTest(){
+/*function hitTest(){
 
   var ennemi = blobl;
   var boxEnnemi = new THREE.Box3().setFromObject(ennemi.mesh);
@@ -254,20 +255,12 @@ function hitTest(){
     if (collision) console.log(collision);
     
   }
-  
-  /*var secondObject = ...your second object...
 
-firstBB = new THREE.Box3().setFromObject(firstObject);
-
-secondBB = new THREE.Box3().setFromObject(secondObject);
-
-var collision = firstBB.isIntersectionBox(secondBB);*/
-
-}
+}*/
 
 
 
-var blobl;
+var enemiesCollision;
 
 function init(){
   //document.addEventListener('keydown', handleKeyBoardDown, false);
@@ -298,9 +291,6 @@ function init(){
 
   document.addEventListener('contextmenu', event => event.preventDefault());
 
-  setTimeout(function(){
-    enemiesSpawn();
-  }, 2000)
 
   createScene();
   createLights();
@@ -309,7 +299,12 @@ function init(){
   createCharacter();
   //createDrilling();
 
+  enemiesCollision = new CollisionEngine();
+
   
+  setTimeout(function(){
+    enemiesSpawn();
+  }, 2000)
 
   loop();
 }
@@ -332,12 +327,13 @@ function loop(){
   mvtTime += deltaTime;
 
   animateCharacter(char.body);
+  
+  enemiesCollision.testCollision();
 
   char.bulletFactory.update();
-
-  if(blobl !== undefined) hitTest();
-  
-
+  for (var i = 0; i < Game.enemies.length; i++) {
+    Game.enemies[i].update();
+  }
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);

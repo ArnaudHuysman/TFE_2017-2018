@@ -19,6 +19,11 @@ gulp.task('js:copy', function(){
 		.pipe(rename({suffix:'.min'}))
 		.pipe(uglify())
 		.pipe(gulp.dest('dist/js/package/'));
+    gulp.src('./node_modules/three/build/three.js')
+    .pipe(concat('three.js'))
+    .pipe(rename({suffix:'.min'}))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/js/package/'));
 })
 
 

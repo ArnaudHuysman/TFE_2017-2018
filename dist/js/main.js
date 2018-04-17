@@ -15,7 +15,8 @@ var Player = {
 };
 
 var Game = {
-  collidableMesh: []
+  collidableMesh: [],
+  enemies: []
 };
 
 window.addEventListener('load', init, false);
@@ -216,7 +217,7 @@ function onRightClick(event) {
   char.bulletFactory.create();
 }
 
-function hitTest() {
+/*function hitTest(){
 
   var ennemi = blobl;
   var boxEnnemi = new THREE.Box3().setFromObject(ennemi.mesh);
@@ -227,17 +228,14 @@ function hitTest() {
     var boxBullet = new THREE.Box3().setFromObject(bullet.mesh);
 
     var collision = boxEnnemi.intersectsBox(boxBullet);
-
+    
     if (collision) console.log(collision);
+    
   }
 
-  /*var secondObject = ...your second object...
-  firstBB = new THREE.Box3().setFromObject(firstObject);
-  secondBB = new THREE.Box3().setFromObject(secondObject);
-  var collision = firstBB.isIntersectionBox(secondBB);*/
-}
+}*/
 
-var blobl;
+var enemiesCollision;
 
 function init() {
   //document.addEventListener('keydown', handleKeyBoardDown, false);
@@ -267,10 +265,6 @@ function init() {
     return event.preventDefault();
   });
 
-  setTimeout(function () {
-    enemiesSpawn();
-  }, 2000);
-
   createScene();
   createLights();
 
@@ -278,6 +272,11 @@ function init() {
   createCharacter();
   //createDrilling();
 
+  enemiesCollision = new CollisionEngine();
+
+  setTimeout(function () {
+    enemiesSpawn();
+  }, 2000);
 
   loop();
 }
@@ -299,9 +298,12 @@ function loop() {
 
   animateCharacter(char.body);
 
-  char.bulletFactory.update();
+  enemiesCollision.testCollision();
 
-  if (blobl !== undefined) hitTest();
+  char.bulletFactory.update();
+  for (var i = 0; i < Game.enemies.length; i++) {
+    Game.enemies[i].update();
+  }
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);
@@ -692,6 +694,10 @@ function animateCharacter(body) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Enemy = function () {
@@ -705,12 +711,22 @@ var Enemy = function () {
     //this.mesh.receiveShadow = true;
     this.mesh.castShadow = true;
     this.name = name;
+    this.collison = false;
+    this.objectInCollision = null;
+    this.mvt = true;
   }
 
-  //Animation of movement and attack
-
-
   _createClass(Enemy, [{
+    key: "update",
+    value: function update() {
+
+      if (this.collision) this.hitAction(this.objectInColllision);
+
+      if (this.mvt) this.move();
+    }
+    //Animation of movement and attack
+
+  }, {
     key: "animation",
     value: function animation() {}
 
@@ -718,26 +734,87 @@ var Enemy = function () {
 
   }, {
     key: "move",
-    value: function move(speed, target) {}
+    value: function move(speed, target) {
+
+      var diffX = 0 - this.mesh.position.x;
+      var diffY = 0 - this.mesh.position.y;
+
+      var theta = Math.atan2(diffY, diffX);
+
+      var mvtX = Math.cos(theta);
+      var mvtY = Math.sin(theta);
+
+      this.mesh.position.x += mvtX * 1;
+      this.mesh.position.y += mvtY * 1;
+
+      if (Math.ceil(Player.targetPos.x / 10) == Math.ceil(this.mesh.position.x / 10) && Math.ceil(Player.targetPos.y / 10) == Math.ceil(this.mesh.position.y / 10)) {
+
+        this.mvt = false;
+      } else {
+        this.mvt = true;
+      }
+    }
   }, {
-    key: "hitTest",
-    value: function hitTest(hitableObjects) {}
+    key: "hitAction",
+    value: function hitAction(hitableObjects) {
+
+      this.mvt = false;
+
+      TweenMax.to(this.mesh.position, 1, {
+        z: 50,
+        repeat: 2,
+        yoyo: true
+      });
+    }
   }]);
 
   return Enemy;
 }();
 
+var SimpleEnemy = function (_Enemy) {
+  _inherits(SimpleEnemy, _Enemy);
+
+  function SimpleEnemy(width, height, depth, color, name) {
+    _classCallCheck(this, SimpleEnemy);
+
+    return _possibleConstructorReturn(this, (SimpleEnemy.__proto__ || Object.getPrototypeOf(SimpleEnemy)).call(this, width, height, depth, color, name));
+  }
+
+  _createClass(SimpleEnemy, [{
+    key: "animation",
+    value: function animation() {}
+  }]);
+
+  return SimpleEnemy;
+}(Enemy);
+
+function removeSelf() {
+  console.log("remove");
+  /*scene.remove(obj.mesh);
+    let index = Game.enemies.indexOf(obj);
+  
+    if (index >= 0)
+    {
+      Game.enemies.splice(index,1);
+    }
+    enemiesCollision.removeBody(obj);
+      obj.collision = false;
+    obj.objectInColllision = null;*/
+}
+
 var blobl;
 
 function enemiesSpawn() {
 
-  blobl = new Enemy(4, 4, 4, 0x99C24D, "blobl");
+  blobl = new SimpleEnemy(4, 4, 4, 0x99C24D, "blobl");
   blobl.mesh.position.x += 150;
   blobl.mesh.position.y += 150;
   blobl.mesh.position.z += 10;
   blobl.mesh.scale.set(2, 2, 2);
 
   scene.add(blobl.mesh);
+  Game.enemies.push(blobl);
+  enemiesCollision.addBody(blobl);
   //Game.collidableMesh.push(blobl.mesh);
 }
 "use strict";
@@ -808,3 +885,56 @@ function createDrilling() {
   drillingMachine.mesh.position.z += 50;
   scene.add(drillingMachine.mesh);
 }
+"use strict";
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//ElementCollisionEngine
+
+var CollisionEngine = function () {
+	function CollisionEngine() {
+		_classCallCheck(this, CollisionEngine);
+
+		this.bodies = [];
+	}
+
+	_createClass(CollisionEngine, [{
+		key: "testCollision",
+		value: function testCollision() {
+			for (var i = 0; i < this.bodies.length; i++) {
+				var target = this.bodies[i];
+				var targetBox = new THREE.Box3().setFromObject(target.mesh);
+
+				for (var j = 0; j < Game.collidableMesh.length; j++) {
+					var bullet = Game.collidableMesh[j];
+					var bulletBox = new THREE.Box3().setFromObject(bullet.mesh);
+
+					var collision = targetBox.intersectsBox(bulletBox);
+
+					if (collision) {
+						this.bodies[i].collision = true;
+						this.bodies[i].objectInCollision = Game.collidableMesh[j];
+					}
+				}
+			}
+		}
+	}, {
+		key: "addBody",
+		value: function addBody(obj) {
+			this.bodies.push(obj);
+		}
+	}, {
+		key: "removeBody",
+		value: function removeBody(obj) {
+			var index = this.bodies.indexOf(obj);
+
+			if (index >= 0) {
+				this.bodies.splice(index, 1);
+			}
+		}
+	}]);
+
+	return CollisionEngine;
+}();
