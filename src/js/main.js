@@ -49,8 +49,8 @@ function createScene() {
   );
 
 
-  camera.position.z = 600 ;
-	camera.position.y = -600;
+  camera.position.z = 150 ;
+	camera.position.y = -250;
 
   //camera.rotation.x = -0.85;
 
@@ -224,47 +224,27 @@ function onRightClick(event){
 
   event.preventDefault();
 
-    raycaster.setFromCamera( mousePos, camera );
+  raycaster.setFromCamera( mousePos, camera );
 
-    var intersects = raycaster.intersectObjects( mapTiles );
+  var intersects = raycaster.intersectObjects( mapTiles );
 
-    if ( intersects.length > 0 ) {
+  if ( intersects.length > 0 ) {
 
-      rightClick.x = intersects[0].point.x;
-      rightClick.y = intersects[0].point.y;
+    rightClick.x = intersects[0].point.x;
+    rightClick.y = intersects[0].point.y;
 
-    }
-
-    char.bulletFactory.create();
-
-}
-
-
-/*function hitTest(){
-
-  var ennemi = blobl;
-  var boxEnnemi = new THREE.Box3().setFromObject(ennemi.mesh);
-
-  for (var i = 0; i < Game.collidableMesh.length; i++) {
-
-    var bullet = Game.collidableMesh[i];
-    var boxBullet = new THREE.Box3().setFromObject(bullet.mesh);
-
-    var collision = boxEnnemi.intersectsBox(boxBullet);
-    
-    if (collision) console.log(collision);
-    
   }
 
-}*/
+  char.bulletFactory.create();
 
-
+}
 
 var enemiesCollision;
 
 function init(){
   //document.addEventListener('keydown', handleKeyBoardDown, false);
   //document.addEventListener('keyup', handleKeyBoardUp, false);
+
   document.addEventListener('mousemove', handleMouseMove, false);
 
   document.body.addEventListener('mousedown', function (e){
@@ -302,9 +282,23 @@ function init(){
   enemiesCollision = new CollisionEngine();
 
   
-  setTimeout(function(){
+  /*setTimeout(function(){
     enemiesSpawn();
   }, 2000)
+*/
+  console.log(char.body.head.object)
+
+  enemiesSpawn()
+  
+  char.body.head.move();
+  char.body.rightArm.move();
+  char.body.leftArm.move();
+  char.body.rightLeg.move();
+  char.body.leftLeg.move();
+  blobl.animation();
+  bigBlobl.animation();
+  shootingBlobl.animation();
+
 
   loop();
 }
@@ -327,13 +321,16 @@ function loop(){
   mvtTime += deltaTime;
 
   animateCharacter(char.body);
+  blobl.move();
+  bigBlobl.move();
+  shootingBlobl.move();
   
   enemiesCollision.testCollision();
 
   char.bulletFactory.update();
-  for (var i = 0; i < Game.enemies.length; i++) {
+  /*for (var i = 0; i < Game.enemies.length; i++) {
     Game.enemies[i].update();
-  }
+  }*/
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);

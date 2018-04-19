@@ -42,8 +42,8 @@ function createScene() {
 
   camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
 
-  camera.position.z = 600;
-  camera.position.y = -600;
+  camera.position.z = 150;
+  camera.position.y = -250;
 
   //camera.rotation.x = -0.85;
 
@@ -217,29 +217,12 @@ function onRightClick(event) {
   char.bulletFactory.create();
 }
 
-/*function hitTest(){
-
-  var ennemi = blobl;
-  var boxEnnemi = new THREE.Box3().setFromObject(ennemi.mesh);
-
-  for (var i = 0; i < Game.collidableMesh.length; i++) {
-
-    var bullet = Game.collidableMesh[i];
-    var boxBullet = new THREE.Box3().setFromObject(bullet.mesh);
-
-    var collision = boxEnnemi.intersectsBox(boxBullet);
-    
-    if (collision) console.log(collision);
-    
-  }
-
-}*/
-
 var enemiesCollision;
 
 function init() {
   //document.addEventListener('keydown', handleKeyBoardDown, false);
   //document.addEventListener('keyup', handleKeyBoardUp, false);
+
   document.addEventListener('mousemove', handleMouseMove, false);
 
   document.body.addEventListener('mousedown', function (e) {
@@ -274,9 +257,22 @@ function init() {
 
   enemiesCollision = new CollisionEngine();
 
-  setTimeout(function () {
+  /*setTimeout(function(){
     enemiesSpawn();
-  }, 2000);
+  }, 2000)
+  */
+  console.log(char.body.head.object);
+
+  enemiesSpawn();
+
+  char.body.head.move();
+  char.body.rightArm.move();
+  char.body.leftArm.move();
+  char.body.rightLeg.move();
+  char.body.leftLeg.move();
+  blobl.animation();
+  bigBlobl.animation();
+  shootingBlobl.animation();
 
   loop();
 }
@@ -297,13 +293,16 @@ function loop() {
   mvtTime += deltaTime;
 
   animateCharacter(char.body);
+  blobl.move();
+  bigBlobl.move();
+  shootingBlobl.move();
 
   enemiesCollision.testCollision();
 
   char.bulletFactory.update();
-  for (var i = 0; i < Game.enemies.length; i++) {
+  /*for (var i = 0; i < Game.enemies.length; i++) {
     Game.enemies[i].update();
-  }
+  }*/
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);
@@ -434,8 +433,23 @@ var Leg = function (_Bodypart) {
 
         _this.outliner.position.set(_this.mesh.position.x, _this.mesh.position.y, _this.mesh.position.z);
 
-        _this.mvt = _this.name == "leftLeg" ? "backward" : "forward";
-        _this.rot = _this.name == "leftLeg" ? -speedRot : speedRot;
+        _this.object.rotation.x = _this.name == "leftLeg" ? -0.8 : 0.8;
+
+        if (_this.name == "leftLeg") {
+            _this.tween = TweenMax.to(_this.object.rotation, 0.5, {
+                x: 0.8,
+                ease: Power0.easeInOut,
+                repeat: -1,
+                yoyo: true
+            });
+        } else {
+            _this.tween = TweenMax.to(_this.object.rotation, 0.5, {
+                x: -0.8,
+                ease: Power0.easeInOut,
+                repeat: -1,
+                yoyo: true
+            });
+        }
 
         return _this;
     }
@@ -444,15 +458,18 @@ var Leg = function (_Bodypart) {
         key: "move",
         value: function move() {
 
-            if (this.object.rotation.x > 0.3 && this.mvt == "forward") {
-                this.rot = -speedRot;
-                this.mvt = "backward";
-            } else if (this.object.rotation.x < -0.3 && this.mvt == "backward") {
-                this.rot = speedRot;
-                this.mvt = "forward";
-            }
+            this.tween;
 
-            this.object.rotation.x += this.rot;
+            /*if(this.object.rotation.x > 0.3 && this.mvt == "forward")
+            {
+              this.rot = -speedRot;
+              this.mvt ="backward"
+            } else if(this.object.rotation.x < -0.3 && this.mvt == "backward")
+            {
+              this.rot = speedRot;
+              this.mvt ="forward"
+            }
+              this.object.rotation.x += this.rot;*/
         }
     }]);
 
@@ -473,8 +490,24 @@ var Arm = function (_Bodypart2) {
 
         _this2.outliner.position.set(_this2.mesh.position.x, _this2.mesh.position.y, _this2.mesh.position.z);
 
-        _this2.mvt = _this2.name == "rightArm" ? "backward" : "forward";
-        _this2.rot = _this2.name == "rightArm" ? -speedRot : speedRot;
+        _this2.object.rotation.x = _this2.name == "rightArm" ? -1 : 1;
+
+        if (_this2.name == "rightArm") {
+            _this2.tween = TweenMax.to(_this2.object.rotation, 0.5, {
+                x: 1,
+                ease: Power0.easeInOut,
+                repeat: -1,
+                yoyo: true
+            });
+        } else {
+            _this2.tween = TweenMax.to(_this2.object.rotation, 0.5, {
+                x: -1,
+                ease: Power0.easeInOut,
+                repeat: -1,
+                yoyo: true
+            });
+        }
+        //this.rot = this.name == "rightArm" ? -speedRot : speedRot;
 
         return _this2;
     }
@@ -483,16 +516,17 @@ var Arm = function (_Bodypart2) {
         key: "move",
         value: function move() {
 
-            if (this.object.rotation.x > 0.3 && this.mvt == "forward") {
-                this.rot = -speedRot;
-
-                this.mvt = "backward";
-            } else if (this.object.rotation.x < -0.3 && this.mvt == "backward") {
-                this.rot = speedRot;
-                this.mvt = "forward";
+            this.tween;
+            /*if(this.object.rotation.x > 0.3 && this.mvt == "forward")
+            {
+              this.rot = -speedRot;
+                this.mvt ="backward"
+            } else if(this.object.rotation.x < -0.3 && this.mvt == "backward")
+            {
+              this.rot = speedRot;
+              this.mvt ="forward"
             }
-
-            this.object.rotation.x += this.rot;
+              this.object.rotation.x += this.rot;*/
         }
     }]);
 
@@ -533,15 +567,36 @@ var Head = function (_Bodypart3) {
     _createClass(Head, [{
         key: "move",
         value: function move() {
-            if (this.object.position.z > 4.1 && this.mvt == "up") {
-                this.headMvt = -0.025;
-                this.mvt = "down";
-            } else if (this.object.position.z < 3.8 && this.mvt == "down") {
-                this.headMvt = 0.025;
-                this.mvt = "up";
-            }
 
-            this.object.position.z += this.headMvt;
+            TweenMax.to(this.outliner.position, 0.25, {
+                z: 4.5,
+                repeat: -1,
+                yoyo: true
+            });
+
+            TweenMax.to(this.mesh.position, 0.25, {
+                z: 4.5,
+                repeat: -1,
+                yoyo: true
+            });
+
+            /*TweenMax.to(this.mesh.position, 1,
+            {
+                z:50,
+                repeat: 2,
+                yoyo:true,
+            });*/
+
+            /* if(this.object.position.z > 4.1 && this.mvt == "up")
+             {
+               this.headMvt = -0.025;
+               this.mvt ="down";
+             } else if(this.object.position.z < 3.8 && this.mvt == "down")
+             {
+               this.headMvt = 0.025;
+               this.mvt ="up";
+             }
+               this.object.position.z += this.headMvt;*/
         }
     }]);
 
@@ -569,7 +624,7 @@ var Body = function (_Bodypart4) {
         _this4.object.add(_this4.head.mesh);
         _this4.object.add(_this4.head.outliner);
 
-        _this4.movable.push(_this4.head);
+        //this.movable.push(this.head);
 
         // Legs
         _this4.leftLeg = new Leg(1.6, 1, 1.8, CharColors.mainColor, "leftLeg");
@@ -599,11 +654,9 @@ var Body = function (_Bodypart4) {
         key: "move",
         value: function move() {
 
-            this.head.move();
-
             for (var i = 0; i < this.movable.length; i++) {
 
-                this.movable[i].move();
+                //this.movable[i].move();
             }
         }
     }]);
@@ -679,7 +732,8 @@ function createCharacter() {
     char = new Char();
 
     char.body.mesh.geometry.center();
-    char.mesh.position.z = 12;
+    char.mesh.position.z = 11;
+    char.mesh.position.x -= 20;
 
     char.mesh.scale.set(1.5, 1.5, 1.5);
 
@@ -707,7 +761,10 @@ var Enemy = function () {
     this.geom = new THREE.BoxGeometry(width, height, depth, 1, 1, 1);
     this.mat = new THREE.MeshPhongMaterial({ color: color, flatShading: true });
 
-    this.mesh = new THREE.Mesh(this.geom, this.mat);
+    this.texture = new THREE.TextureLoader().load('./src/img/crate.jpg');
+    this.material = new THREE.MeshBasicMaterial({ map: this.texture });
+
+    this.mesh = new THREE.Mesh(this.geom, this.texture);
     //this.mesh.receiveShadow = true;
     this.mesh.castShadow = true;
     this.name = name;
@@ -728,7 +785,9 @@ var Enemy = function () {
 
   }, {
     key: "animation",
-    value: function animation() {}
+    value: function animation() {
+      console.log("yeah");
+    }
 
     //Movement towards target
 
@@ -736,35 +795,28 @@ var Enemy = function () {
     key: "move",
     value: function move(speed, target) {
 
-      var diffX = 0 - this.mesh.position.x;
+      /*var diffX = 0 - this.mesh.position.x;
       var diffY = 0 - this.mesh.position.y;
-
-      var theta = Math.atan2(diffY, diffX);
-
-      var mvtX = Math.cos(theta);
+        var theta = Math.atan2(diffY, diffX);
+        var mvtX = Math.cos(theta);
       var mvtY = Math.sin(theta);
-
-      this.mesh.position.x += mvtX * 1;
-      this.mesh.position.y += mvtY * 1;
-
-      if (Math.ceil(Player.targetPos.x / 10) == Math.ceil(this.mesh.position.x / 10) && Math.ceil(Player.targetPos.y / 10) == Math.ceil(this.mesh.position.y / 10)) {
-
-        this.mvt = false;
+        this.mesh.position.x += mvtX*1;
+      this.mesh.position.y += mvtY*1;
+        if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.mesh.position.x/10)
+      && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.mesh.position.y/10))
+      {
+          this.mvt = false;
       } else {
         this.mvt = true;
       }
+      */
+
     }
   }, {
     key: "hitAction",
     value: function hitAction(hitableObjects) {
 
       this.mvt = false;
-
-      TweenMax.to(this.mesh.position, 1, {
-        z: 50,
-        repeat: 2,
-        yoyo: true
-      });
     }
   }]);
 
@@ -782,10 +834,118 @@ var SimpleEnemy = function (_Enemy) {
 
   _createClass(SimpleEnemy, [{
     key: "animation",
-    value: function animation() {}
+    value: function animation() {
+      TweenMax.to(this.mesh.position, 0.4, {
+        z: 16,
+        ease: Power2.easeOut,
+        repeat: -1,
+        yoyo: true
+      });
+
+      TweenMax.to(this.mesh.scale, 0.4, {
+        z: 2.1,
+        y: 1.9,
+        x: 1.9,
+        ease: Power2.easeOut,
+        repeat: -1,
+        yoyo: true
+      });
+
+      TweenMax.fromTo(this.mesh.rotation, 0.4, {
+        x: 0.1,
+        ease: Power2.easeOut,
+        repeat: -1,
+        yoyo: true
+      }, {
+        x: -0.1,
+        ease: Power2.easeOut,
+        repeat: -1,
+        yoyo: true
+      });
+    }
   }]);
 
   return SimpleEnemy;
+}(Enemy);
+
+var BigEnemy = function (_Enemy2) {
+  _inherits(BigEnemy, _Enemy2);
+
+  function BigEnemy(width, height, depth, color, name) {
+    _classCallCheck(this, BigEnemy);
+
+    return _possibleConstructorReturn(this, (BigEnemy.__proto__ || Object.getPrototypeOf(BigEnemy)).call(this, width, height, depth, color, name));
+  }
+
+  _createClass(BigEnemy, [{
+    key: "animation",
+    value: function animation() {
+      TweenMax.to(this.mesh.position, 0.6, {
+        z: 22,
+        ease: Power3.easeOut,
+        repeat: -1,
+        yoyo: true
+      });
+
+      TweenMax.fromTo(this.mesh.scale, 0.6, {
+        z: 1.6,
+        y: 2.1,
+        x: 2.1,
+        ease: Power2.easeOut,
+        repeat: -1,
+        yoyo: true
+      }, {
+        z: 2.1,
+        y: 1.9,
+        x: 1.9,
+        ease: Power2.easeOut,
+        repeat: -1,
+        yoyo: true
+      });
+    }
+  }]);
+
+  return BigEnemy;
+}(Enemy);
+
+var ShootingEnemy = function (_Enemy3) {
+  _inherits(ShootingEnemy, _Enemy3);
+
+  function ShootingEnemy(width, height, depth, color, name) {
+    _classCallCheck(this, ShootingEnemy);
+
+    return _possibleConstructorReturn(this, (ShootingEnemy.__proto__ || Object.getPrototypeOf(ShootingEnemy)).call(this, width, height, depth, color, name));
+  }
+
+  _createClass(ShootingEnemy, [{
+    key: "animation",
+    value: function animation() {
+      TweenMax.to(this.mesh.position, 0.5, {
+        z: 22,
+        ease: Power3.easeOut,
+        repeat: -1,
+        yoyo: true
+      });
+
+      TweenMax.from(this.mesh.scale, 0.5, {
+        z: 1,
+        y: 2.2,
+        x: 2.2,
+        ease: Power2.easeOut,
+        repeat: -1,
+        yoyo: true
+      });
+
+      TweenMax.to(this.mesh.rotation, 0.5, {
+        x: 0.1,
+        ease: Power2.easeOut,
+        repeat: -1,
+        yoyo: true
+      });
+    }
+  }]);
+
+  return ShootingEnemy;
 }(Enemy);
 
 function removeSelf() {
@@ -802,20 +962,34 @@ function removeSelf() {
     obj.objectInColllision = null;*/
 }
 
-var blobl;
+var blobl, bigBlobl, shootingBlobl;
 
 function enemiesSpawn() {
 
   blobl = new SimpleEnemy(4, 4, 4, 0x99C24D, "blobl");
-  blobl.mesh.position.x += 150;
-  blobl.mesh.position.y += 150;
+  blobl.mesh.position.x += 20;
   blobl.mesh.position.z += 10;
   blobl.mesh.scale.set(2, 2, 2);
+
+  console.log(blobl.mesh);
 
   scene.add(blobl.mesh);
   Game.enemies.push(blobl);
   enemiesCollision.addBody(blobl);
   //Game.collidableMesh.push(blobl.mesh);
+
+  bigBlobl = new BigEnemy(8, 8, 8, 0x99C24D, "bigBlobl");
+  bigBlobl.mesh.position.x += 45;
+  bigBlobl.mesh.position.z += 16;
+  bigBlobl.mesh.scale.set(2, 2, 2);
+
+  scene.add(bigBlobl.mesh);
+
+  shootingBlobl = new ShootingEnemy(4, 4, 10, 0x99C24D, "shootingBlobl");
+  shootingBlobl.mesh.position.z += 16;
+  shootingBlobl.mesh.scale.set(2, 2, 2);
+
+  scene.add(shootingBlobl.mesh);
 }
 "use strict";
 

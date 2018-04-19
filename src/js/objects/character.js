@@ -37,23 +37,41 @@ class Leg extends Bodypart {
 
     super(width, height, depth, color, name);
 
-    this.mesh.geometry.translate( 0, 0, -1);
-    this.mesh.position.z = -2;
-    this.outliner.position.z = 2.7;
-    this.mesh.position.x = this.name == "leftLeg" ? -0.9 : 0.9;
+      this.mesh.geometry.translate( 0, 0, -1);
+      this.mesh.position.z = -2;
+      this.outliner.position.z = 2.7;
+      this.mesh.position.x = this.name == "leftLeg" ? -0.9 : 0.9;
 
     this.outliner.position.set(this.mesh.position.x,this.mesh.position.y,this.mesh.position.z);
 
-    this.mvt = this.name == "leftLeg" ? "backward" : "forward";
-    this.rot = this.name == "leftLeg" ? -speedRot : speedRot;
+    this.object.rotation.x = this.name == "leftLeg" ? -0.8 : 0.8;
 
-    
+        if(this.name == "leftLeg")
+         {
+               this.tween =  TweenMax.to(this.object.rotation, 0.5, {
+                               x : 0.8,
+                               ease: Power0.easeInOut,
+                               repeat : -1,
+                               yoyo: true
+                             })
+         } else {
+                  this.tween =  TweenMax.to(this.object.rotation, 0.5, {
+                                 x : -0.8,
+                                 ease: Power0.easeInOut,
+                                 repeat : -1,
+                                 yoyo: true
+                               })
+         }
+
+      
 
   }
 
   move(){
 
-    if(this.object.rotation.x > 0.3 && this.mvt == "forward")
+    this.tween;
+
+    /*if(this.object.rotation.x > 0.3 && this.mvt == "forward")
     {
       this.rot = -speedRot;
       this.mvt ="backward"
@@ -63,7 +81,7 @@ class Leg extends Bodypart {
       this.mvt ="forward"
     }
 
-    this.object.rotation.x += this.rot;
+    this.object.rotation.x += this.rot;*/
   }
 }
 
@@ -78,14 +96,32 @@ class Arm extends Bodypart {
 
       this.outliner.position.set(this.mesh.position.x,this.mesh.position.y,this.mesh.position.z);
 
-      this.mvt = this.name == "rightArm" ? "backward" : "forward";
-      this.rot = this.name == "rightArm" ? -speedRot : speedRot;
+      this.object.rotation.x = this.name == "rightArm" ? -1 : 1;
+
+      if(this.name == "rightArm")
+       {
+               this.tween =  TweenMax.to(this.object.rotation, 0.5, {
+                               x : 1,
+                               ease: Power0.easeInOut,
+                               repeat : -1,
+                               yoyo: true
+                             })
+       } else {
+                this.tween =  TweenMax.to(this.object.rotation, 0.5, {
+                               x : -1,
+                               ease: Power0.easeInOut,
+                               repeat : -1,
+                               yoyo: true
+                             })
+       }
+      //this.rot = this.name == "rightArm" ? -speedRot : speedRot;
       
   }
 
   move(){
 
-    if(this.object.rotation.x > 0.3 && this.mvt == "forward")
+    this.tween;
+    /*if(this.object.rotation.x > 0.3 && this.mvt == "forward")
     {
       this.rot = -speedRot;
 
@@ -96,7 +132,7 @@ class Arm extends Bodypart {
       this.mvt ="forward"
     }
 
-    this.object.rotation.x += this.rot;
+    this.object.rotation.x += this.rot;*/
 
 
 
@@ -132,7 +168,30 @@ class Head extends Bodypart {
   }
 
   move(){
-    if(this.object.position.z > 4.1 && this.mvt == "up")
+
+
+    TweenMax.to(this.outliner.position, 0.25, {
+      z : 4.5,
+      repeat : -1,
+      yoyo: true
+    })
+
+    TweenMax.to(this.mesh.position, 0.25, {
+      z : 4.5,
+      repeat : -1,
+      yoyo: true
+    })
+
+
+    /*TweenMax.to(this.mesh.position, 1,
+    {
+        z:50,
+        repeat: 2,
+        yoyo:true,
+    });*/
+
+    
+   /* if(this.object.position.z > 4.1 && this.mvt == "up")
     {
       this.headMvt = -0.025;
       this.mvt ="down";
@@ -142,7 +201,7 @@ class Head extends Bodypart {
       this.mvt ="up";
     }
 
-    this.object.position.z += this.headMvt;
+    this.object.position.z += this.headMvt;*/
 
     
    
@@ -169,7 +228,7 @@ class Body extends Bodypart {
     this.object.add( this.head.mesh );
     this.object.add( this.head.outliner );
 
-    this.movable.push(this.head);
+    //this.movable.push(this.head);
 
     // Legs
     this.leftLeg = new Leg(1.6, 1, 1.8, CharColors.mainColor, "leftLeg" );
@@ -197,11 +256,9 @@ class Body extends Bodypart {
 
   move(){
 
-    this.head.move();
-
     for (var i = 0; i < this.movable.length; i++) {
 
-         this.movable[i].move();
+         //this.movable[i].move();
     }
 
   }
@@ -282,7 +339,8 @@ function createCharacter(){
   char = new Char();
 
   char.body.mesh.geometry.center();
-  char.mesh.position.z = 12;
+  char.mesh.position.z = 11;
+  char.mesh.position.x -= 20;
 
   char.mesh.scale.set(1.5,1.5,1.5);
 
