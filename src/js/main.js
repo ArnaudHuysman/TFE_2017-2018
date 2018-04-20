@@ -37,7 +37,7 @@ function createScene() {
   //scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
   aspectRatio = WIDTH/HEIGHT;
-  fieldOfView = 30;
+  fieldOfView = 60;
   nearPlane = 1;
   farPlane = 10000;
 
@@ -49,12 +49,12 @@ function createScene() {
   );
 
 
-  camera.position.z = 150 ;
+  camera.position.z = 400 ;
 	camera.position.y = -250;
 
   //camera.rotation.x = -0.85;
 
-  camera.lookAt(new THREE.Vector3(0,0,0));
+  camera.lookAt(new THREE.Vector3(0,-40,0));
 
   plane = new THREE.Plane(new THREE.Vector3(1, 0, 0), 10);
   intersectPoint = new THREE.Vector3();

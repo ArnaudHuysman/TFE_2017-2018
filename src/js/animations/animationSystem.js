@@ -1,6 +1,5 @@
 class AnimationSystem {
 	constructor(){
-		super()
 
 		this.currentAnimation = null;
 	}
@@ -10,7 +9,6 @@ class AnimationSystem {
 
 class Animation {
 	constructor(){
-		super();
 
 		this.enterAction = null;
 		this.mainAction = null;

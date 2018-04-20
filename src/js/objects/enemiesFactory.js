@@ -7,7 +7,7 @@ class Enemy {
     this.texture = new THREE.TextureLoader().load( './src/img/crate.jpg' );
     this.material = new THREE.MeshBasicMaterial( { map: this.texture } );
 
-    this.mesh = new THREE.Mesh(this.geom, this.texture);
+    this.mesh = new THREE.Mesh(this.geom, this.mat);
     //this.mesh.receiveShadow = true;
     this.mesh.castShadow = true;
     this.name = name;

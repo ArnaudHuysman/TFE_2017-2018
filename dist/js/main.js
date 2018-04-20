@@ -36,18 +36,18 @@ function createScene() {
   //scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
   aspectRatio = WIDTH / HEIGHT;
-  fieldOfView = 30;
+  fieldOfView = 60;
   nearPlane = 1;
   farPlane = 10000;
 
   camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
 
-  camera.position.z = 150;
+  camera.position.z = 400;
   camera.position.y = -250;
 
   //camera.rotation.x = -0.85;
 
-  camera.lookAt(new THREE.Vector3(0, 0, 0));
+  camera.lookAt(new THREE.Vector3(0, -40, 0));
 
   plane = new THREE.Plane(new THREE.Vector3(1, 0, 0), 10);
   intersectPoint = new THREE.Vector3();
@@ -309,6 +309,23 @@ function loop() {
 }
 "use strict";
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AnimationSystem = function AnimationSystem() {
+	_classCallCheck(this, AnimationSystem);
+
+	this.currentAnimation = null;
+};
+
+var Animation = function Animation() {
+	_classCallCheck(this, Animation);
+
+	this.enterAction = null;
+	this.mainAction = null;
+	this.exitAction = null;
+};
+"use strict";
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -404,7 +421,7 @@ var Bodypart = function Bodypart(width, height, depth, color, name) {
     this.mat = new THREE.MeshPhongMaterial({ color: color, flatShading: true });
 
     this.mesh = new THREE.Mesh(this.geom, this.mat);
-    //this.mesh.receiveShadow = true;
+    this.mesh.receiveShadow = true;
     this.mesh.castShadow = true;
 
     this.outlinerMat = new THREE.MeshBasicMaterial({ color: CharColors.outlinerColor, side: THREE.BackSide });
@@ -705,8 +722,8 @@ var Char = function () {
                 var mvtX = Math.cos(theta);
                 var mvtY = Math.sin(theta);
 
-                this.mesh.position.x += mvtX * 1;
-                this.mesh.position.y += mvtY * 1;
+                this.mesh.position.x += mvtX * 0.9;
+                this.mesh.position.y += mvtY * 0.9;
 
                 if (Math.ceil(Player.targetPos.x / 10) == Math.ceil(this.mesh.position.x / 10) && Math.ceil(Player.targetPos.y / 10) == Math.ceil(this.mesh.position.y / 10)) {
 
@@ -764,7 +781,7 @@ var Enemy = function () {
     this.texture = new THREE.TextureLoader().load('./src/img/crate.jpg');
     this.material = new THREE.MeshBasicMaterial({ map: this.texture });
 
-    this.mesh = new THREE.Mesh(this.geom, this.texture);
+    this.mesh = new THREE.Mesh(this.geom, this.mat);
     //this.mesh.receiveShadow = true;
     this.mesh.castShadow = true;
     this.name = name;
@@ -1004,7 +1021,7 @@ var BoardGame = function BoardGame() {
   this.mesh = new THREE.Object3D();
   this.tileSize = 12;
   this.size = 32;
-  var geom = new THREE.BoxGeometry(this.tileSize, this.tileSize, this.tileSize);
+  var geom = new THREE.BoxBufferGeometry(this.tileSize, this.tileSize, this.tileSize);
 
   var tampon = 0;
   var tampon2 = 0;
@@ -1036,9 +1053,12 @@ var board,
 
 function createBoardGame() {
   board = new BoardGame(Colors.blue);
+
   //board.mesh.rotation.y = Math.PI/4;
   board.mesh.translateX(-16 * (board.tileSize * 1.05));
   board.mesh.translateY(-16 * (board.tileSize * 1.05));
+  board.mesh.matrixAutoUpdate = false;
+  board.mesh.updateMatrix();
 
   scene.add(board.mesh);
 }

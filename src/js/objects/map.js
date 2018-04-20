@@ -7,7 +7,7 @@ class BoardGame {
     this.mesh = new THREE.Object3D();
     this.tileSize = 12;
     this.size = 32;
-    var geom = new THREE.BoxGeometry(this.tileSize,this.tileSize,this.tileSize);
+    var geom = new THREE.BoxBufferGeometry(this.tileSize,this.tileSize,this.tileSize);
 
     var tampon= 0;
     var tampon2 =0;
@@ -45,9 +45,14 @@ var board, mapTiles = [];
 
 function createBoardGame(){
   board = new BoardGame(Colors.blue);
+
+  
+
   //board.mesh.rotation.y = Math.PI/4;
   board.mesh.translateX(-16*(board.tileSize*1.05));
   board.mesh.translateY(-16*(board.tileSize*1.05));
+  board.mesh.matrixAutoUpdate = false;
+  board.mesh.updateMatrix();
 
   scene.add(board.mesh);
 }

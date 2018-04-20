@@ -16,7 +16,7 @@ class Bodypart {
     this.mat = new THREE.MeshPhongMaterial({color, flatShading: true});
 
     this.mesh = new THREE.Mesh(this.geom, this.mat);
-    //this.mesh.receiveShadow = true;
+    this.mesh.receiveShadow = true;
     this.mesh.castShadow = true;
 
     this.outlinerMat = new THREE.MeshBasicMaterial({ color: CharColors.outlinerColor, side: THREE.BackSide })
@@ -309,8 +309,8 @@ class Char {
       var mvtX = Math.cos(theta);
       var mvtY = Math.sin(theta);
 
-      this.mesh.position.x += mvtX*1;
-      this.mesh.position.y += mvtY*1;
+      this.mesh.position.x += mvtX*0.9;
+      this.mesh.position.y += mvtY*0.9;
 
       if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.mesh.position.x/10)
       && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.mesh.position.y/10))
