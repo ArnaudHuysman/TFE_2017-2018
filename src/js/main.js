@@ -9,7 +9,8 @@ const Colors = {
 const Player = {
   isRightClick: false,
   isLeftClick: false,
-  targetPos : { x: 0, y: 0 }
+  targetPos : { x: 0, y: 0 },
+  score: 0,
 }
 
 const Game = {
@@ -37,7 +38,7 @@ function createScene() {
   //scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
   aspectRatio = WIDTH/HEIGHT;
-  fieldOfView = 60;
+  fieldOfView = 30;
   nearPlane = 1;
   farPlane = 10000;
 
@@ -49,12 +50,12 @@ function createScene() {
   );
 
 
-  camera.position.z = 400 ;
-	camera.position.y = -250;
+  camera.position.z = 600 ;
+	camera.position.y = -850;
 
   //camera.rotation.x = -0.85;
 
-  camera.lookAt(new THREE.Vector3(0,-40,0));
+  camera.lookAt(new THREE.Vector3(0,0,0));
 
   plane = new THREE.Plane(new THREE.Vector3(1, 0, 0), 10);
   intersectPoint = new THREE.Vector3();
@@ -220,30 +221,11 @@ function onDocumentMouseDown( event ) {
 
 }
 
-function onRightClick(event){
 
-  event.preventDefault();
-
-  raycaster.setFromCamera( mousePos, camera );
-
-  var intersects = raycaster.intersectObjects( mapTiles );
-
-  if ( intersects.length > 0 ) {
-
-    rightClick.x = intersects[0].point.x;
-    rightClick.y = intersects[0].point.y;
-
-  }
-
-  char.bulletFactory.create();
-
-}
-
-var enemiesCollision;
+var enemiesCollision, counter, interval;
 
 function init(){
-  //document.addEventListener('keydown', handleKeyBoardDown, false);
-  //document.addEventListener('keyup', handleKeyBoardUp, false);
+
 
   document.addEventListener('mousemove', handleMouseMove, false);
 
@@ -255,8 +237,7 @@ function init(){
       }
       else if(e.button === 2){
           Player.isRightClick = true;
-          onRightClick(e);
-
+          char.bulletFactory.create();
       }
   }, false);
 
@@ -281,12 +262,12 @@ function init(){
 
   enemiesCollision = new CollisionEngine();
 
-  
-  /*setTimeout(function(){
+    counter = 0;
+
+  interval = setInterval(function(){
     enemiesSpawn();
-  }, 2000)
-*/
-  console.log(char.body.head.object)
+    counter++;
+  }, 5000)
 
   enemiesSpawn()
   
@@ -295,9 +276,7 @@ function init(){
   char.body.leftArm.move();
   char.body.rightLeg.move();
   char.body.leftLeg.move();
-  blobl.animation();
-  bigBlobl.animation();
-  shootingBlobl.animation();
+
 
 
   loop();
@@ -320,17 +299,19 @@ function loop(){
 
   mvtTime += deltaTime;
 
+  if( counter === 9) clearInterval(interval);
+
+  if( Player.score === 10 ) console.log("VICTORY");
+
   animateCharacter(char.body);
-  blobl.move();
-  bigBlobl.move();
-  shootingBlobl.move();
   
   enemiesCollision.testCollision();
 
   char.bulletFactory.update();
-  /*for (var i = 0; i < Game.enemies.length; i++) {
+  for (var i = 0; i < Game.enemies.length; i++) {
     Game.enemies[i].update();
-  }*/
+    
+  }
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);

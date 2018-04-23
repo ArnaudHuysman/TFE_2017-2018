@@ -5,20 +5,20 @@
 class BoardGame {
   constructor(){
     this.mesh = new THREE.Object3D();
-    this.tileSize = 12;
+    this.tileSize = 24;
     this.size = 32;
     var geom = new THREE.BoxBufferGeometry(this.tileSize,this.tileSize,this.tileSize);
 
     var tampon= 0;
     var tampon2 =0;
 
-    for(var i=0; i<32; i++){
-      if(i<16) tampon +=1;
+    for(var i=0; i<20; i++){
+      if(i<10) tampon +=1;
       else tampon -= 1;
-      for( var j=0; j<32; j++){
-        if(j<16) tampon2 +=1;
+      for( var j=0; j<20; j++){
+        if(j<10) tampon2 +=1;
         else tampon2 -= 1;
-        for (var k = 0; k < 1/*((tampon)*(tampon2)*1.2)/(Math.random()*16)*/; k++) {
+        for (var k = 0; k < ((tampon)*(tampon2)*1.2)/(Math.random()*20); k++) {
 
           var c = new THREE.Mesh(geom,new THREE.MeshPhongMaterial( { color: 0x5f5f5f, flatShading: true }));
           c.position.x = i*(this.tileSize*1.05);
@@ -28,10 +28,13 @@ class BoardGame {
           c.castShadow = true;
           c.receiveShadow = true;
 
+
           this.mesh.add(c);
 
-          mapTiles.push(c);
-
+          if(k === 0) {
+            mapTiles.push(c);
+          };
+        
         }
       }
     }
@@ -49,10 +52,11 @@ function createBoardGame(){
   
 
   //board.mesh.rotation.y = Math.PI/4;
-  board.mesh.translateX(-16*(board.tileSize*1.05));
-  board.mesh.translateY(-16*(board.tileSize*1.05));
-  board.mesh.matrixAutoUpdate = false;
-  board.mesh.updateMatrix();
+  /*board.mesh.translateX(-16*(board.tileSize*1.05));*/
+  board.mesh.translateY(-10*(board.tileSize*1.05));
+  board.mesh.rotation.z = Math.PI / 4;
+  board.mesh.position.z = -10;
+  board.mesh.updateMatrixWorld();
 
   scene.add(board.mesh);
 }

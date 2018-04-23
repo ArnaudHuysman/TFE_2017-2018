@@ -38,8 +38,8 @@ gulp.task('js', function() {
     .pipe(rename({ suffix: '.min' }))	
     .pipe(uglify())
     .on('error', function (err) { util.log(util.colors.red('[Error]'), err.toString()); })
-    .pipe(gulp.dest('dist/js'))
-    .pipe(notify({ message: 'Scripts task complete' }));
+    .pipe(gulp.dest('dist/js'));
+    //.pipe(notify({ message: 'Scripts task complete' }));
 });
 
 

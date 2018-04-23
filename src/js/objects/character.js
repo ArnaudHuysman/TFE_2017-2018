@@ -48,14 +48,14 @@ class Leg extends Bodypart {
 
         if(this.name == "leftLeg")
          {
-               this.tween =  TweenMax.to(this.object.rotation, 0.5, {
+               this.tween =  TweenMax.to(this.object.rotation, 0.4, {
                                x : 0.8,
                                ease: Power0.easeInOut,
                                repeat : -1,
                                yoyo: true
                              })
          } else {
-                  this.tween =  TweenMax.to(this.object.rotation, 0.5, {
+                  this.tween =  TweenMax.to(this.object.rotation, 0.4, {
                                  x : -0.8,
                                  ease: Power0.easeInOut,
                                  repeat : -1,
@@ -100,14 +100,14 @@ class Arm extends Bodypart {
 
       if(this.name == "rightArm")
        {
-               this.tween =  TweenMax.to(this.object.rotation, 0.5, {
+               this.tween =  TweenMax.to(this.object.rotation, 0.4, {
                                x : 1,
                                ease: Power0.easeInOut,
                                repeat : -1,
                                yoyo: true
                              })
        } else {
-                this.tween =  TweenMax.to(this.object.rotation, 0.5, {
+                this.tween =  TweenMax.to(this.object.rotation, 0.4, {
                                x : -1,
                                ease: Power0.easeInOut,
                                repeat : -1,
@@ -170,39 +170,17 @@ class Head extends Bodypart {
   move(){
 
 
-    TweenMax.to(this.outliner.position, 0.25, {
+    TweenMax.to(this.outliner.position, 0.2, {
       z : 4.5,
       repeat : -1,
       yoyo: true
     })
 
-    TweenMax.to(this.mesh.position, 0.25, {
+    TweenMax.to(this.mesh.position, 0.2, {
       z : 4.5,
       repeat : -1,
       yoyo: true
     })
-
-
-    /*TweenMax.to(this.mesh.position, 1,
-    {
-        z:50,
-        repeat: 2,
-        yoyo:true,
-    });*/
-
-    
-   /* if(this.object.position.z > 4.1 && this.mvt == "up")
-    {
-      this.headMvt = -0.025;
-      this.mvt ="down";
-    } else if(this.object.position.z < 3.8 && this.mvt == "down")
-    {
-      this.headMvt = 0.025;
-      this.mvt ="up";
-    }
-
-    this.object.position.z += this.headMvt;*/
-
     
    
   }
@@ -309,8 +287,8 @@ class Char {
       var mvtX = Math.cos(theta);
       var mvtY = Math.sin(theta);
 
-      this.mesh.position.x += mvtX*0.9;
-      this.mesh.position.y += mvtY*0.9;
+      this.mesh.position.x += mvtX*2;
+      this.mesh.position.y += mvtY*2;
 
       if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.mesh.position.x/10)
       && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.mesh.position.y/10))
@@ -340,9 +318,8 @@ function createCharacter(){
 
   char.body.mesh.geometry.center();
   char.mesh.position.z = 11;
-  char.mesh.position.x -= 20;
 
-  char.mesh.scale.set(1.5,1.5,1.5);
+  char.mesh.scale.set(2.5,2.5,2.5);
 
   scene.add(char.mesh);
 

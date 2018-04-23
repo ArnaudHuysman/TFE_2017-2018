@@ -23,6 +23,7 @@ class CollisionEngine {
 				if(collision) {
 					this.bodies[i].collision = true;
 					this.bodies[i].objectInCollision = Game.collidableMesh[j];
+					Game.collidableMesh[j].collision = true;
 				}
 			}
 		}

@@ -6,7 +6,7 @@ class Bullet {
 
     this.mesh = new THREE.Mesh(this.geom, this.mat);
 
-
+    this.collision = false;
     this.mvt = {
       x :0,
       z :0
@@ -19,6 +19,17 @@ class Bullet {
     this.mesh.position.x += this.mvt.x*5;
     this.mesh.position.y += this.mvt.y*5;
 
+    if (this.collision) {
+
+      scene.remove(this.mesh);
+
+      let index = Game.collidableMesh.indexOf(this);
+      if (index >= 0)
+      {
+        Game.collidableMesh.splice(index,1);
+      }
+
+    }
   }
 
 }
@@ -33,8 +44,8 @@ class BulletFactory {
     bullet.mesh.position.z = 12;
     bullet.mesh.position.x = char.mesh.position.x;
     bullet.mesh.position.y = char.mesh.position.y;
-    var diffX = rightClick.x - bullet.mesh.position.x;
-    var diffY = rightClick.y - bullet.mesh.position.y;
+    var diffX = mouseProjectPos.x - bullet.mesh.position.x;
+    var diffY = mouseProjectPos.y - bullet.mesh.position.y;
 
     var theta = Math.atan2(diffY, diffX);
 

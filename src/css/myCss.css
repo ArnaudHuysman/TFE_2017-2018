@@ -5,3 +5,8 @@
   overflow: hidden;
   background: linear-gradient(#3C6867, #046865);
 }
+
+.score{
+	position: absolute;
+	z-index: 10;
+}
