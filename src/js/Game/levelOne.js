@@ -31,6 +31,8 @@ var scene, scene2,
     renderer, container, raycaster,
     plane, intersectPoint;
 
+scene = new THREE.Scene();
+
 
 var enemiesCollision, counter, interval;
 
@@ -47,6 +49,7 @@ window.addEventListener('load', init, false);
 
 function init(){
 
+
   Game_Scene = new Scene();
   document.addEventListener('mousemove', handleMouseMove, false);
 
@@ -58,7 +61,7 @@ function init(){
       }
       else if(e.button === 2){
           Player.isRightClick = true;
-          char.bulletFactory.create();
+          Heroes.standart.char.bulletFactory.create();
       }
   }, false);
 
@@ -102,7 +105,7 @@ function init(){
   })
 
   createBoardGame();
-  createCharacter();
+  //createCharacter();
   //createDrilling();
 
   enemiesCollision = new CollisionEngine();
@@ -114,14 +117,7 @@ function init(){
     counter++;
   }, 5000)
 
-  enemiesSpawn()
-
-  char.body.head.move();
-  char.body.rightArm.move();
-  char.body.leftArm.move();
-  char.body.rightLeg.move();
-  char.body.leftLeg.move();
-
+  enemiesSpawn();
 
 
   animation();
@@ -147,11 +143,15 @@ function update(){
 
   if( Player.score === 10 ) console.log("VICTORY");
 
-  animateCharacter(char.body);
+  Heroes.standart.update();
+  animateCharacter(Heroes.standart);
+
+  Heroes.standart.char.move();
+
 
   enemiesCollision.testCollision();
 
-  char.bulletFactory.update();
+  Heroes.standart.char.bulletFactory.update();
   for (var i = 0; i < Game.enemies.length; i++) {
     Game.enemies[i].update();
 

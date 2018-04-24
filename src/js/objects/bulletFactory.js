@@ -42,15 +42,15 @@ class BulletFactory {
 
     var bullet = new Bullet(2,2,2,0xffffff);
     bullet.mesh.position.z = 12;
-    bullet.mesh.position.x = char.mesh.position.x;
-    bullet.mesh.position.y = char.mesh.position.y;
+    bullet.mesh.position.x = Heroes.standart.char.mesh.position.x;
+    bullet.mesh.position.y = Heroes.standart.char.mesh.position.y;
     var diffX = mouseProjectPos.x - bullet.mesh.position.x;
     var diffY = mouseProjectPos.y - bullet.mesh.position.y;
 
     var theta = Math.atan2(diffY, diffX);
 
     bullet.mvt.x = Math.cos(theta);
-    
+
     bullet.mvt.y = Math.sin(theta);
 
 

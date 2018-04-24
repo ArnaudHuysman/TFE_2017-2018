@@ -9,7 +9,6 @@ class Scene {
 
 	createScene(){
 
-		scene = new THREE.Scene();
 		//scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
 		HEIGHT = window.innerHeight;
