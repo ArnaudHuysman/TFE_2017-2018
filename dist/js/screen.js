@@ -39,7 +39,6 @@ var ScreenSystem = function () {
 				this.removeScreen(this.previousScreen.display);
 			}
 
-			console.log(this.currentScreen);
 			this.container.appendChild(this.currentScreen.display);
 			this.currentScreen.enter(this.setScreen.bind(this));
 		}
@@ -74,59 +73,85 @@ var Screen = function () {
 	return Screen;
 }();
 
-function log() {
-	console.log("work plz");
-}
+var IntroScreen = function (_Screen) {
+	_inherits(IntroScreen, _Screen);
 
-var MainScreen = function (_Screen) {
-	_inherits(MainScreen, _Screen);
+	function IntroScreen() {
+		_classCallCheck(this, IntroScreen);
 
-	function MainScreen() {
-		_classCallCheck(this, MainScreen);
+		var _this = _possibleConstructorReturn(this, (IntroScreen.__proto__ || Object.getPrototypeOf(IntroScreen)).call(this));
 
-		var _this = _possibleConstructorReturn(this, (MainScreen.__proto__ || Object.getPrototypeOf(MainScreen)).call(this));
-
-		_this.display = document.querySelector('.template').content.querySelector('.mainScreen').cloneNode(true);
-		_this.button = _this.display.querySelector('button');
+		_this.display = document.querySelector('.template').content.querySelector('.introScreen').cloneNode(true);
+		_this.button = _this.display.querySelector('.playButton');
 
 		return _this;
 	}
 
-	_createClass(MainScreen, [{
+	_createClass(IntroScreen, [{
 		key: 'enter',
 		value: function enter(exitCallback) {
 
 			this.exitCallback = exitCallback;
-
-			console.log(this.button);
 			this.button.addEventListener('click', this.navigate.bind(this));
 		}
 	}, {
 		key: 'navigate',
 		value: function navigate(e) {
-			console.log("yeah");
-			this.exitCallback(secondScreen);
+			this.exitCallback(characterScreen);
 		}
 	}]);
 
-	return MainScreen;
+	return IntroScreen;
 }(Screen);
 
-var mainScreen = new MainScreen();
+var introScreen = new IntroScreen();
 
-var SecondScreen = function (_Screen2) {
-	_inherits(SecondScreen, _Screen2);
+var CharacterScreen = function (_Screen2) {
+	_inherits(CharacterScreen, _Screen2);
 
-	function SecondScreen() {
-		_classCallCheck(this, SecondScreen);
+	function CharacterScreen() {
+		_classCallCheck(this, CharacterScreen);
 
-		var _this2 = _possibleConstructorReturn(this, (SecondScreen.__proto__ || Object.getPrototypeOf(SecondScreen)).call(this));
+		var _this2 = _possibleConstructorReturn(this, (CharacterScreen.__proto__ || Object.getPrototypeOf(CharacterScreen)).call(this));
 
-		_this2.display = document.querySelector('.template').content.querySelector('.secondScreen').cloneNode(true);
+		_this2.display = document.querySelector('.template').content.querySelector('.characterScreen').cloneNode(true);
+		_this2.button = _this2.display.querySelector('.playButton');
+
 		return _this2;
 	}
 
-	_createClass(SecondScreen, [{
+	_createClass(CharacterScreen, [{
+		key: 'enter',
+		value: function enter(exitCallback) {
+
+			this.exitCallback = exitCallback;
+			this.button.addEventListener('click', this.navigate.bind(this));
+		}
+	}, {
+		key: 'navigate',
+		value: function navigate(e) {
+			this.exitCallback(gameScreen);
+		}
+	}]);
+
+	return CharacterScreen;
+}(Screen);
+
+var characterScreen = new CharacterScreen();
+
+var GameScreen = function (_Screen3) {
+	_inherits(GameScreen, _Screen3);
+
+	function GameScreen() {
+		_classCallCheck(this, GameScreen);
+
+		var _this3 = _possibleConstructorReturn(this, (GameScreen.__proto__ || Object.getPrototypeOf(GameScreen)).call(this));
+
+		_this3.display = document.querySelector('.template').content.querySelector('.gameScreen').cloneNode(true);
+		return _this3;
+	}
+
+	_createClass(GameScreen, [{
 		key: 'enter',
 		value: function enter(exitCallback) {
 
@@ -134,12 +159,13 @@ var SecondScreen = function (_Screen2) {
 		}
 	}]);
 
-	return SecondScreen;
+	return GameScreen;
 }(Screen);
 
-var secondScreen = new SecondScreen();
+var gameScreen = new GameScreen();
 
 var mainContaint = document.querySelector(".app");
+console.log(mainContaint);
 var AppScreens = new ScreenSystem(mainContaint);
 
-AppScreens.setScreen(mainScreen);
+AppScreens.setScreen(introScreen);

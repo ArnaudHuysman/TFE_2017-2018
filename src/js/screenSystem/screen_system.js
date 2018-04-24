@@ -107,7 +107,7 @@ class GameScreen extends Screen{
 	}
 
 	enter(exitCallback){
-
+		init();
 		this.exitCallback = exitCallback;
 	}
 }

@@ -35,31 +35,28 @@ gulp.task('js', function() {
   	}))
     .pipe(concat('main.js'))
     .pipe(gulp.dest('dist/js'))
-    .pipe(rename({ suffix: '.min' }))	
+    .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
     .on('error', function (err) { util.log(util.colors.red('[Error]'), err.toString()); })
-    .pipe(gulp.dest('dist/js'));
-    //.pipe(notify({ message: 'Scripts task complete' }));
-});
-
-
-<<<<<<< HEAD
-=======
-gulp.task('screen:js', function() {
-  return gulp.src('src/js/screenSystem/**/*.js')
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(concat('screen.js'))
     .pipe(gulp.dest('dist/js'))
+    .pipe(notify({ message: 'Scripts task complete' }));
 });
 
 
->>>>>>> features/screen_system
+// gulp.task('screen:js', function() {
+//   return gulp.src('src/js/screenSystem/**/*.js')
+//     .pipe(babel({
+//       presets: ['es2015']
+//     }))
+//     .pipe(concat('screen.js'))
+//     .pipe(gulp.dest('dist/js'))
+// });
+
+
 gulp.task('watch', function() {
-  gulp.watch('src/js/**/*.js', ['js'])
-  gulp.watch('src/js/screenSystem/**/*.js', ['screen:js']);
+  gulp.watch('src/js/**/*.js', ['js']);
+  //gulp.watch('src/js/screenSystem/**/*.js', ['screen:js']);
 });
 
 
-gulp.task('default', ['watch', 'js', 'screen:js']);
+gulp.task('default', ['watch', 'js']);

@@ -28,7 +28,7 @@ class Enemy {
   update(){
 
     if(this.collision) {
- 
+
         removeSelf(this);
         //this.hitAction(this.objectInColllision);
     };
@@ -36,7 +36,7 @@ class Enemy {
   //Animation of movement and attack
   animation(){
 
-    
+
   }
 
   //Movement towards target
@@ -69,7 +69,7 @@ class Enemy {
   hitAction(hitableObjects){
 
     this.mvt = false;
-    
+
   }
 }
 
@@ -121,7 +121,7 @@ class BigEnemy extends Enemy {
   update(){
 
     if(this.collision) {
-        console.log("hit"); 
+        console.log("hit");
         removeSelf(this);
 
         for (var i = 0; i < 180; i+=45) {
@@ -207,14 +207,14 @@ class ShootingEnemy extends Enemy {
   }
 
   update(){
-    
+
     var diffX = char.mesh.position.x - this.object.position.x;
     var diffY = char.mesh.position.y - this.object.position.y;
 
     if(Math.abs(diffY) < 100 && Math.abs(diffX) < 100) {
       this.mvt = false;
     } else {
-      this.mvt = true; 
+      this.mvt = true;
     }
 
     var theta = Math.atan2(diffY, diffX);
@@ -242,10 +242,10 @@ class ShootingEnemy extends Enemy {
   }
 }
 
-var  score = document.querySelector(".score");
+var  score
 var scoreText;
 function removeSelf(obj){
-
+  score = document.querySelector(".score");
   Player.score++;
   scoreText = "Score : " + Player.score;
   score.innerText = scoreText;
@@ -282,13 +282,13 @@ function EnemiFactory(rdm) {
     }
 
 
-    //Move vertices 
+    //Move vertices
     /*for (var i = 0; i < 9; i++) {
       enemi.geom.vertices[i].z = 5;
     }
   */
     return enemi;
-} 
+}
 
 
 function enemiesSpawn() {
@@ -305,8 +305,8 @@ function enemiesSpawn() {
     enemi.object.position.x = vector.x;
     enemi.object.position.y = vector.y;
 
-    enemi.animation();  
-    
+    enemi.animation();
+
     Game.enemies.push(enemi);
     enemiesCollision.addBody(enemi);
     scene.add(enemi.object);

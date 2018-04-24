@@ -18,7 +18,7 @@ const Game = {
   enemies: []
 }
 
-window.addEventListener('load', init, false);
+//window.addEventListener('load', init, false);
 
 /*---------------------------------------------------------------
                            CAMERA
@@ -75,6 +75,7 @@ function createScene() {
   raycaster = new THREE.Raycaster();
 
   container = document.getElementById('world');
+  container.style.display = "block";
   container.appendChild(renderer.domElement);
 
   window.addEventListener('resize', handleWindowResize, false);
@@ -270,7 +271,7 @@ function init(){
   }, 5000)
 
   enemiesSpawn()
-  
+
   char.body.head.move();
   char.body.rightArm.move();
   char.body.leftArm.move();
@@ -304,13 +305,13 @@ function loop(){
   if( Player.score === 10 ) console.log("VICTORY");
 
   animateCharacter(char.body);
-  
+
   enemiesCollision.testCollision();
 
   char.bulletFactory.update();
   for (var i = 0; i < Game.enemies.length; i++) {
     Game.enemies[i].update();
-    
+
   }
 
   renderer.render(scene, camera);
