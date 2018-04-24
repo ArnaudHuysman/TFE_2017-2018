@@ -242,13 +242,14 @@ class ShootingEnemy extends Enemy {
   }
 }
 
-var  score = document.querySelector(".score");
+var  scoreDiv = document.querySelector(".score");
 var scoreText;
 function removeSelf(obj){
 
+  console.log(scoreDiv);
   Player.score++;
   scoreText = "Score : " + Player.score;
-  score.innerText = scoreText;
+  scoreDiv.innerText = scoreText;
 
   scene.remove(obj.object);
 
