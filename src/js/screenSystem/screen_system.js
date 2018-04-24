@@ -25,8 +25,7 @@ class ScreenSystem {
 		if( this.previousScreen){
 			this.removeScreen(this.previousScreen.display);
 		}
-				
-		console.log(this.currentScreen);
+
 		this.container.appendChild(this.currentScreen.display);
 		this.currentScreen.enter(this.setScreen.bind(this))
 	}
@@ -54,51 +53,70 @@ class Screen {
 
 }
 
-function log(){
-	console.log("work plz");
-}
 
-class MainScreen extends Screen{
+
+class IntroScreen extends Screen{
 	constructor(){
 		super();
-		this.display = document.querySelector('.template').content.querySelector('.mainScreen').cloneNode(true);
-		this.button = this.display.querySelector('button');
+		this.display = document.querySelector('.template').content.querySelector('.introScreen').cloneNode(true);
+		this.button = this.display.querySelector('.playButton');
 
 	}
 
 	enter(exitCallback){
 
 		this.exitCallback = exitCallback;
-
-		console.log(this.button);
-	    this.button.addEventListener('click', this.navigate.bind(this));
+	  this.button.addEventListener('click', this.navigate.bind(this));
 	}
 
 	navigate(e){
-		console.log("yeah");
-		this.exitCallback(secondScreen);	
+		this.exitCallback(characterScreen);
 	}
+
 }
 
-const mainScreen = new MainScreen();
+const introScreen = new IntroScreen();
 
 
-class SecondScreen extends Screen{
+class CharacterScreen extends Screen{
 	constructor(){
 		super();
-		this.display = document.querySelector('.template').content.querySelector('.secondScreen').cloneNode(true);
+		this.display = document.querySelector('.template').content.querySelector('.characterScreen').cloneNode(true);
+		this.button = this.display.querySelector('.playButton');
+
 	}
 
 	enter(exitCallback){
 
-		this.exitCallback = exitCallback;	
+		this.exitCallback = exitCallback;
+	  this.button.addEventListener('click', this.navigate.bind(this));
+	}
+
+	navigate(e){
+		this.exitCallback(gameScreen);
 	}
 }
 
-const secondScreen = new SecondScreen();
+const characterScreen = new CharacterScreen();
+
+
+class GameScreen extends Screen{
+	constructor(){
+		super();
+		this.display = document.querySelector('.template').content.querySelector('.gameScreen').cloneNode(true);
+	}
+
+	enter(exitCallback){
+
+		this.exitCallback = exitCallback;
+	}
+}
+
+const gameScreen = new GameScreen();
 
 
 const mainContaint = document.querySelector(".app");
+console.log(mainContaint);
 const AppScreens = new ScreenSystem(mainContaint);
 
-AppScreens.setScreen(mainScreen);
+AppScreens.setScreen(introScreen);
