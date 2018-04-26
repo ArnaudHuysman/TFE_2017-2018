@@ -110,16 +110,6 @@ function init(){
 
   enemiesCollision = new CollisionEngine();
 
-    counter = 0;
-
-  interval = setInterval(function(){
-    enemiesSpawn();
-    counter++;
-  }, 5000)
-
-  enemiesSpawn();
-
-
   animation();
 }
 
@@ -144,9 +134,9 @@ function update(){
   if( Player.score === 10 ) console.log("VICTORY");
 
   Heroes.standart.update();
-  animateCharacter(Heroes.standart);
+  //animateCharacter(Heroes.standart);
 
-  Heroes.standart.char.move();
+  Heroes.standart.movement();
 
 
   enemiesCollision.testCollision();

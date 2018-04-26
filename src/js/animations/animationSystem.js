@@ -1,17 +1,31 @@
 class AnimationSystem {
-	constructor(){
+	constructor(initAnimation){
 
-		this.currentAnimation = null;
+		this.currentAnimation = initAnimation;
+		this.currentAnimation.in();
+
 	}
 
+	changeAnimation(newAnimation){
+		this.currentAnimation.out();
 
+		this.currentAnimation = newAnimation;
+
+		this.currentAnimation.in();
+	}
 }
 
 class Animation {
-	constructor(){
+	constructor(object){
+		this.object  = object;
+	}
 
-		this.enterAction = null;
-		this.mainAction = null;
-		this.exitAction = null;
+	in(){
+	}
+
+	mainAction(){
+	}
+
+	out(){
 	}
 }

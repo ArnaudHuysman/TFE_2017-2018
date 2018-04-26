@@ -4,9 +4,6 @@
   outlinerColor: 0xd90368
  }
 
- const speedRot = 0.03;
-
-
 class Bodypart {
   constructor(width, height, depth, color, name) {
 
@@ -43,36 +40,6 @@ class Leg extends Bodypart {
     this.mesh.position.x = this.name == "leftLeg" ? -0.9 : 0.9;
 
     this.outliner.position.set(this.mesh.position.x,this.mesh.position.y,this.mesh.position.z);
-
-    this.object.rotation.x = this.name == "rightLeg" ? 0.8 : -0.8;
-
-    this.standTween = TweenMax.to(this.object.rotation, 0.4, {
-      x: 0,
-      ease: Power0.easeInOut
-    })
-
-    if(this.name == "leftLeg")
-     {
-       this.tween = TweenMax.to(this.object.rotation, 0.4, {
-                       x : 0.8,
-                       ease: Power0.easeInOut,
-                       repeat : -1,
-                       yoyo: true
-                     })
-     } else {
-      this.tween = TweenMax.to(this.object.rotation, 0.4, {
-                       x : -0.8,
-                       ease: Power0.easeInOut,
-                       repeat : -1,
-                       yoyo: true
-                     })
-     }
-  }
-
-  move(){
-
-
-
   }
 }
 
@@ -87,38 +54,9 @@ class Arm extends Bodypart {
 
     this.outliner.position.set(this.mesh.position.x,this.mesh.position.y,this.mesh.position.z);
 
-    this.object.rotation.x = this.name == "rightArm" ? -1 : 1;
-
-
-    this.standTween = TweenMax.to(this.object.rotation, 0.4, {
-      x: 0,
-      ease: Power0.easeInOut
-    })
-
-    if(this.name == "rightArm")
-     {
-       this.tween =  TweenMax.to(this.object.rotation, 0.4, {
-                       x : 1,
-                       ease: Power0.easeInOut,
-                       repeat : -1,
-                       yoyo: true
-                     })
-     } else {
-        this.tween =  TweenMax.to(this.object.rotation, 0.4, {
-                       x : -1,
-                       ease: Power0.easeInOut,
-                       repeat : -1,
-                       yoyo: true
-                     })
-     }
-
-  }
-
-  move(){
-
-    this.tween;
   }
 }
+
 
 class Head extends Bodypart {
   constructor(width, height, depth, color, name) {
@@ -145,22 +83,6 @@ class Head extends Bodypart {
 
     this.mvt = "up";
     this.headMvt = 0.025;
-
-  }
-
-  move(){
-    TweenMax.to(this.outliner.position, 0.2, {
-      z : 4.5,
-      repeat : -1,
-      yoyo: true
-    })
-
-    TweenMax.to(this.mesh.position, 0.2, {
-      z : 4.5,
-      repeat : -1,
-      yoyo: true
-    })
-
 
   }
 }
@@ -206,12 +128,6 @@ class Body extends Bodypart {
     this.movable.push(this.leftArm,this.rightArm);
 
   }
-
-  move(){
-    this.movable.forEach(function(part){
-      part.move();
-    })
-  }
 }
 
 /*
@@ -230,67 +146,11 @@ class Char {
     this.state = "still";
     this.mvt = "false";
 
+
     this.body = new Body( 4,  4 , 2.8, CharColors.mainColor);
-
-
-   /* this.body.mesh.rotation.x = Math.PI/2;
-    this.body.mesh.rotation.y = Math.PI/2;*/
 
     this.mesh.add( this.body.object );
     this.bulletFactory = new BulletFactory();
 
   }
-
-
-
-  move(){
-    if( Player.isLeftClick || this.body.mvt )
-    {
-      var diffX = Player.targetPos.x - this.mesh.position.x;
-      var diffY = Player.targetPos.y - this.mesh.position.y;
-
-      var theta = Math.atan2(diffY, diffX);
-
-      var mvtX = Math.cos(theta);
-      var mvtY = Math.sin(theta);
-
-      this.mesh.position.x += mvtX*2;
-      this.mesh.position.y += mvtY*2;
-
-      if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.mesh.position.x/10)
-      && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.mesh.position.y/10))
-      {
-
-        Heroes.standart.action = "stand";
-        this.body.mvt = false;
-      } else {
-        Heroes.standart.action = "move";
-        this.body.mvt = true;
-      }
-    }
-
-    var lookAtPoint = new THREE.Vector3(mouseProjectPos.x,mouseProjectPos.y,12);
-
-    this.mesh.up = new THREE.Vector3(0,0,1);
-    this.mesh.lookAt(lookAtPoint);
-  }
-}
-
-
-function animateCharacter(Hero){
-
-  switch(Hero.action){
-    case "stand" :
-        Hero.char.body.movable.forEach(function(part){
-          part.tween.pause();
-        })
-      break;
-
-    case "move" :
-        Hero.char.body.movable.forEach(function(part){
-          part.tween.play();
-        })
-      break;
-  }
-
 }
