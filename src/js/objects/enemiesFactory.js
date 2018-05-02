@@ -276,7 +276,7 @@ function EnemiFactory(type) {
       enemi.geom.vertices[i].z = 5;
     }
   */
-    //enemi.animation();
+    enemi.animation();
     return enemi;
 }
 
@@ -290,10 +290,10 @@ function enemiesSpawn(type) {
     var vector = new THREE.Vector3();
     vector.setFromMatrixPosition( mapTiles[rdm].matrixWorld );
 
-    enemi.object.scale.set(10,10,10);
-    enemi.object.position.z = 50;
-    enemi.object.position.x = -50//vector.x;
-    enemi.object.position.y = -50//vector.y;
+    enemi.object.scale.set(2,2,2);
+    enemi.object.position.z = 10;
+    enemi.object.position.x = vector.x;
+    enemi.object.position.y = vector.y;
 
 
     Game.enemies.push(enemi);
