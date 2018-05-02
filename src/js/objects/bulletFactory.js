@@ -10,9 +10,7 @@ class Bullet {
     this.mvt = {
       x :0,
       z :0
-    } ;
-
-
+    };
   }
 
   update(){
@@ -40,19 +38,33 @@ class BulletFactory {
   }
   create(){
 
-    var bullet = new Bullet(2,2,2,0xffffff);
-    bullet.mesh.position.z = 12;
-    bullet.mesh.position.x = Heroes.standart.char.mesh.position.x;
-    bullet.mesh.position.y = Heroes.standart.char.mesh.position.y;
-    var diffX = mouseProjectPos.x - bullet.mesh.position.x;
-    var diffY = mouseProjectPos.y - bullet.mesh.position.y;
 
+    var diffX = mouseProjectPos.x -  Heroes.standart.char.mesh.position.x;;
+    var diffY = mouseProjectPos.y - Heroes.standart.char.mesh.position.y;
     var theta = Math.atan2(diffY, diffX);
+    console.log(theta);
+    var bullet = new Bullet(2,2,2,0xffffff);
 
-    bullet.mvt.x = Math.cos(theta);
 
-    bullet.mvt.y = Math.sin(theta);
+    bullet.mvt.x = Math.cos(theta)*1.5;
+    bullet.mvt.y = Math.sin(theta)*1.5;
 
+    var decalX = Math.cos(theta)*5;
+    var decalY = Math.sin(theta)*5;
+
+    bullet.mesh.position.z = 12;
+    switch(Heroes.standart.gunShooting){
+      case "right":
+        bullet.mesh.position.x = Heroes.standart.char.mesh.position.x + decalY;
+        bullet.mesh.position.y = Heroes.standart.char.mesh.position.y - decalX;
+        Heroes.standart.gunShooting = "left";
+        break;
+      case "left":
+        bullet.mesh.position.x = Heroes.standart.char.mesh.position.x - decalY;
+        bullet.mesh.position.y = Heroes.standart.char.mesh.position.y + decalX;
+        Heroes.standart.gunShooting = "right";
+        break;
+    }
 
     scene.add(bullet.mesh);
     Game.collidableMesh.push(bullet);

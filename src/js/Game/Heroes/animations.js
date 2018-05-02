@@ -1,12 +1,11 @@
-class WalkAnimation extends Animation {
+//Arms
+
+class ArmWalkAnimation extends Animation {
   constructor(object){
     super(object)
-
-    this.tweens = [];
   }
 
   in(){
-    console.log("Walk In")
     // Arm Animation
 
     this.object.rightArm.object.rotation.x = -1;
@@ -25,6 +24,70 @@ class WalkAnimation extends Animation {
                      repeat : -1,
                      yoyo: true
                   }))
+  }
+
+  out(){
+    super.out();
+  }
+
+
+}
+
+class ArmStandAnimation extends Animation{
+  constructor(object){
+    super(object)
+
+  }
+
+  in(){
+    this.object.arms.forEach((part) => {
+      this.tweens.push(TweenMax.to(part.object.rotation, 0.2, {
+                    x : 0,
+                    ease: Power0.easeInOut
+                  }))
+    })
+
+  }
+
+  out(){
+    super.out();
+  }
+}
+
+class ArmShootAnimation extends Animation {
+  constructor(object){
+    super(object)
+  }
+
+  in(){
+    this.object.arms.forEach((part) => {
+      this.tweens.push(TweenMax.to(part.object.rotation, 0.05, {
+                    x : -1.5,
+                    ease: Power0.easeInOut
+                  }))
+    })
+
+  }
+
+  out(){
+    super.out();
+    this.object.arms.forEach((part) => {
+      TweenMax.to(part.object.rotation, 0.1, {
+                    x : 0,
+                    ease: Power0.easeInOut
+                  })
+    })
+  }
+}
+
+// LEGS
+
+class LegWalkAnimation extends Animation {
+  constructor(object){
+    super(object)
+  }
+
+  in(){
 
     // Leg Animation
 
@@ -47,19 +110,13 @@ class WalkAnimation extends Animation {
   }
 
   out(){
-    console.log("Walk Out")
-    this.tweens.forEach((tween) => {
-      tween.kill();
-    })
-
-    this.tweens = [];
-
+    super.out()
   }
 
 
 }
 
-class StandAnimation extends Animation{
+class LegStandAnimation extends Animation{
   constructor(object){
     super(object)
 
@@ -67,23 +124,21 @@ class StandAnimation extends Animation{
 
   in(){
 
-    console.log("Stand In")
-    this.object.movable.forEach((part) => {
-      part.object.rotation.x = 0;
+    this.object.legs.forEach((part) => {
+      this.tweens.push(TweenMax.to(part.object.rotation, 0.2, {
+                    x : 0,
+                    ease: Power0.easeInOut
+                  }))
     })
 
   }
 
   out(){
-    console.log("Stand Out")
+    super.out()
   }
 }
 
-class ShootAnimation extends Animation {
-  constructor(object){
-    super(object)
-  }
-}
+//
 
 class DeadAnimation extends Animation{
   constructor(object){

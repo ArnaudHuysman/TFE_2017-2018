@@ -53,7 +53,6 @@ class Arm extends Bodypart {
     this.mesh.position.x = this.name == "leftArm" ? -2.4 : 2.4;
 
     this.outliner.position.set(this.mesh.position.x,this.mesh.position.y,this.mesh.position.z);
-
   }
 }
 
@@ -96,7 +95,8 @@ class Body extends Bodypart {
     super(width, height, depth, color, name);
 
     this.mvt = false;
-    this.movable = [];
+    this.legs = [];
+    this.arms = [];
 
     this.object.rotation.set(-Math.PI/2,0,0) ;
 
@@ -115,8 +115,9 @@ class Body extends Bodypart {
 
     this.object.add( this.leftLeg.object );
     this.object.add( this.rightLeg.object );
+    this.legs.push( this.leftLeg );
+    this.legs.push( this.rightLeg );
 
-    this.movable.push(this.leftLeg,this.rightLeg);
 
     // Arms
     this.leftArm = new Arm(0.8, 2.4, 1, CharColors.mainColor, "leftArm" );
@@ -124,8 +125,8 @@ class Body extends Bodypart {
 
     this.object.add( this.leftArm.object );
     this.object.add( this.rightArm.object );
-
-    this.movable.push(this.leftArm,this.rightArm);
+    this.arms.push( this.leftArm );
+    this.arms.push( this.rightArm );
 
   }
 }

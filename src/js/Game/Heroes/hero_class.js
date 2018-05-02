@@ -1,19 +1,67 @@
+
+
 class Hero {
   constructor() {
 
+    this.isShooting = false;
+    this.gunShooting = "right";
+
     this.char = new Char();
-    this.char.mesh.position.z = 11;
-    this.char.mesh.scale.set(2.5,2.5,2.5);
+    this.char.mesh.position.z = 10;
+    this.char.mesh.scale.set(2,2,2);
     scene.add(this.char.mesh);
 
-    this.animationSystem = new AnimationSystem(new StandAnimation(this.char.body));
+
+    this.leftWaepon = new TwinsGun();
+    this.leftWaepon.mesh.position.set(-2.4,-1,-2.5);
+    this.leftWaepon.mesh.scale.set(0.4,0.4,0.4);
+    this.leftWaepon.mesh.rotation.set(Math.PI/2,0,-Math.PI/2);
+    this.char.body.leftArm.object.add( this.leftWaepon.mesh );
+
+    this.rightWaepon = new TwinsGun();
+    this.rightWaepon.mesh.position.set(2.4,-1,-2.5);
+    this.rightWaepon.mesh.scale.set(0.4,0.4,0.4);
+    this.rightWaepon.mesh.rotation.set(Math.PI/2,0,-Math.PI/2);
+    this.char.body.rightArm.object.add( this.rightWaepon.mesh );
+
+    this.armsAnimationSystem = new AnimationSystem(new ArmStandAnimation(this.char.body));
+    this.legsAnimationSystem = new AnimationSystem(new LegStandAnimation(this.char.body));
   }
 
   model(){
 
+
   }
 
   update(){
+
+    if(Player.isLeftClick && !this.char.body.mvt){
+
+      this.armsAnimationSystem.changeAnimation(new ArmWalkAnimation(this.char.body));
+      this.legsAnimationSystem.changeAnimation(new LegWalkAnimation(this.char.body));
+
+    }
+
+    if( Player.isLeftClick || this.char.body.mvt ) this.movement();
+
+    if(Player.isRightClick && !this.isShooting) {
+      this.armsAnimationSystem.changeAnimation(new ArmShootAnimation(this.char.body));
+      this.isShooting = true;
+
+    }
+
+    if(!Player.isRightClick && this.isShooting){
+      this.char.body.mvt ?
+        this.armsAnimationSystem.changeAnimation(new ArmWalkAnimation(this.char.body))
+        :
+        this.armsAnimationSystem.changeAnimation(new ArmStandAnimation(this.char.body))
+      this.isShooting = false;
+    }
+
+    var lookAtPoint = new THREE.Vector3(mouseProjectPos.x,mouseProjectPos.y,12);
+
+    this.char.mesh.up = new THREE.Vector3(0,0,1);
+    this.char.mesh.lookAt(lookAtPoint);
 
   }
 
@@ -23,14 +71,7 @@ class Hero {
   }
 
   movement(){
-    if(Player.isLeftClick && !this.char.body.mvt){
 
-      this.animationSystem.changeAnimation(new WalkAnimation(this.char.body));
-
-    }
-
-    if( Player.isLeftClick || this.char.body.mvt )
-    {
       var diffX = Player.targetPos.x - this.char.mesh.position.x;
       var diffY = Player.targetPos.y - this.char.mesh.position.y;
 
@@ -45,17 +86,14 @@ class Hero {
       if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.char.mesh.position.x/10)
       && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.char.mesh.position.y/10))
       {
-        this.animationSystem.changeAnimation(new StandAnimation(this.char.body))
+        this.armsAnimationSystem.changeAnimation(new ArmStandAnimation(this.char.body))
+        this.legsAnimationSystem.changeAnimation(new LegStandAnimation(this.char.body))
         this.char.body.mvt = false;
       } else {
         this.char.body.mvt = true;
       }
-    }
 
-    var lookAtPoint = new THREE.Vector3(mouseProjectPos.x,mouseProjectPos.y,12);
 
-    this.char.mesh.up = new THREE.Vector3(0,0,1);
-    this.char.mesh.lookAt(lookAtPoint);
   }
 
   shoot(){
@@ -68,8 +106,4 @@ class StandartHero extends Hero {
     super()
   }
 
-}
-
-const Heroes = {
-  standart : new StandartHero(),
 }

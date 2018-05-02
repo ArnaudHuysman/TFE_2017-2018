@@ -35,13 +35,12 @@ gulp.task('js', function() {
   	}))
     .pipe(concat('main.js'))
     .pipe(gulp.dest('dist/js'))
-    .pipe(rename({ suffix: '.min' }))	
+    .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
     .on('error', function (err) { util.log(util.colors.red('[Error]'), err.toString()); })
     .pipe(gulp.dest('dist/js'));
     //.pipe(notify({ message: 'Scripts task complete' }));
 });
-
 
 gulp.task('watch', function() {
   gulp.watch('src/js/**/*.js', ['js']);

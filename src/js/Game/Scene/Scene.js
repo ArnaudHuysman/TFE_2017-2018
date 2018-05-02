@@ -27,7 +27,7 @@ class Scene {
 	    farPlane
 	  );
 
-		this.camera.position.z = 600 ;
+		this.camera.position.z = 500 ;
 		this.camera.position.y = -850;
 
 		//camera.rotation.x = -0.85;

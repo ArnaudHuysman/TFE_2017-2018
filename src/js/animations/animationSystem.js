@@ -18,14 +18,14 @@ class AnimationSystem {
 class Animation {
 	constructor(object){
 		this.object  = object;
+		this.tweens = [];
 	}
 
 	in(){
 	}
 
-	mainAction(){
-	}
-
 	out(){
+		this.tweens.forEach((tween) => tween.kill());
+		this.tweens = [];
 	}
 }

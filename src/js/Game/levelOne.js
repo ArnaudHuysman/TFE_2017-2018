@@ -20,6 +20,12 @@ const Game = {
   enemies: []
 }
 
+const Heroes = {
+  standart : null,
+}
+
+const gameTime = 120;
+
 
 
 /*---------------------------------------------------------------
@@ -36,12 +42,13 @@ scene = new THREE.Scene();
 
 var enemiesCollision, counter, interval;
 
-var Game_Scene;
+var Game_Scene, Waves;
 
 var deltaTime,
     mvtTime = 0,
     newTime = Date.now(),
     oldTime = Date.now();
+
 
 
 window.addEventListener('load', init, false);
@@ -50,7 +57,11 @@ window.addEventListener('load', init, false);
 function init(){
 
 
+  Heroes.standart = new StandartHero();
   Game_Scene = new Scene();
+
+
+
   document.addEventListener('mousemove', handleMouseMove, false);
 
   document.body.addEventListener('mousedown', function (e){
@@ -104,11 +115,12 @@ function init(){
     scene.add(light);
   })
 
-  createBoardGame();
-  //createCharacter();
-  //createDrilling();
-
   enemiesCollision = new CollisionEngine();
+  createBoardGame();
+
+  enemiesSpawn("simple");
+
+
 
   animation();
 }
@@ -134,17 +146,15 @@ function update(){
   if( Player.score === 10 ) console.log("VICTORY");
 
   Heroes.standart.update();
-  //animateCharacter(Heroes.standart);
-
-  Heroes.standart.movement();
 
 
   enemiesCollision.testCollision();
+  drill.animate(mvtTime, gameTime);
+  updateWaves(mvtTime);
 
   Heroes.standart.char.bulletFactory.update();
   for (var i = 0; i < Game.enemies.length; i++) {
     Game.enemies[i].update();
-
   }
 }
 
@@ -250,7 +260,7 @@ function toWorldPosition(event, mouse){
   vector.unproject( Game_Scene.camera );
 
   var dir = vector.sub( Game_Scene.camera.position ).normalize();
-  var distance = - (Game_Scene.camera.position.z - 50) / dir.z;
+  var distance = - (Game_Scene.camera.position.z - 10) / dir.z;
   var pos = Game_Scene.camera.position.clone().add( dir.multiplyScalar( distance ) );
   return pos;
 }
