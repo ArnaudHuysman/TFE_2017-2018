@@ -5,6 +5,10 @@ class Hero {
 
     this.isShooting = false;
     this.gunShooting = "right";
+    this.alreadyMoved  = false;
+
+    this.fireRate = 300;
+    this.interval = 0;
 
     this.char = new Char();
     this.char.mesh.position.z = 10;
@@ -33,22 +37,24 @@ class Hero {
 
   }
 
-  update(){
+  update(tp){
 
-    if(Player.isLeftClick && !this.char.body.mvt){
+    if(this.char.body.mvt && this.alreadyMoved === false){
 
       this.armsAnimationSystem.changeAnimation(new ArmWalkAnimation(this.char.body));
       this.legsAnimationSystem.changeAnimation(new LegWalkAnimation(this.char.body));
+      this.alreadyMoved = true;
 
     }
 
-    if( Player.isLeftClick || this.char.body.mvt ) this.movement();
-
-    if(Player.isRightClick && !this.isShooting) {
-      this.armsAnimationSystem.changeAnimation(new ArmShootAnimation(this.char.body));
-      this.isShooting = true;
-
+    if(Player.isRightClick) {
+      this.shoot(tp);
+      if(!this.isShooting){
+        this.armsAnimationSystem.changeAnimation(new ArmShootAnimation(this.char.body));
+        this.isShooting = true;
+      }
     }
+
 
     if(!Player.isRightClick && this.isShooting){
       this.char.body.mvt ?
@@ -83,6 +89,8 @@ class Hero {
       this.char.mesh.position.x += mvtX*2;
       this.char.mesh.position.y += mvtY*2;
 
+      console.log(mvtX);
+
       if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.char.mesh.position.x/10)
       && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.char.mesh.position.y/10))
       {
@@ -96,8 +104,11 @@ class Hero {
 
   }
 
-  shoot(){
-
+  shoot(tp){
+    if( this.interval < tp){
+      this.char.bulletFactory.create();
+      this.interval = tp+this.fireRate;
+    } 
   }
 }
 

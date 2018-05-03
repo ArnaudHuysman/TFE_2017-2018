@@ -27,6 +27,7 @@ const Heroes = {
 const gameTime = 120;
 
 
+const keys = [];
 
 /*---------------------------------------------------------------
                            INIT
@@ -72,7 +73,6 @@ function init(){
       }
       else if(e.button === 2){
           Player.isRightClick = true;
-          Heroes.standart.char.bulletFactory.create();
       }
   }, false);
 
@@ -84,6 +84,20 @@ function init(){
           Player.isRightClick = false;
       }
   }, false);
+
+  window.addEventListener("keydown", function(evt){
+  	//Eneleve les reactions par defaut du clavier
+  	//evt.preventDefault();
+  	keys[evt.keyCode] = true;
+  } );
+
+  window.addEventListener("keyup", function(evt){
+  	//evt.preventDefault();
+  	keys[evt.keyCode] = false;
+  } );
+
+
+
 
   document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -120,8 +134,6 @@ function init(){
 
   enemiesSpawn("simple");
 
-
-
   animation();
 }
 
@@ -145,12 +157,13 @@ function update(){
 
   if( Player.score === 10 ) console.log("VICTORY");
 
-  Heroes.standart.update();
+  Heroes.standart.update(mvtTime);
 
 
   enemiesCollision.testCollision();
   drill.animate(mvtTime, gameTime);
   updateWaves(mvtTime);
+  checkPressedKeys();
 
   Heroes.standart.char.bulletFactory.update();
   for (var i = 0; i < Game.enemies.length; i++) {

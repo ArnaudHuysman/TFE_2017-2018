@@ -4,13 +4,10 @@ const gulp 			= require('gulp');
 const concat 		= require('gulp-concat');
 const rename 		= require('gulp-rename');
 const uglify 		= require('gulp-uglify');
-const plumber 		= require('gulp-plumber');
+const plumber 	= require('gulp-plumber');
 const notify 		= require('gulp-notify');
 const babel 		= require('gulp-babel');
 const util 			= require('gulp-util');
-
-
-
 
 
 gulp.task('js:copy', function(){

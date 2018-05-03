@@ -1,6 +1,6 @@
 class Map {
   constructor(){
-    
+
   }
 }
 
@@ -17,15 +17,15 @@ class FirstMap extends Map {
 
     for(var i=0; i<maps.firstMap.structure.length; i++){
       for( var j=0; j<maps.firstMap.structure[i].length; j++){
-
+          let c;
           switch (maps.firstMap.structure[i][j]) {
             case 0:
               break;
             case 1:
-              var c = new THREE.Mesh(geom,new THREE.MeshPhongMaterial( { color: 0x5f5f5f, flatShading: true }));
+              c = new THREE.Mesh(geom,new THREE.MeshPhongMaterial( { color: 0x5f5f5f, flatShading: true }));
               break;
             case 2:
-              var c = new THREE.Mesh(geom,new THREE.MeshPhongMaterial( { color: 0x3243F6, flatShading: true }));
+              c = new THREE.Mesh(geom,new THREE.MeshPhongMaterial( { color: 0x3243F6, flatShading: true }));
               break;
             default:
 
