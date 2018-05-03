@@ -76,6 +76,8 @@ class Enemy {
 class SimpleEnemy extends Enemy {
   constructor(width, height, depth, color, name){
     super(width, height, depth, color, name);
+
+
   }
 
   animation(){
@@ -89,9 +91,9 @@ class SimpleEnemy extends Enemy {
 
     TweenMax.to(this.object.scale, 0.4,
     {
-        z: 3.1,
-        y: 2.9,
-        x: 2.9,
+        z: 2.1,
+        y: 1.9,
+        x: 1.9,
         ease: Power2.easeOut,
         repeat: -1,
         yoyo:true,
@@ -123,20 +125,6 @@ class BigEnemy extends Enemy {
     if(this.collision) {
         console.log("hit");
         removeSelf(this);
-
-        for (var i = 0; i < 180; i+=45) {
-          console.log(Math.cos(i), Math.sin(i));
-
-          var newEnemi = EnemiFactory(0);
-          newEnemi.object.scale.set(3,3,3);
-          newEnemi.object.position.z = 10;
-          newEnemi.object.position.x = this.object.position.x + Math.cos(i)*25;
-          newEnemi.object.position.y = this.object.position.y + Math.sin(i)*25;
-
-          Game.enemies.push(newEnemi);
-          enemiesCollision.addBody(newEnemi);
-          scene.add(newEnemi.object);
-        }
         //this.hitAction(this.objectInColllision);
     };
   }
@@ -152,17 +140,17 @@ class BigEnemy extends Enemy {
 
     TweenMax.fromTo(this.object.scale, 0.6,
     {
-        z: 2.6,
-        y: 3.1,
-        x: 3.1,
+        z: 1.6,
+        y: 2.1,
+        x: 2.1,
         ease: Power2.easeOut,
         repeat: -1,
         yoyo:true,
     },
     {
-        z: 3.1,
-        y: 2.9,
-        x: 2.9,
+        z: 2.1,
+        y: 1.9,
+        x: 1.9,
         ease: Power2.easeOut,
         repeat: -1,
         yoyo:true,
@@ -208,8 +196,13 @@ class ShootingEnemy extends Enemy {
 
   update(){
 
+<<<<<<< HEAD
     var diffX = char.mesh.position.x - this.object.position.x;
     var diffY = char.mesh.position.y - this.object.position.y;
+=======
+    var diffX = Heroes.standart.char.mesh.position.x - this.object.position.x;
+    var diffY = Heroes.standart.char.mesh.position.y - this.object.position.y;
+>>>>>>> features/level_system
 
     if(Math.abs(diffY) < 100 && Math.abs(diffX) < 100) {
       this.mvt = false;
@@ -242,13 +235,21 @@ class ShootingEnemy extends Enemy {
   }
 }
 
+<<<<<<< HEAD
 var  score
 var scoreText;
 function removeSelf(obj){
   score = document.querySelector(".score");
+=======
+var  scoreDiv = document.querySelector(".score");
+var scoreText;
+function removeSelf(obj){
+
+  console.log(scoreDiv);
+>>>>>>> features/level_system
   Player.score++;
   scoreText = "Score : " + Player.score;
-  score.innerText = scoreText;
+  scoreDiv.innerText = scoreText;
 
   scene.remove(obj.object);
 
@@ -264,19 +265,19 @@ function removeSelf(obj){
 }
 
 
-function EnemiFactory(rdm) {
+function EnemiFactory(type) {
     var enemi ;
 
-    switch(rdm) {
-      case 0 :
+    switch(type) {
+      case "simple" :
           enemi = new SimpleEnemy(4,4,4,0x8ac926, "blobl");
           break;
 
-      case 1:
+      case "big":
           enemi = new BigEnemy(8,8,8,0x4c6e15, "bigBlobl");
           break;
 
-      case 2:
+      case "shooting":
           enemi = new ShootingEnemy(4,4,10,0x56445d, "shootingBlobl");
           break;
     }
@@ -287,25 +288,33 @@ function EnemiFactory(rdm) {
       enemi.geom.vertices[i].z = 5;
     }
   */
+    enemi.animation();
     return enemi;
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> features/level_system
 
 
-function enemiesSpawn() {
-
-    var enemi = EnemiFactory(Math.floor(Math.random()*2)+1);
+function enemiesSpawn(type) {
+    console.log(type);
+    var enemi = EnemiFactory(type);
 
     var rdm = Math.floor(Math.random() * mapTiles.length);
 
     var vector = new THREE.Vector3();
     vector.setFromMatrixPosition( mapTiles[rdm].matrixWorld );
 
-    enemi.object.scale.set(3,3,3);
+    enemi.object.scale.set(2,2,2);
     enemi.object.position.z = 10;
     enemi.object.position.x = vector.x;
     enemi.object.position.y = vector.y;
 
+<<<<<<< HEAD
     enemi.animation();
+=======
+>>>>>>> features/level_system
 
     Game.enemies.push(enemi);
     enemiesCollision.addBody(enemi);

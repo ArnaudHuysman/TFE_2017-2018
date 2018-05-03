@@ -4,13 +4,10 @@ const gulp 			= require('gulp');
 const concat 		= require('gulp-concat');
 const rename 		= require('gulp-rename');
 const uglify 		= require('gulp-uglify');
-const plumber 		= require('gulp-plumber');
+const plumber 	= require('gulp-plumber');
 const notify 		= require('gulp-notify');
 const babel 		= require('gulp-babel');
 const util 			= require('gulp-util');
-
-
-
 
 
 gulp.task('js:copy', function(){
@@ -29,7 +26,7 @@ gulp.task('js:copy', function(){
 
 gulp.task('js', function() {
 
-  return gulp.src('src/js/**/*.js')
+  return gulp.src(['src/js/**/**/*.js'])
   	.pipe(babel({
   		presets: ['es2015']
   	}))
@@ -42,6 +39,7 @@ gulp.task('js', function() {
     .pipe(notify({ message: 'Scripts task complete' }));
 });
 
+<<<<<<< HEAD
 
 // gulp.task('screen:js', function() {
 //   return gulp.src('src/js/screenSystem/**/*.js')
@@ -53,6 +51,8 @@ gulp.task('js', function() {
 // });
 
 
+=======
+>>>>>>> features/level_system
 gulp.task('watch', function() {
   gulp.watch('src/js/**/*.js', ['js']);
   //gulp.watch('src/js/screenSystem/**/*.js', ['screen:js']);

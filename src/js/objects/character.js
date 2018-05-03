@@ -4,9 +4,6 @@
   outlinerColor: 0xd90368
  }
 
- const speedRot = 0.03; 
-
-
 class Bodypart {
   constructor(width, height, depth, color, name) {
 
@@ -32,112 +29,33 @@ class Bodypart {
   }
 }
 
-class Leg extends Bodypart {    
+class Leg extends Bodypart {
   constructor(width, height, depth, color, name) {
 
     super(width, height, depth, color, name);
 
-      this.mesh.geometry.translate( 0, 0, -1);
-      this.mesh.position.z = -2;
-      this.outliner.position.z = 2.7;
-      this.mesh.position.x = this.name == "leftLeg" ? -0.9 : 0.9;
+    this.mesh.geometry.translate( 0, 0, -1);
+    this.mesh.position.z = -2;
+    this.outliner.position.z = 2.7;
+    this.mesh.position.x = this.name == "leftLeg" ? -0.9 : 0.9;
 
     this.outliner.position.set(this.mesh.position.x,this.mesh.position.y,this.mesh.position.z);
-
-    this.object.rotation.x = this.name == "leftLeg" ? -0.8 : 0.8;
-
-        if(this.name == "leftLeg")
-         {
-               this.tween =  TweenMax.to(this.object.rotation, 0.4, {
-                               x : 0.8,
-                               ease: Power0.easeInOut,
-                               repeat : -1,
-                               yoyo: true
-                             })
-         } else {
-                  this.tween =  TweenMax.to(this.object.rotation, 0.4, {
-                                 x : -0.8,
-                                 ease: Power0.easeInOut,
-                                 repeat : -1,
-                                 yoyo: true
-                               })
-         }
-
-      
-
-  }
-
-  move(){
-
-    this.tween;
-
-    /*if(this.object.rotation.x > 0.3 && this.mvt == "forward")
-    {
-      this.rot = -speedRot;
-      this.mvt ="backward"
-    } else if(this.object.rotation.x < -0.3 && this.mvt == "backward")
-    {
-      this.rot = speedRot;
-      this.mvt ="forward"
-    }
-
-    this.object.rotation.x += this.rot;*/
   }
 }
 
 class Arm extends Bodypart {
   constructor(width, height, depth, color, name) {
 
-      super(width, height, depth, color, name);
+    super(width, height, depth, color, name);
 
-      this.mesh.geometry.translate(0,0,-1.2);
-      this.mesh.position.z = 0.6;
-      this.mesh.position.x = this.name == "leftArm" ? -2.4 : 2.4;
+    this.mesh.geometry.translate(0,0,-1.2);
+    this.mesh.position.z = 0.6;
+    this.mesh.position.x = this.name == "leftArm" ? -2.4 : 2.4;
 
-      this.outliner.position.set(this.mesh.position.x,this.mesh.position.y,this.mesh.position.z);
-
-      this.object.rotation.x = this.name == "rightArm" ? -1 : 1;
-
-      if(this.name == "rightArm")
-       {
-               this.tween =  TweenMax.to(this.object.rotation, 0.4, {
-                               x : 1,
-                               ease: Power0.easeInOut,
-                               repeat : -1,
-                               yoyo: true
-                             })
-       } else {
-                this.tween =  TweenMax.to(this.object.rotation, 0.4, {
-                               x : -1,
-                               ease: Power0.easeInOut,
-                               repeat : -1,
-                               yoyo: true
-                             })
-       }
-      //this.rot = this.name == "rightArm" ? -speedRot : speedRot;
-      
-  }
-
-  move(){
-
-    this.tween;
-    /*if(this.object.rotation.x > 0.3 && this.mvt == "forward")
-    {
-      this.rot = -speedRot;
-
-      this.mvt ="backward"
-    } else if(this.object.rotation.x < -0.3 && this.mvt == "backward")
-    {
-      this.rot = speedRot;
-      this.mvt ="forward"
-    }
-
-    this.object.rotation.x += this.rot;*/
-
-
-
+    this.outliner.position.set(this.mesh.position.x,this.mesh.position.y,this.mesh.position.z);
   }
 }
+
 
 class Head extends Bodypart {
   constructor(width, height, depth, color, name) {
@@ -166,24 +84,6 @@ class Head extends Bodypart {
     this.headMvt = 0.025;
 
   }
-
-  move(){
-
-
-    TweenMax.to(this.outliner.position, 0.2, {
-      z : 4.5,
-      repeat : -1,
-      yoyo: true
-    })
-
-    TweenMax.to(this.mesh.position, 0.2, {
-      z : 4.5,
-      repeat : -1,
-      yoyo: true
-    })
-    
-   
-  }
 }
 
 
@@ -195,10 +95,11 @@ class Body extends Bodypart {
     super(width, height, depth, color, name);
 
     this.mvt = false;
-    this.movable = [];
+    this.legs = [];
+    this.arms = [];
 
-    this.object.rotation.set(-Math.PI/2,0,0) ;  
-    
+    this.object.rotation.set(-Math.PI/2,0,0) ;
+
 
     // Head
     this.head = new Head(4.8, 4.8, 4.8, CharColors.mainColor, "head");
@@ -212,10 +113,11 @@ class Body extends Bodypart {
     this.leftLeg = new Leg(1.6, 1, 1.8, CharColors.mainColor, "leftLeg" );
     this.rightLeg = new Leg(1.6, 1, 1.8, CharColors.mainColor, "rightLeg" );
 
-    this.object.add( this.leftLeg.object );  
+    this.object.add( this.leftLeg.object );
     this.object.add( this.rightLeg.object );
+    this.legs.push( this.leftLeg );
+    this.legs.push( this.rightLeg );
 
-    this.movable.push(this.leftLeg,this.rightLeg);
 
     // Arms
     this.leftArm = new Arm(0.8, 2.4, 1, CharColors.mainColor, "leftArm" );
@@ -223,21 +125,8 @@ class Body extends Bodypart {
 
     this.object.add( this.leftArm.object );
     this.object.add( this.rightArm.object );
-
-    this.movable.push(this.leftArm,this.rightArm);
-
-  }
-
-  update(){
-
-  }
-
-  move(){
-
-    for (var i = 0; i < this.movable.length; i++) {
-
-         //this.movable[i].move();
-    }
+    this.arms.push( this.leftArm );
+    this.arms.push( this.rightArm );
 
   }
 }
@@ -258,75 +147,11 @@ class Char {
     this.state = "still";
     this.mvt = "false";
 
+
     this.body = new Body( 4,  4 , 2.8, CharColors.mainColor);
 
-
-   /* this.body.mesh.rotation.x = Math.PI/2;
-    this.body.mesh.rotation.y = Math.PI/2;*/
-   
     this.mesh.add( this.body.object );
-
-
     this.bulletFactory = new BulletFactory();
 
   }
-
-
-
-  move(){
-    this.body.move();
-  
-
-    if( Player.isLeftClick || this.body.mvt )
-    {
-      var diffX = Player.targetPos.x - this.mesh.position.x;
-      var diffY = Player.targetPos.y - this.mesh.position.y;
-
-      var theta = Math.atan2(diffY, diffX);
-
-      var mvtX = Math.cos(theta);
-      var mvtY = Math.sin(theta);
-
-      this.mesh.position.x += mvtX*2;
-      this.mesh.position.y += mvtY*2;
-
-      if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.mesh.position.x/10)
-      && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.mesh.position.y/10))
-      {
-
-        this.body.mvt = false;
-      } else {
-        this.body.mvt = true;
-      }
-    }
-
-    var lookAtPoint = new THREE.Vector3(mouseProjectPos.x,mouseProjectPos.y,12);
-
-    this.mesh.up = new THREE.Vector3(0,0,1);
-    this.mesh.lookAt(lookAtPoint);
-
-
-
-  }
-}
-
-
-var char;
-
-function createCharacter(){
-  char = new Char();
-
-  char.body.mesh.geometry.center();
-  char.mesh.position.z = 11;
-
-  char.mesh.scale.set(2.5,2.5,2.5);
-
-  scene.add(char.mesh);
-
-}
-
-function animateCharacter(body){
-
-  char.move();
-
 }
