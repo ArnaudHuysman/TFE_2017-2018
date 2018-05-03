@@ -52,8 +52,6 @@ var deltaTime,
 
 
 
-window.addEventListener('load', init, false);
-
 
 function init(){
 
@@ -118,6 +116,7 @@ function init(){
   raycaster = new THREE.Raycaster();
 
   container = document.getElementById('world');
+  container.style.display = "block";
   container.appendChild(renderer.domElement);
 
   window.addEventListener('resize', handleWindowResize, false);

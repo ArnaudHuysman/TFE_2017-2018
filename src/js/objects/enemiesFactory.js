@@ -196,13 +196,10 @@ class ShootingEnemy extends Enemy {
 
   update(){
 
-<<<<<<< HEAD
-    var diffX = char.mesh.position.x - this.object.position.x;
-    var diffY = char.mesh.position.y - this.object.position.y;
-=======
+
     var diffX = Heroes.standart.char.mesh.position.x - this.object.position.x;
     var diffY = Heroes.standart.char.mesh.position.y - this.object.position.y;
->>>>>>> features/level_system
+
 
     if(Math.abs(diffY) < 100 && Math.abs(diffX) < 100) {
       this.mvt = false;
@@ -235,18 +232,13 @@ class ShootingEnemy extends Enemy {
   }
 }
 
-<<<<<<< HEAD
-var  score
-var scoreText;
-function removeSelf(obj){
-  score = document.querySelector(".score");
-=======
+
 var  scoreDiv = document.querySelector(".score");
 var scoreText;
 function removeSelf(obj){
 
   console.log(scoreDiv);
->>>>>>> features/level_system
+
   Player.score++;
   scoreText = "Score : " + Player.score;
   scoreDiv.innerText = scoreText;
@@ -291,11 +283,6 @@ function EnemiFactory(type) {
     enemi.animation();
     return enemi;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> features/level_system
-
 
 function enemiesSpawn(type) {
     console.log(type);
@@ -310,11 +297,6 @@ function enemiesSpawn(type) {
     enemi.object.position.z = 10;
     enemi.object.position.x = vector.x;
     enemi.object.position.y = vector.y;
-
-<<<<<<< HEAD
-    enemi.animation();
-=======
->>>>>>> features/level_system
 
     Game.enemies.push(enemi);
     enemiesCollision.addBody(enemi);

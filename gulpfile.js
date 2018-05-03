@@ -39,23 +39,8 @@ gulp.task('js', function() {
     .pipe(notify({ message: 'Scripts task complete' }));
 });
 
-<<<<<<< HEAD
-
-// gulp.task('screen:js', function() {
-//   return gulp.src('src/js/screenSystem/**/*.js')
-//     .pipe(babel({
-//       presets: ['es2015']
-//     }))
-//     .pipe(concat('screen.js'))
-//     .pipe(gulp.dest('dist/js'))
-// });
-
-
-=======
->>>>>>> features/level_system
 gulp.task('watch', function() {
   gulp.watch('src/js/**/*.js', ['js']);
-  //gulp.watch('src/js/screenSystem/**/*.js', ['screen:js']);
 });
 
 
