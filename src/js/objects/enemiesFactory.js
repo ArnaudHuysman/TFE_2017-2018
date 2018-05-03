@@ -233,10 +233,12 @@ class ShootingEnemy extends Enemy {
 }
 
 
-var  scoreDiv = document.querySelector(".score");
+var  scoreDiv ;
+
 var scoreText;
 function removeSelf(obj){
 
+  scoreDiv = document.querySelector(".score");
   console.log(scoreDiv);
 
   Player.score++;

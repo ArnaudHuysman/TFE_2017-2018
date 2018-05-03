@@ -38,7 +38,7 @@ class Hero {
   }
 
   update(tp){
-
+  
     if(this.char.body.mvt && this.alreadyMoved === false){
 
       this.armsAnimationSystem.changeAnimation(new ArmWalkAnimation(this.char.body));
@@ -108,7 +108,7 @@ class Hero {
     if( this.interval < tp){
       this.char.bulletFactory.create();
       this.interval = tp+this.fireRate;
-    } 
+    }
   }
 }
 
