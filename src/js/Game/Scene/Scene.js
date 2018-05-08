@@ -1,3 +1,5 @@
+var fieldOfView, aspectRatio, nearPlane, farPlane, HEIGHT, WIDTH;
+
 class Scene {
 	constructor() {
 
@@ -7,7 +9,7 @@ class Scene {
 
 	}
 
-	createScene(){
+	generateScene(){
 
 		//scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
@@ -33,12 +35,15 @@ class Scene {
 		//camera.rotation.x = -0.85;
 
 		this.camera.lookAt(new THREE.Vector3(0,0,0));
+
+		this.createLights()
 	}
 
 	createLights(){
 		let light = new THREE.PointLight(0xffffff)
-		light.position.set(0,-600,600);
+		light.position.set(0,-1000,1000);
 		this.lights.push(light);
+		scene.add(light);
 	}
 
 

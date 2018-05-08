@@ -1,24 +1,17 @@
 class Map {
-  constructor(){
-
-  }
-}
-
-class FirstMap extends Map {
-  constructor(){
-    super()
-
+  constructor(mapUsed){
     this.mesh = new THREE.Object3D();
+    this.map = mapUsed;
     this.tileSize = 24;
     var geom = new THREE.BoxBufferGeometry(this.tileSize,this.tileSize,this.tileSize);
 
     var tampon= 0;
     var tampon2 =0;
 
-    for(var i=0; i<maps.firstMap.structure.length; i++){
-      for( var j=0; j<maps.firstMap.structure[i].length; j++){
+    for(var i=0; i<this.map.structure.length; i++){
+      for( var j=0; j<this.map.structure[i].length; j++){
           let c;
-          switch (maps.firstMap.structure[i][j]) {
+          switch (this.map.structure[i][j]) {
             case 0:
               break;
             case 1:
@@ -51,8 +44,8 @@ class FirstMap extends Map {
 let board;
 let mapTiles = [];
 
-function createBoardGame(){
-  board = new FirstMap();
+function createBoardGame(map){
+  board = new Map(map);
 
   //board.mesh.rotation.y = Math.PI/4;
   /*board.mesh.translateX(-16*(board.tileSize*1.05));*/

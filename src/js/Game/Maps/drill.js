@@ -14,8 +14,17 @@ class Drill {
     this.main = new DrillPart(5,30,5,0x0a2444,"main");
     this.main.mesh.position.set(0,0,5);
     this.object.add(this.main.mesh);
-    console.log(gameTime)
+
+    this.life = 20;
     this.diff = 30/(gameTime*60);
+  }
+
+  update(){
+    if(this.life <= 0 ) {
+      console.log("Defeat");
+    }
+
+    this.animate();
   }
 
   animate(){
@@ -32,9 +41,10 @@ class Drill {
 const drill = new Drill();
 
 drill.object.scale.set(2,2,2);
-drill.object.position.set(0,0,5);
+drill.object.position.set(0,85,5);
 drill.object.rotation.z = Math.PI / 4;
-drill.object.translateY(50);
-drill.object.translateX(50);
+// drill.object.translateY(50);
+// drill.object.translateX(50);
 
 scene.add(drill.object);
+GameObjects.collidableMesh.push(drill.support);

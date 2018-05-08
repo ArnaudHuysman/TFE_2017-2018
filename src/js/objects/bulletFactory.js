@@ -21,10 +21,10 @@ class Bullet {
 
       scene.remove(this.mesh);
 
-      let index = Game.collidableMesh.indexOf(this);
+      let index = GameObjects.collidableMesh.indexOf(this);
       if (index >= 0)
       {
-        Game.collidableMesh.splice(index,1);
+        GameObjects.collidableMesh.splice(index,1);
       }
 
     }
@@ -42,8 +42,7 @@ class BulletFactory {
     var diffX = mouseProjectPos.x -  Heroes.standart.char.mesh.position.x;;
     var diffY = mouseProjectPos.y - Heroes.standart.char.mesh.position.y;
     var theta = Math.atan2(diffY, diffX);
-    console.log(theta);
-    var bullet = new Bullet(2,2,2,0xffffff);
+    var bullet = new Bullet(3,3,3,0xffffff);
 
 
     bullet.mvt.x = Math.cos(theta)*1.5;
@@ -67,7 +66,7 @@ class BulletFactory {
     }
 
     scene.add(bullet.mesh);
-    Game.collidableMesh.push(bullet);
+    GameObjects.collidableMesh.push(bullet);
     this.bullets.push(bullet);
   }
 

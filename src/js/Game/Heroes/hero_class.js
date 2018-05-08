@@ -12,7 +12,7 @@ class Hero {
 
     this.char = new Char();
     this.char.mesh.position.z = 10;
-    this.char.mesh.scale.set(2,2,2);
+    this.char.mesh.scale.set(2.5,2.5,2.5);
     scene.add(this.char.mesh);
 
 
@@ -38,7 +38,7 @@ class Hero {
   }
 
   update(tp){
-  
+
     if(this.char.body.mvt && this.alreadyMoved === false){
 
       this.armsAnimationSystem.changeAnimation(new ArmWalkAnimation(this.char.body));
@@ -88,8 +88,6 @@ class Hero {
 
       this.char.mesh.position.x += mvtX*2;
       this.char.mesh.position.y += mvtY*2;
-
-      console.log(mvtX);
 
       if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.char.mesh.position.x/10)
       && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.char.mesh.position.y/10))

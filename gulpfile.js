@@ -11,21 +11,16 @@ const util 			= require('gulp-util');
 
 
 gulp.task('js:copy', function(){
-	return gulp.src('./node_modules/three/build/three.js')
-		.pipe(concat('three.js'))
+	return gulp.src('./node_modules/pathfinding/src/PathFinding.js')
+		.pipe(concat('pathfinding.js'))
 		.pipe(rename({suffix:'.min'}))
 		.pipe(uglify())
 		.pipe(gulp.dest('dist/js/package/'));
-    gulp.src('./node_modules/three/build/three.js')
-    .pipe(concat('three.js'))
-    .pipe(rename({suffix:'.min'}))
-    .pipe(uglify())
-    .pipe(gulp.dest('dist/js/package/'));
 })
 
 
-gulp.task('js', function() {
 
+gulp.task('js', function() {
   return gulp.src(['src/js/**/**/*.js'])
   	.pipe(babel({
   		presets: ['es2015']

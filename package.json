@@ -36,5 +36,8 @@
     "gulp-util": "^3.0.8",
     "jshint": "^2.9.5",
     "three": "^0.89.0"
+  },
+  "dependencies": {
+    "pathfinding": "^0.4.18"
   }
 }

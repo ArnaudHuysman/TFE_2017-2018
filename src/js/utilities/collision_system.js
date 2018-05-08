@@ -14,23 +14,23 @@ class CollisionEngine {
 			const target = this.bodies[i];
 			const targetBox  = new THREE.Box3().setFromObject(target.mesh);
 
-			for (var j = 0; j < Game.collidableMesh.length; j++) {
-				const bullet = Game.collidableMesh[j];
-				const bulletBox = new THREE.Box3().setFromObject(bullet.mesh);
+			for (var j = 0; j < GameObjects.collidableMesh.length; j++) {
+				const objCollide = GameObjects.collidableMesh[j];
+				const collideBox = new THREE.Box3().setFromObject(objCollide.mesh);
 
-				const collision = targetBox.intersectsBox(bulletBox);
+				const collision = targetBox.intersectsBox(collideBox);
 
 				if(collision) {
 					this.bodies[i].collision = true;
-					this.bodies[i].objectInCollision = Game.collidableMesh[j];
-					Game.collidableMesh[j].collision = true;
+					this.bodies[i].objectInCollision = objCollide;
+					GameObjects.collidableMesh[j].collision = true;
 				}
 			}
 		}
 	}
 
 	addBody(obj){
-		this.bodies.push(obj);	
+		this.bodies.push(obj);
 	}
 
 	removeBody(obj){

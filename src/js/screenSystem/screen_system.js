@@ -1,13 +1,3 @@
-/*var screens = document.querySelectorAll(".screen")
-
-screens.forEach.call( screens, (screen) => {
-	console.log(screen);
-	screen.style.display = "none";
-});
-*/
-
-
-
 
 class ScreenSystem {
 
@@ -99,7 +89,7 @@ class CharacterScreen extends Screen{
 
 const characterScreen = new CharacterScreen();
 
-
+var game;
 class GameScreen extends Screen{
 	constructor(){
 		super();
@@ -107,16 +97,17 @@ class GameScreen extends Screen{
 	}
 
 	enter(exitCallback){
-		init();
+		Heroes.standart = new StandartHero();
+		game = new Game(Heroes.standart, maps.firstMap);
+		game.init();
+
 		this.exitCallback = exitCallback;
 	}
 }
 
 const gameScreen = new GameScreen();
 
-
 const mainContaint = document.querySelector(".app");
-console.log(mainContaint);
 const AppScreens = new ScreenSystem(mainContaint);
 
 AppScreens.setScreen(introScreen);
