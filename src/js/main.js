@@ -1,36 +1,10 @@
-// var keys = [];
-//
-// var scene,
-//     camera, fieldOfView, aspectRatio, nearPlane, farPlane, HEIGHT, WIDTH,
-//     renderer, container, raycaster,
-//     plane, intersectPoint;
-//
-// scene = new THREE.Scene();
-//
-//
-// var enemiesCollision;
-//
-// var Game_Scene, Waves;
-//
-// var deltaTime,
-//     mvtTime = 0,
-//     newTime = Date.now(),
-//     oldTime = Date.now();
-//
-// (function(){
-//
-//
-// 	init = function()
-// 	{
-// 		update();
-// 	}
-//
-// 	update = function()
-// 	{
-//
-// 		requestAnimationFrame(update.bind());
-// 	}
-//
-// 	init();
-//
-// })();
+console.log("bouh");
+
+var PF = require('pathfinding');
+
+var grid = new PF.Grid(5, 7);
+
+var finder = new PF.AStarFinder();
+var path = finder.findPath(0,0,4,6, grid);
+
+console.log(path);

@@ -47,5 +47,3 @@ const maps = {
                   ]
                 }
               }
-
-var grid = new PF.Grid(5, 7);

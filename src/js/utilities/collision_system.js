@@ -3,7 +3,7 @@
 
 //ElementCollisionEngine
 
-class CollisionEngine {
+export default class CollisionEngine {
 
 	constructor(){
 		this.bodies = [];

@@ -1,13 +1,18 @@
 
 
-const gulp 			= require('gulp');
-const concat 		= require('gulp-concat');
-const rename 		= require('gulp-rename');
-const uglify 		= require('gulp-uglify');
-const plumber 	= require('gulp-plumber');
-const notify 		= require('gulp-notify');
-const babel 		= require('gulp-babel');
-const util 			= require('gulp-util');
+const gulp 			 = require('gulp');
+const concat 		 = require('gulp-concat');
+const rename 		 = require('gulp-rename');
+const uglify 		 = require('gulp-uglify');
+const plumber 	 = require('gulp-plumber');
+const notify 		 = require('gulp-notify');
+const babel 		 = require('gulp-babel');
+const babelify 	 = require('babelify');
+const util 			 = require('gulp-util');
+const sourcemaps = require('gulp-sourcemaps');
+const source 		 = require('vinyl-source-stream');
+const buffer 		 = require('vinyl-buffer');
+const browserify = require('browserify');
 
 
 gulp.task('js:copy', function(){
@@ -34,9 +39,23 @@ gulp.task('js', function() {
     .pipe(notify({ message: 'Scripts task complete' }));
 });
 
+
+gulp.task('javascript', function () {
+    // app.js is your main JS file with all your module inclusions
+    return browserify({entries: './src/js/main.js', debug: true})
+        .transform("babelify", { presets: ["env"] })
+        .bundle()
+        .pipe(source('app.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('./dist/js'));
+});
+
 gulp.task('watch', function() {
-  gulp.watch('src/js/**/*.js', ['js']);
+  gulp.watch('src/js/**/*.js', ['javascript']);
 });
 
 
-gulp.task('default', ['watch', 'js']);
+gulp.task('default', ['watch', 'javascript']);
