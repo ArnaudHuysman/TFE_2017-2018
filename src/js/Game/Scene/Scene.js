@@ -1,6 +1,12 @@
-var fieldOfView, aspectRatio, nearPlane, farPlane, HEIGHT, WIDTH;
-
-class Scene {
+export const SceneInfo = {
+	fieldOfView : 0,
+	aspectRatio : 0,
+	nearPlane : 0,
+	farPlane : 0,
+	HEIGHT : 0,
+	WIDTH : 0
+}
+export class Scene {
 	constructor() {
 
 		this.scene = new THREE.Scene();
@@ -9,24 +15,24 @@ class Scene {
 
 	}
 
-	generateScene(){
+	generateScene(scene){
 
 		//scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
-		HEIGHT = window.innerHeight;
-	  WIDTH = window.innerWidth;
+		SceneInfo.HEIGHT = window.innerHeight;
+	  SceneInfo.WIDTH = window.innerWidth;
 
 
-		aspectRatio = WIDTH/HEIGHT;
-		fieldOfView = 30;
-		nearPlane = 1;
-		farPlane = 10000;
+		SceneInfo.aspectRatio = SceneInfo.WIDTH/SceneInfo.HEIGHT;
+		SceneInfo.fieldOfView = 30;
+		SceneInfo.nearPlane = 1;
+		SceneInfo.farPlane = 10000;
 
 		this.camera =  new THREE.PerspectiveCamera(
-	    fieldOfView,
-	    aspectRatio,
-	    nearPlane,
-	    farPlane
+	    SceneInfo.fieldOfView,
+	    SceneInfo.aspectRatio,
+	    SceneInfo.nearPlane,
+	    SceneInfo.farPlane
 	  );
 
 		this.camera.position.z = 500 ;
@@ -36,15 +42,13 @@ class Scene {
 
 		this.camera.lookAt(new THREE.Vector3(0,0,0));
 
-		this.createLights()
+		this.createLights(scene)
 	}
 
-	createLights(){
+	createLights(scene){
 		let light = new THREE.PointLight(0xffffff)
 		light.position.set(0,-1000,1000);
 		this.lights.push(light);
 		scene.add(light);
 	}
-
-
 }

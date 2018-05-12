@@ -1,9 +1,9 @@
 
 
-
+import {GameObjects} from '../Game/utils';
 //ElementCollisionEngine
 
-export default class CollisionEngine {
+export class CollisionEngine {
 
 	constructor(){
 		this.bodies = [];

@@ -1,8 +1,8 @@
-class Enemy {
-  constructor(width, height, depth, color, name) {
+export default class Enemy {
+  constructor(width, height, depth, color, name, game) {
 
     this.object  = new THREE.Object3D();
-
+    this.currentGame = game;
     this.geom = new THREE.BoxGeometry(width, height, depth, 2, 2, 2);
     this.mat = new THREE.MeshPhongMaterial({color, flatShading: true});
 
@@ -22,6 +22,7 @@ class Enemy {
     this.collision = false;
     this.objectInCollision = null;
     this.mvt = true;
+    this.target = null;
 
   }
 

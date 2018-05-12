@@ -1,4 +1,7 @@
-
+import {Heroes} from '../Game/utils';
+import {StandartHero} from '../Game/Heroes/hero_class';
+import {Game} from '../Game/game';
+import {maps} from '../Game/Maps/maps'
 class ScreenSystem {
 
 	constructor(container){
@@ -25,10 +28,6 @@ class ScreenSystem {
 	}
 }
 
-
-
-
-
 class Screen {
 	constructor(){
 		this.display = null;
@@ -39,11 +38,7 @@ class Screen {
 	exit(){};
 
 	update(){};
-
-
 }
-
-
 
 class IntroScreen extends Screen{
 	constructor(){
@@ -97,9 +92,9 @@ class GameScreen extends Screen{
 	}
 
 	enter(exitCallback){
-		Heroes.standart = new StandartHero();
-		game = new Game(Heroes.standart, maps.firstMap);
-		game.init();
+		var scene  = new THREE.Scene();
+		game = new Game(maps.firstMap, scene);
+		game.init(scene);
 
 		this.exitCallback = exitCallback;
 	}
@@ -110,4 +105,4 @@ const gameScreen = new GameScreen();
 const mainContaint = document.querySelector(".app");
 const AppScreens = new ScreenSystem(mainContaint);
 
-AppScreens.setScreen(introScreen);
+AppScreens.setScreen(gameScreen);

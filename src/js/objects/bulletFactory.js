@@ -1,4 +1,7 @@
-class Bullet {
+import {Mouse, GameObjects} from '../Game/utils'
+
+
+export class Bullet {
   constructor(width,height,depth,color){
 
     this.geom = new THREE.BoxGeometry(width, height, depth, 1, 1, 1);
@@ -13,7 +16,7 @@ class Bullet {
     };
   }
 
-  update(){
+  update(scene){
     this.mesh.position.x += this.mvt.x*5;
     this.mesh.position.y += this.mvt.y*5;
 
@@ -32,15 +35,18 @@ class Bullet {
 
 }
 
-class BulletFactory {
-  constructor(){
+export default class BulletFactory {
+  constructor(game){
     this.bullets = [];
+    this.currentGame = game;
   }
-  create(){
+  create(scene){
 
+    console.log(this.currentGame.hero.char.mesh.position);
+    console.log(Mouse.projectPos);
 
-    var diffX = mouseProjectPos.x -  Heroes.standart.char.mesh.position.x;;
-    var diffY = mouseProjectPos.y - Heroes.standart.char.mesh.position.y;
+    var diffX = Mouse.projectPos.x -  this.currentGame.hero.char.mesh.position.x;
+    var diffY = Mouse.projectPos.y - this.currentGame.hero.char.mesh.position.y;
     var theta = Math.atan2(diffY, diffX);
     var bullet = new Bullet(3,3,3,0xffffff);
 
@@ -52,16 +58,16 @@ class BulletFactory {
     var decalY = Math.sin(theta)*5;
 
     bullet.mesh.position.z = 12;
-    switch(Heroes.standart.gunShooting){
+    switch(this.currentGame.hero.gunShooting){
       case "right":
-        bullet.mesh.position.x = Heroes.standart.char.mesh.position.x + decalY;
-        bullet.mesh.position.y = Heroes.standart.char.mesh.position.y - decalX;
-        Heroes.standart.gunShooting = "left";
+        bullet.mesh.position.x = this.currentGame.hero.char.mesh.position.x + decalY;
+        bullet.mesh.position.y = this.currentGame.hero.char.mesh.position.y - decalX;
+        this.currentGame.hero.gunShooting = "left";
         break;
       case "left":
-        bullet.mesh.position.x = Heroes.standart.char.mesh.position.x - decalY;
-        bullet.mesh.position.y = Heroes.standart.char.mesh.position.y + decalX;
-        Heroes.standart.gunShooting = "right";
+        bullet.mesh.position.x = this.currentGame.hero.char.mesh.position.x - decalY;
+        bullet.mesh.position.y = this.currentGame.hero.char.mesh.position.y + decalX;
+        this.currentGame.hero.gunShooting = "right";
         break;
     }
 
@@ -70,9 +76,9 @@ class BulletFactory {
     this.bullets.push(bullet);
   }
 
-  update(){
+  update(scene){
     for (var i = 0; i < this.bullets.length; i++) {
-      this.bullets[i].update();
+      this.bullets[i].update(scene);
     }
 
   }

@@ -1,4 +1,4 @@
-class AnimationSystem {
+export class AnimationSystem {
 	constructor(initAnimation){
 
 		this.currentAnimation = initAnimation;
@@ -15,7 +15,7 @@ class AnimationSystem {
 	}
 }
 
-class Animation {
+export class Animation {
 	constructor(object){
 		this.object  = object;
 		this.tweens = [];

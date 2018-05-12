@@ -1,11 +1,20 @@
 
+import {Char} from './char_cstr';
+import {TwinsGun} from './weapon_class';
+import {AnimationSystem} from '../../animations/animationSystem';
+import {ArmStandAnimation,LegStandAnimation,ArmShootAnimation,ArmWalkAnimation,LegWalkAnimation} from './animations';
+import {Player, Mouse} from '../utils';
+import BulletFactory from '../../objects/bulletFactory'
 
 class Hero {
-  constructor() {
+  constructor(game,scene) {
 
+    this.currentGame = game;
     this.isShooting = false;
     this.gunShooting = "right";
-    this.alreadyMoved  = false;
+    this.alreadyMoved = false;
+
+    this.bulletFactory = new BulletFactory(game);
 
     this.fireRate = 300;
     this.interval = 0;
@@ -13,6 +22,7 @@ class Hero {
     this.char = new Char();
     this.char.mesh.position.z = 10;
     this.char.mesh.scale.set(2.5,2.5,2.5);
+
     scene.add(this.char.mesh);
 
 
@@ -37,7 +47,7 @@ class Hero {
 
   }
 
-  update(tp){
+  update(scene,tp){
 
     if(this.char.body.mvt && this.alreadyMoved === false){
 
@@ -48,7 +58,7 @@ class Hero {
     }
 
     if(Player.isRightClick) {
-      this.shoot(tp);
+      this.shoot(scene,tp);
       if(!this.isShooting){
         this.armsAnimationSystem.changeAnimation(new ArmShootAnimation(this.char.body));
         this.isShooting = true;
@@ -64,7 +74,7 @@ class Hero {
       this.isShooting = false;
     }
 
-    var lookAtPoint = new THREE.Vector3(mouseProjectPos.x,mouseProjectPos.y,12);
+    var lookAtPoint = new THREE.Vector3(Mouse.projectPos.x,Mouse.projectPos.y,12);
 
     this.char.mesh.up = new THREE.Vector3(0,0,1);
     this.char.mesh.lookAt(lookAtPoint);
@@ -102,17 +112,17 @@ class Hero {
 
   }
 
-  shoot(tp){
+  shoot(scene,tp){
     if( this.interval < tp){
-      this.char.bulletFactory.create();
+      this.bulletFactory.create(scene);
       this.interval = tp+this.fireRate;
     }
   }
 }
 
-class StandartHero extends Hero {
-  constructor(){
-    super()
+export class StandartHero extends Hero {
+  constructor(game,scene){
+    super(game,scene)
   }
 
 }

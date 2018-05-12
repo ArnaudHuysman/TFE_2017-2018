@@ -35,7 +35,7 @@ class Waepon {
 
 }
 
-class TwinsGun extends Waepon {
+export class TwinsGun extends Waepon {
   constructor(){
     super()
 

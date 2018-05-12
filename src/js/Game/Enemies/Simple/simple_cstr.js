@@ -1,11 +1,15 @@
-class SimpleEnemy extends Enemy {
-  constructor(width, height, depth, color, name){
-    super(width, height, depth, color, name)
+import Enemy from '../enemy_cstr';
+import {Drill} from '../../Maps/drill'
+
+
+export default class SimpleEnemy extends Enemy {
+  constructor(width, height, depth, color, name, game){
+    super(width, height, depth, color, name, game)
   }
 
   update(){
-    var diffX = drill.object.position.x - this.object.position.x;
-    var diffY = drill.object.position.y - this.object.position.y;
+    var diffX = this.target.object.position.x - this.object.position.x;
+    var diffY = this.target.object.position.y - this.object.position.y;
 
     var theta = Math.atan2(diffY, diffX);
 
@@ -56,7 +60,7 @@ class SimpleEnemy extends Enemy {
   }
 
   hitAction(hitableObjects){
-    if(hitableObjects instanceof DrillPart ) drill.life -= 10;
-    removeSelf(this);
+    if(hitableObjects instanceof Drill ) drill.life -= 10;
+    this.currentGame.enemyFactory.removeSelf(this);
   }
 }

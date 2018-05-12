@@ -1,20 +1,23 @@
-class BigEnemy extends Enemy {
-  constructor(width, height, depth, color, name){
-    super(width, height, depth, color, name);
+import Enemy from '../enemy_cstr';
+import {getRandomTiles} from '../../Maps/testPosition';
+import {Bullet} from '../../../objects/bulletFactory'
 
-    this.target = null;
+export default class BigEnemy extends Enemy {
+  constructor(width, height, depth, color, name, game){
+    super(width, height, depth, color, name, game);
+
     this.mvtInterval = 0;
     this.mvtDelay = 15000;
 
     this.popDelay = 5000;
-    this.popInterval = mvtTime + this.popDelay;
+    this.popInterval = this.popDelay;
 
   }
 
   update(tp){
 
     if( this.mvtInterval < tp){
-      this.target = getRandomTiles();
+      this.target = getRandomTiles(this.currentGame);
       this.mvtInterval = tp+this.mvtDelay;
     }
 
@@ -69,7 +72,7 @@ class BigEnemy extends Enemy {
 
   }
   hitAction(hitableObjects){
-    if(hitableObjects instanceof Bullet ) removeSelf(this);
+    if(hitableObjects instanceof Bullet ) this.currentGame.enemyFactory.removeSelf(this);
   }
 
   spawnSimple(){
@@ -81,16 +84,7 @@ class BigEnemy extends Enemy {
       pos.y = this.object.position.y + Math.sin(i)*25;
       pos.z = 10;
 
-      enemiesSpawn("simple", pos)
+      this.currentGame.enemyFactory.addEntity("simple",this.currentGame, pos);
     }
   }
-}
-
-function getRandomTiles(){
-  var rdm = Math.floor(Math.random() * mapTiles.length);
-
-  var vector = new THREE.Vector3();
-  vector.setFromMatrixPosition( mapTiles[rdm].matrixWorld );
-
-  return vector;
 }

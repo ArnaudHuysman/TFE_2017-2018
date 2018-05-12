@@ -1,11 +1,14 @@
+import {Bodypart} from '../Heroes/char_cstr';
+import {GameObjects} from '../utils';
+
 class DrillPart extends Bodypart {
   constructor(width, height, depth, color, name){
     super(width, height, depth, color, name)
   }
 }
 
-class Drill {
-  constructor(){
+export class Drill {
+  constructor(scene,gameTime){
     this.object  = new THREE.Object3D();
 
     this.support = new DrillPart(20,5,20,0xd90368,"support");
@@ -17,6 +20,15 @@ class Drill {
 
     this.life = 20;
     this.diff = 30/(gameTime*60);
+
+    this.object.scale.set(2,2,2);
+    this.object.position.set(0,85,5);
+    this.object.rotation.z = Math.PI / 4;
+    // drill.object.translateY(50);
+    // drill.object.translateX(50);
+
+    scene.add(this.object);
+    GameObjects.collidableMesh.push(this.support);
   }
 
   update(){
@@ -36,15 +48,3 @@ class Drill {
 
   }
 }
-
-
-const drill = new Drill();
-
-drill.object.scale.set(2,2,2);
-drill.object.position.set(0,85,5);
-drill.object.rotation.z = Math.PI / 4;
-// drill.object.translateY(50);
-// drill.object.translateX(50);
-
-scene.add(drill.object);
-GameObjects.collidableMesh.push(drill.support);

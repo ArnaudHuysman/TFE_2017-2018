@@ -1,6 +1,7 @@
+import {keys}  from '../Game/utils';
+import { ArmStandAnimation, ArmShootAnimation, LegStandAnimation } from '../Game/Heroes/animations'
 
-function checkPressedKeys(){
-  const hero = Heroes.standart;
+export function checkPressedKeys(hero){
 
   if(keys[90]) hero.char.mesh.position.y += 1;
   if(keys[83]) hero.char.mesh.position.y -= 1;

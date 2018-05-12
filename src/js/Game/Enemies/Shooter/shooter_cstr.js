@@ -1,7 +1,8 @@
+import Enemy from '../enemy_cstr';
 
-class ShootingEnemy extends Enemy {
-  constructor(width, height, depth, color, name){
-    super(width, height, depth, color, name);
+export default class ShooterEnemy extends Enemy {
+  constructor(width, height, depth, color, name, game){
+    super(width, height, depth, color, name, game);
   }
 
   animation(){
@@ -35,8 +36,8 @@ class ShootingEnemy extends Enemy {
   update(){
 
 
-    var diffX = Heroes.standart.char.mesh.position.x - this.object.position.x;
-    var diffY = Heroes.standart.char.mesh.position.y - this.object.position.y;
+    var diffX = this.currentGame.hero.char.mesh.position.x - this.object.position.x;
+    var diffY = this.currentGame.hero.char.mesh.position.y - this.object.position.y;
 
 
     if(Math.abs(diffY) < 100 && Math.abs(diffX) < 100) {

@@ -1,7 +1,8 @@
-class Map {
-  constructor(mapUsed){
+export default class Map {
+  constructor(mapUsed,scene){
     this.mesh = new THREE.Object3D();
     this.map = mapUsed;
+    this.mapTiles = [];
     this.tileSize = 24;
     var geom = new THREE.BoxBufferGeometry(this.tileSize,this.tileSize,this.tileSize);
 
@@ -33,26 +34,18 @@ class Map {
             c.receiveShadow = true;
             this.mesh.add(c);
 
-            mapTiles.push(c);
+            this.mapTiles.push(c);
           }
 
       }
     }
+
+    this.mesh.translateY(-10*(this.tileSize*1.05));
+    this.mesh.rotation.z = Math.PI / 4;
+    this.mesh.position.z = -10;
+    this.mesh.updateMatrixWorld();
+
+    scene.add(this.mesh);
+
   }
-}
-
-let board;
-let mapTiles = [];
-
-function createBoardGame(map){
-  board = new Map(map);
-
-  //board.mesh.rotation.y = Math.PI/4;
-  /*board.mesh.translateX(-16*(board.tileSize*1.05));*/
-  board.mesh.translateY(-10*(board.tileSize*1.05));
-  board.mesh.rotation.z = Math.PI / 4;
-  board.mesh.position.z = -10;
-  board.mesh.updateMatrixWorld();
-
-  scene.add(board.mesh);
 }

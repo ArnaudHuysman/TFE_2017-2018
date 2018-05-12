@@ -1,49 +1,64 @@
 
-var renderer, raycaster, intersectPoint;
+import {Scene, SceneInfo} from './Scene/Scene';
+import {CollisionEngine} from '../utilities/collision_system';
+import Utils,{Player,keys, GameObjects}  from './utils';
+import {createBoardGame} from './Maps/firstMap';
+import {Drill} from './Maps/drill';
+import {updateWaves} from './Maps/waves';
+import Map from './Maps/FirstMap';
+import {checkPressedKeys} from '../objects/keys_handler';
+import EnemyFactory from './Enemies/enemy_factory';
+import {StandartHero} from './Heroes/hero_class';
 
 
+var raycaster, intersectPoint;
 var deltaTime,
     mvtTime = 0,
     newTime = Date.now(),
     oldTime = Date.now();
 
-var scene  = new THREE.Scene();
+const gameTime = 120;
 
 
-class Game {
-  constructor(hero, map){
 
-    this.hero = hero;
-    this.map = map;
-    this.context = new Scene();
+export class Game {
+  constructor(map, scene){
+
+    this.hero = new StandartHero(this,scene);
+    this.drill = new Drill(scene,gameTime);
+    this.map = new Map(map,scene);;
+    this.context = new Scene(scene);
     this.container = document.getElementById('world');
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true
     });
+    this.raycaster = new THREE.Raycaster();
 
+    this.enemyFactory = new EnemyFactory(this,scene);
     this.enemiesCollision = new CollisionEngine();
-
   }
 
   load(){
 
   }
 
-  init(){
+  init(scene){
+    //GENERATE SCENE
+    this.context.generateScene(scene);
 
     // --------- EVENT LISTENER ------------ //
-    window.addEventListener('mousemove', handleMouseMove, false);
-    window.addEventListener('mousedown', function (e){
+    window.addEventListener('mousemove', e => Utils.handleMouseMove(e , SceneInfo, this), false);
+    window.addEventListener('mousedown', e => {
         if(e.button === 0){
             Player.isLeftClick = true;
-            onDocumentMouseDown(e);
+            Utils.onDocumentMouseDown(e,this);
         }
         else if(e.button === 2){
             Player.isRightClick = true;
         }
     }, false);
-    window.addEventListener('mouseup', function (e){
+    window.addEventListener('mouseup', e => {
         if(e.button === 0){
             Player.isLeftClick = false;
         }
@@ -58,58 +73,51 @@ class Game {
       keys[evt.keyCode] = false;
     } );
     document.addEventListener('contextmenu', event => event.preventDefault());
-    window.addEventListener('resize', handleWindowResize, false);
+    window.addEventListener('resize', e => Utils.handleWindowResize(SceneInfo,this), false);
 
-    //GENERATE SCENE
-    this.context.generateScene();
+
 
     //SET RENDERER SETTINGS
     this.renderer.setPixelRatio( window.devicePixelRatio );
-    this.renderer.setSize(WIDTH,HEIGHT);
+    this.renderer.setSize(SceneInfo.WIDTH,SceneInfo.HEIGHT);
 
     this.renderer.shadowMap.enabled = true;
-
-    //ADD RAYCASTER
-    raycaster = new THREE.Raycaster();
 
     //SHOW GAME CONTAINER
 
     this.container.style.display = "block";
     this.container.appendChild(this.renderer.domElement);
 
-    //ADD MAP TO Scene
-    createBoardGame(this.map);
-
     //LAUNCH ANIMATION
-    this.animation();
+    this.animation(scene);
   }
 
-  animation(){
-    this.update();
-    this.render();
-    requestAnimationFrame(this.animation.bind(this))
+  animation(scene){
+    this.update(scene);
+    this.render(scene);
+    requestAnimationFrame(this.animation.bind(this,scene))
   }
 
-  update(){
+  update(scene){
 
     deltaTime = newTime - oldTime;
     oldTime = newTime;
     newTime = Date.now();
     mvtTime += deltaTime;
 
-    this.hero.update(mvtTime);
+    this.hero.update(scene,mvtTime);
     this.enemiesCollision.testCollision();
-    drill.update(mvtTime, gameTime);
-    updateWaves(mvtTime);
-    checkPressedKeys();
+    this.drill.update(mvtTime, gameTime);
+    updateWaves(this,scene,mvtTime);
+    checkPressedKeys(this.hero);
 
-    Heroes.standart.char.bulletFactory.update();
+    this.hero.bulletFactory.update(scene);
     for (var i = 0; i < GameObjects.enemies.length; i++) {
       GameObjects.enemies[i].update(mvtTime);
     }
   }
 
-  render(){
+  render(scene){
     this.renderer.clear();
     this.renderer.render(scene, this.context.camera);
   }

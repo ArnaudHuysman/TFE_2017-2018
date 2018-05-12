@@ -1,6 +1,7 @@
-//Arms
+import {Animation} from '../../animations/animationSystem'
 
-class ArmWalkAnimation extends Animation {
+//Arms
+export class ArmWalkAnimation extends Animation {
   constructor(object){
     super(object)
   }
@@ -33,7 +34,7 @@ class ArmWalkAnimation extends Animation {
 
 }
 
-class ArmStandAnimation extends Animation{
+export class ArmStandAnimation extends Animation{
   constructor(object){
     super(object)
 
@@ -54,7 +55,7 @@ class ArmStandAnimation extends Animation{
   }
 }
 
-class ArmShootAnimation extends Animation {
+export class ArmShootAnimation extends Animation {
   constructor(object){
     super(object)
   }
@@ -82,7 +83,7 @@ class ArmShootAnimation extends Animation {
 
 // LEGS
 
-class LegWalkAnimation extends Animation {
+export class LegWalkAnimation extends Animation {
   constructor(object){
     super(object)
   }
@@ -116,7 +117,7 @@ class LegWalkAnimation extends Animation {
 
 }
 
-class LegStandAnimation extends Animation{
+export class LegStandAnimation extends Animation{
   constructor(object){
     super(object)
 
@@ -140,7 +141,7 @@ class LegStandAnimation extends Animation{
 
 //
 
-class DeadAnimation extends Animation{
+export class DeadAnimation extends Animation{
   constructor(object){
     super(object)
   }

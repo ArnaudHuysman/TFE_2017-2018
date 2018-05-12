@@ -1,10 +1,7 @@
+import {Colors} from '../utils';
+import BulletFactory from '../../objects/bulletFactory';
 
- const CharColors = {
-  mainColor: 0x0a2444,
-  outlinerColor: 0xd90368
- }
-
-class Bodypart {
+export class Bodypart {
   constructor(width, height, depth, color, name) {
 
     this.object  = new THREE.Object3D();
@@ -16,7 +13,7 @@ class Bodypart {
     this.mesh.receiveShadow = true;
     this.mesh.castShadow = true;
 
-    this.outlinerMat = new THREE.MeshBasicMaterial({ color: CharColors.outlinerColor, side: THREE.BackSide })
+    this.outlinerMat = new THREE.MeshBasicMaterial({ color: Colors.charColors.outlinerColor, side: THREE.BackSide })
     this.outliner = new THREE.Mesh(this.geom, this.outlinerMat);
 
     this.outliner.scale.multiplyScalar(1.1);
@@ -102,7 +99,7 @@ class Body extends Bodypart {
 
 
     // Head
-    this.head = new Head(4.8, 4.8, 4.8, CharColors.mainColor, "head");
+    this.head = new Head(4.8, 4.8, 4.8, Colors.charColors.mainColor, "head");
 
     this.object.add( this.head.mesh );
     this.object.add( this.head.outliner );
@@ -110,8 +107,8 @@ class Body extends Bodypart {
     //this.movable.push(this.head);
 
     // Legs
-    this.leftLeg = new Leg(1.6, 1, 1.8, CharColors.mainColor, "leftLeg" );
-    this.rightLeg = new Leg(1.6, 1, 1.8, CharColors.mainColor, "rightLeg" );
+    this.leftLeg = new Leg(1.6, 1, 1.8, Colors.charColors.mainColor, "leftLeg" );
+    this.rightLeg = new Leg(1.6, 1, 1.8, Colors.charColors.mainColor, "rightLeg" );
 
     this.object.add( this.leftLeg.object );
     this.object.add( this.rightLeg.object );
@@ -120,8 +117,8 @@ class Body extends Bodypart {
 
 
     // Arms
-    this.leftArm = new Arm(0.8, 2.4, 1, CharColors.mainColor, "leftArm" );
-    this.rightArm = new Arm(0.8, 2.4, 1, CharColors.mainColor, "rightArm" );
+    this.leftArm = new Arm(0.8, 2.4, 1, Colors.charColors.mainColor, "leftArm" );
+    this.rightArm = new Arm(0.8, 2.4, 1, Colors.charColors.mainColor, "rightArm" );
 
     this.object.add( this.leftArm.object );
     this.object.add( this.rightArm.object );
@@ -137,7 +134,7 @@ class Body extends Bodypart {
 *   - Name
 */
 
-class Char {
+export class Char {
 
   constructor(name){
     this.mesh = new THREE.Object3D();
@@ -148,10 +145,10 @@ class Char {
     this.mvt = "false";
 
 
-    this.body = new Body( 4,  4 , 2.8, CharColors.mainColor);
+    this.body = new Body( 4,  4 , 2.8, Colors.charColors.mainColor);
 
     this.mesh.add( this.body.object );
-    this.bulletFactory = new BulletFactory();
+    
 
   }
 }
