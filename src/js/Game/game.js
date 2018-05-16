@@ -10,7 +10,6 @@ import {checkPressedKeys} from '../objects/keys_handler';
 import EnemyFactory from './Enemies/enemy_factory';
 import {StandartHero} from './Heroes/hero_class';
 
-
 var raycaster, intersectPoint;
 var deltaTime,
     mvtTime = 0,
@@ -24,9 +23,11 @@ const gameTime = 120;
 export class Game {
   constructor(map, scene){
 
+    this.threeContainer = new THREE.Object3D();
+
     this.hero = new StandartHero(this,scene);
-    this.drill = new Drill(scene,gameTime);
-    this.map = new Map(map,scene);;
+    this.drill = new Drill(this,scene,gameTime);
+    this.map = new Map(this,map,scene);
     this.context = new Scene(scene);
     this.container = document.getElementById('world');
     this.renderer = new THREE.WebGLRenderer({
@@ -35,8 +36,16 @@ export class Game {
     });
     this.raycaster = new THREE.Raycaster();
 
+
+
     this.enemyFactory = new EnemyFactory(this,scene);
     this.enemiesCollision = new CollisionEngine();
+
+    scene.add(this.threeContainer);
+
+    //this.threeContainer.translateY(-10*(24*1.05));
+    //this.threeContainer.rotation.z = Math.PI / 4;
+    //this.threeContainer.updateMatrixWorld();
   }
 
   load(){
@@ -46,7 +55,6 @@ export class Game {
   init(scene){
     //GENERATE SCENE
     this.context.generateScene(scene);
-
     // --------- EVENT LISTENER ------------ //
     window.addEventListener('mousemove', e => Utils.handleMouseMove(e , SceneInfo, this), false);
     window.addEventListener('mousedown', e => {
@@ -105,7 +113,7 @@ export class Game {
     newTime = Date.now();
     mvtTime += deltaTime;
 
-    this.hero.update(scene,mvtTime);
+    this.hero.update(scene,mvtTime,this);
     this.enemiesCollision.testCollision();
     this.drill.update(mvtTime, gameTime);
     updateWaves(this,scene,mvtTime);

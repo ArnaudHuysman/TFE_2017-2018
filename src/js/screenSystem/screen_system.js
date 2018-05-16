@@ -94,6 +94,7 @@ class GameScreen extends Screen{
 	enter(exitCallback){
 		var scene  = new THREE.Scene();
 		game = new Game(maps.firstMap, scene);
+		window.game = game;
 		game.init(scene);
 
 		this.exitCallback = exitCallback;

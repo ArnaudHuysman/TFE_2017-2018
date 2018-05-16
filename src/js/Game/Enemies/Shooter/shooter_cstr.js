@@ -1,4 +1,6 @@
 import Enemy from '../enemy_cstr';
+import {getPath, getCubePosition} from '../../Maps/testPosition';
+
 
 export default class ShooterEnemy extends Enemy {
   constructor(width, height, depth, color, name, game){
@@ -35,9 +37,19 @@ export default class ShooterEnemy extends Enemy {
 
   update(){
 
+    const {hero, map} = this.currentGame;
 
-    var diffX = this.currentGame.hero.char.mesh.position.x - this.object.position.x;
-    var diffY = this.currentGame.hero.char.mesh.position.y - this.object.position.y;
+
+
+    super.update();
+    //this.path = getPath(map.matrix, this.tilePos, hero.tilePos );
+    //this.targetPosition = getCubePosition(map, this.path[0]);
+
+    let diffX = hero.char.mesh.position.x - this.object.position.x;
+    let diffY = hero.char.mesh.position.y - this.object.position.y;
+
+
+
 
 
     if(Math.abs(diffY) < 100 && Math.abs(diffX) < 100) {
@@ -48,7 +60,6 @@ export default class ShooterEnemy extends Enemy {
 
     var theta = Math.atan2(diffY, diffX);
 
-    super.update();
     if(this.mvt) this.move(theta);
   }
   move(theta){

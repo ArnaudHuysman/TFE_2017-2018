@@ -5,6 +5,7 @@ import {AnimationSystem} from '../../animations/animationSystem';
 import {ArmStandAnimation,LegStandAnimation,ArmShootAnimation,ArmWalkAnimation,LegWalkAnimation} from './animations';
 import {Player, Mouse} from '../utils';
 import BulletFactory from '../../objects/bulletFactory'
+import {getCubeMapValue} from '../Maps/testPosition';
 
 class Hero {
   constructor(game,scene) {
@@ -19,11 +20,13 @@ class Hero {
     this.fireRate = 300;
     this.interval = 0;
 
+    this.tilePos = null;
+
     this.char = new Char();
     this.char.mesh.position.z = 10;
     this.char.mesh.scale.set(2.5,2.5,2.5);
 
-    scene.add(this.char.mesh);
+    game.threeContainer.add(this.char.mesh);
 
 
     this.leftWaepon = new TwinsGun();
@@ -47,7 +50,9 @@ class Hero {
 
   }
 
-  update(scene,tp){
+  update(scene,tp,game){
+
+
 
     if(this.char.body.mvt && this.alreadyMoved === false){
 
@@ -78,6 +83,14 @@ class Hero {
 
     this.char.mesh.up = new THREE.Vector3(0,0,1);
     this.char.mesh.lookAt(lookAtPoint);
+
+    let pos = {
+      x: this.char.mesh.position.x,
+      y: this.char.mesh.position.y,
+      z: -10
+    }
+
+    this.tilePos = getCubeMapValue(game,pos);
 
   }
 

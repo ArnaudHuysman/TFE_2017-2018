@@ -16,7 +16,7 @@ export function updateWaves(game,scene,timePassed){
         let enemi = game.enemyFactory.addEntity(map.waves[count].enemies[i].type,game);
         GameObjects.enemies.push(enemi);
         game.enemiesCollision.addBody(enemi);
-        scene.add(enemi.object);
+        game.threeContainer.add(enemi.object);
       }
     }
     count++;

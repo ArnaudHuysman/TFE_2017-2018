@@ -35,12 +35,14 @@ export class Scene {
 	    SceneInfo.farPlane
 	  );
 
-		this.camera.position.z = 500 ;
-		this.camera.position.y = -850;
+		this.camera.position.x = 0;
+		this.camera.position.z = 500;
+		this.camera.position.y = 0;
 
+		this.camera.rotation.x = (Math.PI/180)*90;
 		//camera.rotation.x = -0.85;
 
-		this.camera.lookAt(new THREE.Vector3(0,0,0));
+		//this.camera.lookAt(new THREE.Vector3(0,0,0));
 
 		this.createLights(scene)
 	}

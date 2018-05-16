@@ -1,8 +1,10 @@
+import {getCubeMapValue} from '../Maps/testPosition';
+
 export default class Enemy {
   constructor(width, height, depth, color, name, game) {
 
     this.object  = new THREE.Object3D();
-    this.currentGame = game;
+
     this.geom = new THREE.BoxGeometry(width, height, depth, 2, 2, 2);
     this.mat = new THREE.MeshPhongMaterial({color, flatShading: true});
 
@@ -19,14 +21,28 @@ export default class Enemy {
     this.object.add(this.outliner);
 
     this.name = name;
+    this.currentGame = game;
     this.collision = false;
     this.objectInCollision = null;
     this.mvt = true;
     this.target = null;
+    this.tilePos = null;
+    this.path = null;
+    this.targetPosition = null;
+    this.updateInterval = 0;
+
 
   }
 
-  update(){
+  update(time){
+
+
+    let pos = {
+      x: this.object.position.x,
+      y: this.object.position.y,
+      z: -10
+    }
+    this.tilePos = getCubeMapValue(this.currentGame,pos);
 
     if(this.collision) {
       this.hitAction(this.objectInCollision);
@@ -34,39 +50,13 @@ export default class Enemy {
   }
   //Animation of movement and attack
   animation(){
-
-
   }
 
   //Movement towards target
-  move(speed,target){
-
-
-    /*var diffX = 0 - this.mesh.position.x;
-    var diffY = 0 - this.mesh.position.y;
-
-    var theta = Math.atan2(diffY, diffX);
-
-    var mvtX = Math.cos(theta);
-    var mvtY = Math.sin(theta);
-
-    this.mesh.position.x += mvtX*1;
-    this.mesh.position.y += mvtY*1;
-
-    if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.mesh.position.x/10)
-    && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.mesh.position.y/10))
-    {
-
-      this.mvt = false;
-    } else {
-      this.mvt = true;
-    }
-*/
-
+  move(){
   }
 
   hitAction(hitableObjects){
     this.mvt = false;
-
   }
 }

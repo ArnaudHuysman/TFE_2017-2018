@@ -1,7 +1,8 @@
 export default class Map {
-  constructor(mapUsed,scene){
+  constructor(game,mapUsed,scene){
     this.mesh = new THREE.Object3D();
     this.map = mapUsed;
+    this.matrix = this.map.structure;
     this.mapTiles = [];
     this.tileSize = 24;
     var geom = new THREE.BoxBufferGeometry(this.tileSize,this.tileSize,this.tileSize);
@@ -13,10 +14,11 @@ export default class Map {
       for( var j=0; j<this.map.structure[i].length; j++){
           let c;
           switch (this.map.structure[i][j]) {
-            case 0:
-              break;
             case 1:
+              break;
+            case 0:
               c = new THREE.Mesh(geom,new THREE.MeshPhongMaterial( { color: 0x5f5f5f, flatShading: true }));
+              c.arrayPos = [i,j];
               break;
             case 2:
               c = new THREE.Mesh(geom,new THREE.MeshPhongMaterial( { color: 0x3243F6, flatShading: true }));
@@ -40,12 +42,9 @@ export default class Map {
       }
     }
 
-    this.mesh.translateY(-10*(this.tileSize*1.05));
-    this.mesh.rotation.z = Math.PI / 4;
     this.mesh.position.z = -10;
-    this.mesh.updateMatrixWorld();
 
-    scene.add(this.mesh);
+    game.threeContainer.add(this.mesh);
 
   }
 }

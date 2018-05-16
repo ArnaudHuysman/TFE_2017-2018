@@ -8,7 +8,7 @@ class DrillPart extends Bodypart {
 }
 
 export class Drill {
-  constructor(scene,gameTime){
+  constructor(game,scene,gameTime){
     this.object  = new THREE.Object3D();
 
     this.support = new DrillPart(20,5,20,0xd90368,"support");
@@ -23,11 +23,9 @@ export class Drill {
 
     this.object.scale.set(2,2,2);
     this.object.position.set(0,85,5);
-    this.object.rotation.z = Math.PI / 4;
-    // drill.object.translateY(50);
-    // drill.object.translateX(50);
 
-    scene.add(this.object);
+
+    game.threeContainer.add(this.object);
     GameObjects.collidableMesh.push(this.support);
   }
 

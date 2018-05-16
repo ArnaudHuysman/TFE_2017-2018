@@ -2,9 +2,11 @@ import Enemy from '../enemy_cstr';
 import {Drill} from '../../Maps/drill'
 
 
+
 export default class SimpleEnemy extends Enemy {
   constructor(width, height, depth, color, name, game){
     super(width, height, depth, color, name, game)
+
   }
 
   update(){

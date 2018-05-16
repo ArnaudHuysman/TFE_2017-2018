@@ -60,8 +60,6 @@ export class TwinsGun extends Waepon {
 
   model(){
 
-
-
   }
 
 
