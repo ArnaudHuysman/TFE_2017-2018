@@ -25,10 +25,11 @@ export class Game {
 
     this.threeContainer = new THREE.Object3D();
 
+
     this.hero = new StandartHero(this,scene);
     this.drill = new Drill(this,scene,gameTime);
     this.map = new Map(this,map,scene);
-    this.context = new Scene(scene);
+    this.context = new Scene(scene,this.map);
     this.container = document.getElementById('world');
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -41,11 +42,16 @@ export class Game {
     this.enemyFactory = new EnemyFactory(this,scene);
     this.enemiesCollision = new CollisionEngine();
 
-    scene.add(this.threeContainer);
+    this.pivot = new THREE.Object3D();
+    this.threeContainer.position.y = -10*(24);
+    this.threeContainer.position.x = -10*(24);
 
-    //this.threeContainer.translateY(-10*(24*1.05));
-    //this.threeContainer.rotation.z = Math.PI / 4;
+    this.pivot.add( this.threeContainer );
+
+    scene.add( this.pivot );
+    this.pivot.rotation.z = -45* Math.PI / 180;
     //this.threeContainer.updateMatrixWorld();
+
   }
 
   load(){

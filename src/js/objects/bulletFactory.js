@@ -71,7 +71,7 @@ export default class BulletFactory {
         break;
     }
 
-    this.currentGame.threeContainer.add(bullet.mesh);
+    scene.add(bullet.mesh);
     GameObjects.collidableMesh.push(bullet);
     this.bullets.push(bullet);
   }

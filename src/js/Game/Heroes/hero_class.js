@@ -24,9 +24,10 @@ class Hero {
 
     this.char = new Char();
     this.char.mesh.position.z = 10;
+
     this.char.mesh.scale.set(2.5,2.5,2.5);
 
-    game.threeContainer.add(this.char.mesh);
+    scene.add(this.char.mesh);
 
 
     this.leftWaepon = new TwinsGun();
@@ -82,16 +83,18 @@ class Hero {
     var lookAtPoint = new THREE.Vector3(Mouse.projectPos.x,Mouse.projectPos.y,12);
 
     this.char.mesh.up = new THREE.Vector3(0,0,1);
-    this.char.mesh.lookAt(lookAtPoint);
 
     let pos = {
       x: this.char.mesh.position.x,
       y: this.char.mesh.position.y,
       z: -10
-    }
+    };
 
-    this.tilePos = getCubeMapValue(game,pos);
+    let value = getCubeMapValue(game,pos)
 
+    this.tilePos = value !== undefined ? value : this.tilePos ;
+
+    this.char.mesh.lookAt(lookAtPoint);
   }
 
   animation(){

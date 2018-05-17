@@ -38,7 +38,6 @@ export default class Map {
 
             this.mapTiles.push(c);
           }
-
       }
     }
 

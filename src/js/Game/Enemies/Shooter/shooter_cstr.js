@@ -42,21 +42,25 @@ export default class ShooterEnemy extends Enemy {
 
 
     super.update();
-    //this.path = getPath(map.matrix, this.tilePos, hero.tilePos );
-    //this.targetPosition = getCubePosition(map, this.path[0]);
 
-    let diffX = hero.char.mesh.position.x - this.object.position.x;
-    let diffY = hero.char.mesh.position.y - this.object.position.y;
+    this.path = getPath(map.matrix, this.tilePos, hero.tilePos );
 
+    console.log(this.path, this.tilePos);
 
-
+    this.targetPosition =  this.path[3] ? getCubePosition(map, this.path[1]) : {x:0, y:0, z:0};
 
 
-    if(Math.abs(diffY) < 100 && Math.abs(diffX) < 100) {
-      this.mvt = false;
-    } else {
-      this.mvt = true;
-    }
+
+
+    let diffX = this.targetPosition.x - this.object.position.x;
+    let diffY = this.targetPosition.y - this.object.position.y;
+
+
+    // if(Math.abs(diffY) < 100 && Math.abs(diffX) < 100) {
+    //   this.mvt = false;
+    // } else {
+    //   this.mvt = true;
+    // }
 
     var theta = Math.atan2(diffY, diffX);
 

@@ -3,10 +3,10 @@
 var PF = require('pathfinding');
 const finder = new PF.AStarFinder();
 export function getPath(matrix, source, target){
+  console.log(matrix);
   var grid = new PF.Grid(matrix);
-
+  console.log(grid);
   var path = finder.findPath(source[0],source[1],target[0],target[1], grid);
-
   return path;
 
 }
@@ -25,8 +25,8 @@ export function getCubeMapValue(game,point){
 export function getCubePosition(map,arrayPos){
 
   const result = map.mapTiles.filter(tile => tile.arrayPos[0] == arrayPos[0] && tile.arrayPos[1] == arrayPos[1]);
-  console.log(result);
-  return result[0].position;
+  let pos = result[0].getWorldPosition();
+  return pos;
 }
 
 

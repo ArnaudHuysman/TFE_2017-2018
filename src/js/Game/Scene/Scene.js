@@ -15,7 +15,7 @@ export class Scene {
 
 	}
 
-	generateScene(scene){
+	generateScene(scene,map){
 
 		//scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
@@ -35,14 +35,10 @@ export class Scene {
 	    SceneInfo.farPlane
 	  );
 
-		this.camera.position.x = 0;
-		this.camera.position.z = 500;
-		this.camera.position.y = 0;
+		this.camera.position.z = 1000;
+		this.camera.position.y = -850;
 
-		this.camera.rotation.x = (Math.PI/180)*90;
-		//camera.rotation.x = -0.85;
-
-		//this.camera.lookAt(new THREE.Vector3(0,0,0));
+		this.camera.lookAt(0,0,0);
 
 		this.createLights(scene)
 	}
