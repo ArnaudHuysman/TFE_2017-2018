@@ -58,6 +58,6 @@ export default class Enemy {
   }
 
   hitAction(hitableObjects){
-    this.mvt = false;
+  //  this.mvt = false;
   }
 }

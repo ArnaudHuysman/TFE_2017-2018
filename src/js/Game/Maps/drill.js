@@ -22,7 +22,7 @@ export class Drill {
     this.diff = 30/(gameTime*60);
 
     this.object.scale.set(2,2,2);
-    this.object.position.set(0,85,5);
+    this.object.position.set(game.map.size/2 - 12.5,game.map.size/2 - 12.5,5);
 
 
     game.threeContainer.add(this.object);

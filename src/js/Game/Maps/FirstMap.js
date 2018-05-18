@@ -5,6 +5,7 @@ export default class Map {
     this.matrix = this.map.structure;
     this.mapTiles = [];
     this.tileSize = 24;
+    this.size = (24*1.05)*20;
     var geom = new THREE.BoxBufferGeometry(this.tileSize,this.tileSize,this.tileSize);
 
     var tampon= 0;
@@ -17,7 +18,7 @@ export default class Map {
             case 1:
               break;
             case 0:
-              c = new THREE.Mesh(geom,new THREE.MeshPhongMaterial( { color: 0x5f5f5f, flatShading: true }));
+              c = new THREE.Mesh(geom,new THREE.MeshPhongMaterial( { color: 0x292F36, flatShading: true }));
               c.arrayPos = [i,j];
               break;
             case 2:

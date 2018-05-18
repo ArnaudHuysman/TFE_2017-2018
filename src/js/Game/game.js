@@ -27,8 +27,9 @@ export class Game {
 
 
     this.hero = new StandartHero(this,scene);
-    this.drill = new Drill(this,scene,gameTime);
+
     this.map = new Map(this,map,scene);
+    this.drill = new Drill(this,scene,gameTime);
     this.context = new Scene(scene,this.map);
     this.container = document.getElementById('world');
     this.renderer = new THREE.WebGLRenderer({
