@@ -13,15 +13,26 @@ const sourcemaps = require('gulp-sourcemaps');
 const source 		 = require('vinyl-source-stream');
 const buffer 		 = require('vinyl-buffer');
 const browserify = require('browserify');
+const merge 		 = require('merge-stream');
 
 
 gulp.task('js:copy', function(){
-	return gulp.src('./node_modules/pathfinding/src/PathFinding.js')
-		.pipe(concat('pathfinding.js'))
-		.pipe(rename({suffix:'.min'}))
-		.pipe(uglify())
+	var PathFinding = gulp.src('./node_modules/pathfinding/src/PathFinding.js')
 		.pipe(gulp.dest('dist/js/package/'));
+
+	var OrbitControls = gulp.src('./node_modules/three/examples/js/controls/OrbitControls.js')
+		.pipe(gulp.dest('dist/js/package/'));
+
+  return merge(PathFinding, OrbitControls);
 })
+
+
+
+
+gulp.task("img:copy", function(){
+  return gulp.src("./src/img/**/*")
+    .pipe(gulp.dest("./dist/assets/img/"));
+});
 
 
 
@@ -54,8 +65,7 @@ gulp.task('javascript', function () {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('src/js/**/*.js', ['javascript']);
+  gulp.watch('src/js/**/*.js', gulp.series('javascript'));
 });
 
-
-gulp.task('default', ['watch', 'javascript']);
+gulp.task('default', gulp.series(gulp.parallel('watch', 'javascript')));

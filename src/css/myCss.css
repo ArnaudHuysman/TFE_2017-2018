@@ -1,13 +1,75 @@
+body{
+  margin : 0;
+  padding: 0;
+}
+
+h3{
+  margin: 0;
+}
+
 #world {
   position : absolute;
   display: none;
   width : 100%;
   height : 100%;
   overflow: hidden;
-  background: linear-gradient(#3C6867, #046865);
+  /* background: url("../../dist/assets/img/BG.png") no-repeat; */
+  background-size: cover;
+}
+
+.screen{
+  width: 100vw;
+  height: 100vh;
+  background: url("../../dist/assets/img/BG.png") no-repeat;
+  background-size: cover;
 }
 
 .score{
 	position: absolute;
 	z-index: 10;
+}
+
+.introScreen{
+  text-align: center;
+}
+
+.title{
+  margin-bottom: 40px;
+  padding-top: 20px;
+}
+
+.title_img{
+  width: 45%;
+}
+
+.btn span {
+  background: #FFF;
+  display: block;
+  padding: 10px 20px;
+  border-radius: 2px;
+  background: linear-gradient(#147698,#2B0854);
+}
+
+.btn:hover {
+  top: 4px;
+  padding-bottom: 0px;
+  box-shadow: 0 2px 0px 2px #460A7F;
+}
+.btn {
+  margin-top: 20px;
+  display: inline-block;
+  font: normal 22px/25px sans-serif;
+  margin-right: 10px;
+  text-transform: uppercase;
+  background: linear-gradient(#147698,#2B0854);
+  color: #fff;
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-radius: 2px;
+  box-shadow: 0 2px 0px 2px #460A7F;
+  transition: padding 0.1s, box-shadow 0.1s, top 0.1s;
+}
+
+.fluidimg{
+  max-width: 100%;
 }

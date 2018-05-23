@@ -1,21 +1,21 @@
 import Enemy from '../enemy_cstr';
-import {getPath, getCubePosition} from '../../Maps/testPosition';
+import {getPath, getCubePosition} from '../../Utils/path_functions';
 
 
 export default class ShooterEnemy extends Enemy {
-  constructor(width, height, depth, color, name, game){
-    super(width, height, depth, color, name, game);
+  constructor(width, height, depth, color, outColor, name, game){
+    super(width, height, depth, color, outColor, name, game);
   }
 
   animation(){
-    TweenMax.to(this.object.position, 0.5,
+    TweenMax.to(this.body.object.position, 0.5,
     {
         z:22,
         ease: Power3.easeOut,
         repeat: -1,
         yoyo:true,
     });
-    TweenMax.from(this.object.scale, 0.5,
+    TweenMax.from(this.body.object.scale, 0.5,
     {
         z: 1,
         y: 3.2,
@@ -25,7 +25,7 @@ export default class ShooterEnemy extends Enemy {
         yoyo:true,
     });
 
-    TweenMax.to(this.object.rotation, 0.5,
+    TweenMax.to(this.body.object.rotation, 0.5,
     {
         x: 0.1,
         ease: Power2.easeOut,
@@ -39,16 +39,14 @@ export default class ShooterEnemy extends Enemy {
 
     const {hero, map} = this.currentGame;
 
-
-
     super.update();
 
     this.path = getPath(map, this.tilePos, hero.tilePos );
 
-    this.targetPosition =  this.path[3] ? getCubePosition(map, this.path[1]) : {x:0, y:0, z:0};
+    this.targetPosition =  this.path[3] ? getCubePosition(map, this.path[1]) : this.body.object.position;
 
-    let diffX = this.targetPosition.x - this.object.position.x;
-    let diffY = this.targetPosition.y - this.object.position.y;
+    let diffX = this.targetPosition.x - this.body.object.position.x;
+    let diffY = this.targetPosition.y - this.body.object.position.y;
 
 
     // if(Math.abs(diffY) < 100 && Math.abs(diffX) < 100) {
@@ -57,7 +55,7 @@ export default class ShooterEnemy extends Enemy {
     //   this.mvt = true;
     // }
 
-    var theta = Math.atan2(diffY, diffX);
+    let theta = Math.atan2(diffY, diffX);
 
     if(this.mvt) this.move(theta);
   }
@@ -66,8 +64,8 @@ export default class ShooterEnemy extends Enemy {
     var mvtX = Math.cos(theta);
     var mvtY = Math.sin(theta);
 
-    this.object.position.x += mvtX*0.5;
-    this.object.position.y += mvtY*0.5;
+    this.body.object.position.x += mvtX*0.5;
+    this.body.object.position.y += mvtY*0.5;
 
     /*if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.object.position.x/10)
     && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.object.position.y/10))

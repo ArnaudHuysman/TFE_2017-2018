@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="src/css/myCss.css" />
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
 		<script type="text/javascript" src="dist/js/package/three.min.js"></script>
+		<script type="text/javascript" src="dist/js/package/OrbitControls.js"></script>
 
 		<!--[if IE]>
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,17 +21,43 @@
 		<template class="template">
 
 			<div class="screen introScreen">
-				<h3> Welcom to </h3>
-				<h1> BLOCK PARTY </h1>
-				<div class="playButton">
-					<button> Play </button>
+				<div class="title">
+					<img class="title_img fluidimg" src="./dist/assets/img/TFE_Title-01.png" alt="">
+				</div>
+
+				<div class="playButton ">
+					<a href="#" class="btn"><span>Jouer</span></a>
+				</div>
+				<div class="optionButton ">
+					<a href="#" class="btn"><span>Options</span></a>
+				</div>
+				<div class="creditButton ">
+					<a href="#" class="btn"><span>Credits</span></a>
 				</div>
 			</div>
 
 			<div class="screen characterScreen">
-				<h1> Choose your Hero </h1>
+				<div class="heroes">
+					<div class="hero">
+						<a href=""> Simple Guy</a>
+					</div>
+					<div class="hero">
+						<a href=""> Scientist </a>
+					</div>
+					<div class="hero">
+						<a href=""> Big Guy </a>
+					</div>
+					<div class="hero">
+						<a href=""> Engeneer </a>
+					</div>
+				</div>
+				<div class="maps">
+					<div class="map">
+						<a href=""> 1ère Map</a>
+					</div>
+				</div>
 				<div class="playButton">
-					 <button> Go </button>
+					 <a href="#" class="btn"><span>Play</span></a>
 				</div>
 			</div>
 

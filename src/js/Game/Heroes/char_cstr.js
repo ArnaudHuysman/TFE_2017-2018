@@ -1,5 +1,4 @@
-import {Colors} from '../utils';
-import BulletFactory from '../../objects/bulletFactory';
+import {Colors} from '../Utils/utils';
 
 export class Bodypart {
   constructor(width, height, depth, color, name) {
@@ -7,7 +6,13 @@ export class Bodypart {
     this.object  = new THREE.Object3D();
 
     this.geom = new THREE.BoxGeometry(width, depth, height, 1, 1, 1);
-    this.mat = new THREE.MeshPhongMaterial({color, flatShading: true});
+    this.mat = new THREE.MeshToonMaterial( {
+						bumpScale: 1,
+						color: color,
+						specular: 0x9EC5AB,
+						reflectivity: 0,
+						shininess: 500
+		});
 
     this.mesh = new THREE.Mesh(this.geom, this.mat);
     this.mesh.receiveShadow = true;
@@ -22,6 +27,7 @@ export class Bodypart {
     this.object.add(this.outliner);
 
     this.name = name;
+
 
   }
 }
@@ -137,18 +143,17 @@ class Body extends Bodypart {
 export class Char {
 
   constructor(name){
-    this.mesh = new THREE.Object3D();
-    this.mesh.name = "character";
+    this.object = new THREE.Object3D();
+    this.object.name = "character";
     this.name = name;
-
     this.state = "still";
     this.mvt = "false";
 
 
     this.body = new Body( 4,  4 , 2.8, Colors.charColors.mainColor);
 
-    this.mesh.add( this.body.object );
-    
+    this.object.add( this.body.object );
+
 
   }
 }

@@ -3,9 +3,10 @@ import {Char} from './char_cstr';
 import {TwinsGun} from './weapon_class';
 import {AnimationSystem} from '../../animations/animationSystem';
 import {ArmStandAnimation,LegStandAnimation,ArmShootAnimation,ArmWalkAnimation,LegWalkAnimation} from './animations';
-import {Player, Mouse} from '../utils';
-import BulletFactory from '../../objects/bulletFactory'
-import {getCubeMapValue} from '../Maps/testPosition';
+import {Player, Mouse} from '../Utils/utils';
+import BulletFactory from './bulletFactory'
+import {getCubeMapValue} from '../Utils/path_functions';
+import {CollisionEngine} from '../Utils/collision_system';
 
 class Hero {
   constructor(game,scene) {
@@ -23,11 +24,18 @@ class Hero {
     this.tilePos = null;
 
     this.char = new Char();
-    this.char.mesh.position.z = 10;
+    this.char.object.position.z = 10;
+    this.char.object.position.x = -30;
+    this.char.object.position.y = 30;
 
-    this.char.mesh.scale.set(2.5,2.5,2.5);
+    this.char.object.scale.set(2.5,2.5,2.5);
 
-    scene.add(this.char.mesh);
+    scene.add(this.char.object);
+
+    // this.collision = false;
+    // this.objectInCollision = null;
+    //
+    game.heroCollision.addBody(this.char);
 
 
     this.leftWaepon = new TwinsGun();
@@ -52,7 +60,6 @@ class Hero {
   }
 
   update(scene,tp,game){
-
 
 
     if(this.char.body.mvt && this.alreadyMoved === false){
@@ -82,11 +89,11 @@ class Hero {
 
     var lookAtPoint = new THREE.Vector3(Mouse.projectPos.x,Mouse.projectPos.y,12);
 
-    this.char.mesh.up = new THREE.Vector3(0,0,1);
+    this.char.object.up = new THREE.Vector3(0,0,1);
 
     let pos = {
-      x: this.char.mesh.position.x,
-      y: this.char.mesh.position.y,
+      x: this.char.object.position.x,
+      y: this.char.object.position.y,
       z: -10
     };
 
@@ -94,7 +101,7 @@ class Hero {
 
     this.tilePos = value !== undefined ? value : this.tilePos ;
 
-    this.char.mesh.lookAt(lookAtPoint);
+    this.char.object.lookAt(lookAtPoint);
   }
 
   animation(){
@@ -104,19 +111,19 @@ class Hero {
 
   movement(){
 
-      var diffX = Player.targetPos.x - this.char.mesh.position.x;
-      var diffY = Player.targetPos.y - this.char.mesh.position.y;
+      var diffX = Player.targetPos.x - this.char.object.position.x;
+      var diffY = Player.targetPos.y - this.char.object.position.y;
 
       var theta = Math.atan2(diffY, diffX);
 
       var mvtX = Math.cos(theta);
       var mvtY = Math.sin(theta);
 
-      this.char.mesh.position.x += mvtX*2;
-      this.char.mesh.position.y += mvtY*2;
+      this.char.object.position.x += mvtX*2;
+      this.char.object.position.y += mvtY*2;
 
-      if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.char.mesh.position.x/10)
-      && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.char.mesh.position.y/10))
+      if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.char.object.position.x/10)
+      && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.char.object.position.y/10))
       {
         this.armsAnimationSystem.changeAnimation(new ArmStandAnimation(this.char.body))
         this.legsAnimationSystem.changeAnimation(new LegStandAnimation(this.char.body))

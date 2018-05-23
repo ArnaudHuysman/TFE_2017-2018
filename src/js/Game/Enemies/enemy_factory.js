@@ -2,7 +2,7 @@
 import SimpleEnemy from './Simple/simple_cstr';
 import BigEnemy from './Big/big_cstr';
 import ShooterEnemy from './Shooter/shooter_cstr';
-import {GameObjects} from '../utils';
+import {GameObjects} from '../Utils/utils';
 
 export default function EnemyFactory(game,scene){
   this.addEntity = function(type,game,pos){
@@ -12,14 +12,14 @@ export default function EnemyFactory(game,scene){
     if(!pos){
       var vector = new THREE.Vector3();
       vector.setFromMatrixPosition( game.map.mapTiles[rdm].matrixWorld );
-      enemi.object.position.z = 10;
-      enemi.object.position.x = vector.x;
-      enemi.object.position.y = vector.y;
+      enemi.body.object.position.z = 10;
+      enemi.body.object.position.x = vector.x;
+      enemi.body.object.position.y = vector.y;
     } else {
-      enemi.object.position.set(pos.x,pos.y,pos.z);
+      enemi.body.object.position.set(pos.x,pos.y,pos.z);
     }
 
-    enemi.object.scale.set(2,2,2);
+    enemi.body.object.scale.set(2,2,2);
 
     return enemi;
   };
@@ -29,16 +29,16 @@ export default function EnemyFactory(game,scene){
 
     switch(type) {
       case "simple" :
-          enemi = new SimpleEnemy(4,4,4,0x8ac926, "blobl",game);
+          enemi = new SimpleEnemy(4,4,4,0x154E95, 0x16D4F0, "blobl", game);
           enemi.target = game.drill;
           break;
 
       case "big":
-          enemi = new BigEnemy(8,8,8,0x4c6e15, "bigBlobl",game);
+          enemi = new BigEnemy(8,8,8,0x0D5762, 0x16D4F0, "bigBlobl", game);
           break;
 
       case "shooting":
-          enemi = new ShooterEnemy(4,4,10,0x56445d, "shootingBlobl",game);
+          enemi = new ShooterEnemy(4,4,10,0xAA84C6, 0x16D4F0, "shootingBlobl", game);
           break;
     }
 
@@ -49,7 +49,7 @@ export default function EnemyFactory(game,scene){
 
   this.removeSelf = function(obj){
 
-    scene.remove(obj.object);
+    scene.remove(obj.body.object);
 
     let index = GameObjects.enemies.indexOf(obj);
     if (index >= 0)

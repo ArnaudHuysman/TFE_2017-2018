@@ -1,24 +1,11 @@
-import {getCubeMapValue} from '../Maps/testPosition';
+import {getCubeMapValue} from '../Utils/path_functions';
+import Cube from '../Utils/cube_cstr';
+
 
 export default class Enemy {
-  constructor(width, height, depth, color, name, game) {
+  constructor(width, height, depth, color, outColor, name, game) {
 
-    this.object  = new THREE.Object3D();
-
-    this.geom = new THREE.BoxGeometry(width, height, depth, 2, 2, 2);
-    this.mat = new THREE.MeshPhongMaterial({color, flatShading: true});
-
-    this.mesh = new THREE.Mesh(this.geom, this.mat);
-    this.mesh.receiveShadow = true;
-    this.mesh.castShadow = true;
-
-    this.outlinerMat = new THREE.MeshBasicMaterial({ color: 0x30323d , side: THREE.BackSide })
-    this.outliner = new THREE.Mesh(this.geom, this.outlinerMat);
-
-    this.outliner.scale.multiplyScalar(1.1);
-
-    this.object.add(this.mesh);
-    this.object.add(this.outliner);
+    this.body = new Cube(width, height, depth, color, outColor, name);
 
     this.name = name;
     this.currentGame = game;
@@ -38,8 +25,8 @@ export default class Enemy {
 
 
     let pos = {
-      x: this.object.position.x,
-      y: this.object.position.y,
+      x: this.body.object.position.x,
+      y: this.body.object.position.y,
       z: -10
     }
     let value = getCubeMapValue(this.currentGame,pos)

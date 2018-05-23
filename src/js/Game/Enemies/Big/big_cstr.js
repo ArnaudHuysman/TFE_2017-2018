@@ -1,10 +1,10 @@
 import Enemy from '../enemy_cstr';
-import {getRandomTiles} from '../../Maps/testPosition';
-import {Bullet} from '../../../objects/bulletFactory'
+import {getPath, getCubePosition, getRandomTiles} from '../../Utils/path_functions';
+
 
 export default class BigEnemy extends Enemy {
-  constructor(width, height, depth, color, name, game){
-    super(width, height, depth, color, name, game);
+  constructor(width, height, depth, color, outcolor, name, game){
+    super(width, height, depth, color, outcolor, name, game);
 
     this.mvtInterval = 0;
     this.mvtDelay = 15000;
@@ -16,6 +16,8 @@ export default class BigEnemy extends Enemy {
 
   update(tp){
 
+    const {hero, map} = this.currentGame;
+
     if( this.mvtInterval < tp){
       this.target = getRandomTiles(this.currentGame);
       this.mvtInterval = tp+this.mvtDelay;
@@ -26,25 +28,30 @@ export default class BigEnemy extends Enemy {
       this.popInterval = tp+this.popDelay;
     }
 
-    var diffX = this.target.x - this.object.position.x;
-    var diffY = this.target.y - this.object.position.y;
-
-    var theta = Math.atan2(diffY, diffX);
-
     super.update();
-    this.move(theta);
+
+    this.path = getPath(map, this.tilePos, hero.tilePos );
+
+    this.targetPosition =  this.path[3] ? getCubePosition(map, this.path[1]) : this.body.object.position;
+
+    let diffX = this.targetPosition.x - this.body.object.position.x;
+    let diffY = this.targetPosition.y - this.body.object.position.y;
+
+    let theta = Math.atan2(diffY, diffX);
+
+    if(this.mvt) this.move(theta);
   }
 
   move(theta){
     var mvtX = Math.cos(theta);
     var mvtY = Math.sin(theta);
 
-    this.object.position.x += mvtX*0.3;
-    this.object.position.y += mvtY*0.3;
+    this.body.object.position.x += mvtX*0.3;
+    this.body.object.position.y += mvtY*0.3;
   }
 
   animation(){
-    TweenMax.to(this.object.position, 0.6,
+    TweenMax.to(this.body.object.position, 0.6,
     {
         z:22,
         ease: Power3.easeOut,
@@ -52,7 +59,7 @@ export default class BigEnemy extends Enemy {
         yoyo:true,
     });
 
-    TweenMax.fromTo(this.object.scale, 0.6,
+    TweenMax.fromTo(this.body.object.scale, 0.6,
     {
         z: 1.6,
         y: 2.1,
@@ -80,8 +87,8 @@ export default class BigEnemy extends Enemy {
 
       let pos = {x: 0,y: 0,z: 0};
 
-      pos.x = this.object.position.x + Math.cos(i)*25;
-      pos.y = this.object.position.y + Math.sin(i)*25;
+      pos.x = this.body.object.position.x + Math.cos(i)*25;
+      pos.y = this.body.object.position.y + Math.sin(i)*25;
       pos.z = 10;
 
       this.currentGame.enemyFactory.addEntity("simple",this.currentGame, pos);
