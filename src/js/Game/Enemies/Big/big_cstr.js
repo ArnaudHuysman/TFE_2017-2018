@@ -7,9 +7,9 @@ export default class BigEnemy extends Enemy {
     super(width, height, depth, color, outcolor, name, game);
 
     this.mvtInterval = 0;
-    this.mvtDelay = 15000;
+    this.mvtDelay = 10000;
 
-    this.popDelay = 5000;
+    this.popDelay = 10000;
     this.popInterval = this.popDelay;
 
   }
@@ -20,6 +20,7 @@ export default class BigEnemy extends Enemy {
 
     if( this.mvtInterval < tp){
       this.target = getRandomTiles(this.currentGame);
+      console.log(this.target);
       this.mvtInterval = tp+this.mvtDelay;
     }
 
@@ -30,9 +31,9 @@ export default class BigEnemy extends Enemy {
 
     super.update();
 
-    this.path = getPath(map, this.tilePos, hero.tilePos );
+    this.path = getPath(map, this.tilePos, this.target.arrayPos );
 
-    this.targetPosition =  this.path[3] ? getCubePosition(map, this.path[1]) : this.body.object.position;
+    this.targetPosition =  this.path[1] ? getCubePosition(map, this.path[1]) : this.targetPosition ;
 
     let diffX = this.targetPosition.x - this.body.object.position.x;
     let diffY = this.targetPosition.y - this.body.object.position.y;
@@ -83,6 +84,7 @@ export default class BigEnemy extends Enemy {
   }
 
   spawnSimple(){
+
     for (var i = 0; i <= 360; i+=120 ) {
 
       let pos = {x: 0,y: 0,z: 0};
@@ -92,6 +94,7 @@ export default class BigEnemy extends Enemy {
       pos.z = 10;
 
       this.currentGame.enemyFactory.addEntity("simple",this.currentGame, pos);
+
     }
   }
 }

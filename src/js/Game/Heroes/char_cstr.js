@@ -149,6 +149,8 @@ export class Char {
     this.state = "still";
     this.mvt = "false";
 
+    this.collision = false;
+    this.objectInCollision = null;
 
     this.body = new Body( 4,  4 , 2.8, Colors.charColors.mainColor);
 

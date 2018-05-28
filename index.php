@@ -68,9 +68,7 @@
 
 		</template>
 
-
-
-	<script type="text/javascript" src="dist/js/app.js"/></script>
+	<script type="text/javascript" src="dist/js/app.js?cb=<?php echo mt_rand(1000, 100000);?>"/></script>
 
 	</body>
 </html>

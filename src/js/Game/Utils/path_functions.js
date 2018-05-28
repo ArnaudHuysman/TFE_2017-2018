@@ -60,5 +60,5 @@ export function getRandomTiles(game){
   var vector = new THREE.Vector3();
   vector.setFromMatrixPosition( game.map.mapTiles[rdm].matrixWorld );
 
-  return vector;
+  return game.map.mapTiles[rdm];
 }

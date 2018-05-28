@@ -5,10 +5,15 @@ export default class Fragment {
     this.object = new THREE.Object3D();
     this.size = 8;
 
-    this.build()
+    this.build();
+    this.name = "fragment";
 
     scene.add(this.object);
-    GameObjects.collidableMesh.push(this);
+
+  }
+
+  update(){
+
   }
 
   build(){

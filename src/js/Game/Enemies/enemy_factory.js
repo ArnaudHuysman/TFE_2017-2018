@@ -21,7 +21,10 @@ export default function EnemyFactory(game,scene){
 
     enemi.body.object.scale.set(2,2,2);
 
-    return enemi;
+    game.enemies.push(enemi);
+    game.collisionEngine.addBody(enemi.body,"enemies");
+    scene.add(enemi.body.object);
+
   };
 
   this.getEnemyCstr = function (type,game){
@@ -38,7 +41,7 @@ export default function EnemyFactory(game,scene){
           break;
 
       case "shooting":
-          enemi = new ShooterEnemy(4,4,10,0xAA84C6, 0x16D4F0, "shootingBlobl", game);
+          enemi = new ShooterEnemy(4,4,10,0x511180, 0x16D4F0, "shootingBlobl", game);
           break;
     }
 

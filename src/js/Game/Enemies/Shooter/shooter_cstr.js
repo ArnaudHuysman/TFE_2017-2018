@@ -1,10 +1,17 @@
 import Enemy from '../enemy_cstr';
 import {getPath, getCubePosition} from '../../Utils/path_functions';
+import BulletFactory from './bullet_factory'
 
 
 export default class ShooterEnemy extends Enemy {
   constructor(width, height, depth, color, outColor, name, game){
     super(width, height, depth, color, outColor, name, game);
+
+    this.bulletFactory = new BulletFactory(game, this.body.object);
+
+    this.fireRate = 1000;
+    this.interval = 0;
+
   }
 
   animation(){
@@ -35,7 +42,7 @@ export default class ShooterEnemy extends Enemy {
 
   }
 
-  update(){
+  update(time,scene){
 
     const {hero, map} = this.currentGame;
 
@@ -43,7 +50,7 @@ export default class ShooterEnemy extends Enemy {
 
     this.path = getPath(map, this.tilePos, hero.tilePos );
 
-    this.targetPosition =  this.path[3] ? getCubePosition(map, this.path[1]) : this.body.object.position;
+    this.targetPosition =  this.path[5] ? getCubePosition(map, this.path[1]) : this.body.object.position;
 
     let diffX = this.targetPosition.x - this.body.object.position.x;
     let diffY = this.targetPosition.y - this.body.object.position.y;
@@ -56,6 +63,11 @@ export default class ShooterEnemy extends Enemy {
     // }
 
     let theta = Math.atan2(diffY, diffX);
+
+
+    this.shoot(time,scene);
+
+    this.bulletFactory.update(scene);
 
     if(this.mvt) this.move(theta);
   }
@@ -76,5 +88,12 @@ export default class ShooterEnemy extends Enemy {
     }*/
 
 
+  }
+
+  shoot(time,scene){
+    if( this.interval < time){
+      this.bulletFactory.create(scene);
+      this.interval = time+this.fireRate;
+    }
   }
 }

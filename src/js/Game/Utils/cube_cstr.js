@@ -15,14 +15,14 @@ export default class Cube {
 class InnerCube {
   constructor(width, height, depth, color){
     this.geom = new THREE.BoxGeometry(width, height, depth, 2, 2, 2);
-    // this.mat = new THREE.MeshToonMaterial( {
-		// 				bumpScale: 1,
-		// 				color: color,
-		// 				specular: 0x9EC5AB,
-		// 				reflectivity: 0,
-		// 				shininess: 40
-		// });
-    this.mat = new THREE.MeshBasicMaterial({ color: color , side: THREE.BackSide })
+    this.mat = new THREE.MeshToonMaterial( {
+						bumpScale: 1,
+						color: color,
+						specular: 0x9EC5AB,
+						reflectivity: 0,
+						shininess: 40
+		});
+    //this.mat = new THREE.MeshBasicMaterial({ color: color , side: THREE.BackSide })
     this.mesh = new THREE.Mesh(this.geom, this.mat);
     this.mesh.receiveShadow = true;
     this.mesh.castShadow = true;

@@ -1,3 +1,5 @@
+import {Drill} from './drill_cstr';
+import Cube from '../../Utils/cube_cstr';
 export default class Map {
   constructor(game,mapUsed,scene){
     this.mesh = new THREE.Object3D();
@@ -11,23 +13,26 @@ export default class Map {
 						bumpScale: 1,
 						color: 0x104F55,
 						specular: 0x9EC5AB,
-						shininess: 20,
+						shininess: 10,
             reflectivity: 0
 		});
 
     var drillMat = new THREE.MeshToonMaterial( {
 						bumpScale: 1,
 						color: 0x16D4F0,
-						specular: 0xfff,
-						shininess: 50,
-            reflectivity: 0
+						specular: 0x9EC5AB,
+						shininess: 40,
+            reflectivity: 1
 		});
 
 
     var tampon = 0;
     var tampon2 = 0;
 
-    this.matrix = this.map.structure.map( row => row.map(x => { return x !== 0 ? 1 : 0 }));
+    this.matrix = this.map.structure.map( row => row.map(x => { return x !== 1 ? 0 : 1 }));
+
+    let drillPos, drillTilePos;
+    let drillTile = false;
 
     for(var i=0; i<this.map.structure.length; i++){
       if(i <= 10) tampon++; else tampon--;
@@ -50,6 +55,7 @@ export default class Map {
               c = new THREE.Mesh(geom,drillMat);
               c.arrayPos = [j,i];
               c.tileType = "drill";
+              drillTile = true;
               break;
             default:
 
@@ -63,6 +69,12 @@ export default class Map {
             c.castShadow = true;
             c.receiveShadow = true;
             this.mesh.add(c);
+
+            if(drillTile) {
+              drillPos = c.position;
+              drillTilePos = c.arrayPos;
+              drillTile = false;
+            }
 
             this.mapTiles.push(c);
 
@@ -81,6 +93,9 @@ export default class Map {
     }
 
     this.mesh.position.z = -10;
+
+    this.drill = new Drill(game,scene,drillPos);
+    this.drill.tilePos = drillTilePos;
 
     game.threeContainer.add(this.mesh);
 

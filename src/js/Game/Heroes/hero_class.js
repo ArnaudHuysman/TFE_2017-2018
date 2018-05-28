@@ -7,6 +7,9 @@ import {Player, Mouse} from '../Utils/utils';
 import BulletFactory from './bulletFactory'
 import {getCubeMapValue} from '../Utils/path_functions';
 import {CollisionEngine} from '../Utils/collision_system';
+import Fragment from '../Maps/Fragment/fragment_cstr'
+import {GameObjects} from '../Utils/utils';
+import {Bullet} from '../Enemies/Shooter/bullet_factory';
 
 class Hero {
   constructor(game,scene) {
@@ -23,6 +26,9 @@ class Hero {
 
     this.tilePos = null;
 
+    this.ressource = 0;
+    this.lifes = 3;
+
     this.char = new Char();
     this.char.object.position.z = 10;
     this.char.object.position.x = -30;
@@ -32,10 +38,7 @@ class Hero {
 
     scene.add(this.char.object);
 
-    // this.collision = false;
-    // this.objectInCollision = null;
-    //
-    game.heroCollision.addBody(this.char);
+    game.collisionEngine.addBody(this.char,"hero");
 
 
     this.leftWaepon = new TwinsGun();
@@ -60,6 +63,8 @@ class Hero {
   }
 
   update(scene,tp,game){
+
+    this.bulletFactory.update(scene);
 
 
     if(this.char.body.mvt && this.alreadyMoved === false){
@@ -96,12 +101,35 @@ class Hero {
       y: this.char.object.position.y,
       z: -10
     };
-
     let value = getCubeMapValue(game,pos)
-
     this.tilePos = value !== undefined ? value : this.tilePos ;
-
     this.char.object.lookAt(lookAtPoint);
+
+    game.collisionEngine.testCollision("hero", "fragment");
+    game.collisionEngine.testCollision("hero", "enemy_projectil");
+    game.collisionEngine.testCollision("hero_projectil", "enemies");
+
+
+    // Collision
+    if(this.char.collision){
+      switch( this.char.objectInCollision.name ){
+        case "fragment":
+          this.ressource += 1;
+          game.collisionEngine.removeBody( this.char.objectInCollision, "fragment");
+          console.log("ressource",this.ressource, game.collisionEngine.bodies["fragment"]);
+          break;
+        case "enemy_bullet":
+          this.lifes -= 1;
+          game.collisionEngine.removeBody( this.char.objectInCollision, "enemy_projectil");
+          console.log("lifes", this.lifes);
+          break;
+      }
+
+      scene.remove(this.char.objectInCollision.object);
+
+      this.char.collision = false;
+      this.char.objectInCollision = null;
+    }
   }
 
   animation(){

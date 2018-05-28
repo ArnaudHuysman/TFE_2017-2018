@@ -21,7 +21,7 @@ export default class Enemy {
 
   }
 
-  update(time){
+  update(time,scene){
 
 
     let pos = {
@@ -31,6 +31,7 @@ export default class Enemy {
     }
     let value = getCubeMapValue(this.currentGame,pos)
     this.tilePos = value !== undefined ? value : this.tilePos ;
+
 
     if(this.collision) {
       this.hitAction(this.objectInCollision);

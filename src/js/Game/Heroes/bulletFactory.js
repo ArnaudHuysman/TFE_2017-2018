@@ -7,7 +7,7 @@ export class Bullet {
     this.geom = new THREE.BoxGeometry(width, height, depth, 1, 1, 1);
     this.mat = new THREE.MeshPhongMaterial({color, flatShading: true});
 
-    this.mesh = new THREE.Mesh(this.geom, this.mat);
+    this.object = new THREE.Mesh(this.geom, this.mat);
 
     this.collision = false;
     this.mvt = {
@@ -16,20 +16,19 @@ export class Bullet {
     };
   }
 
-  update(scene){
-    this.mesh.position.x += this.mvt.x*5;
-    this.mesh.position.y += this.mvt.y*5;
+  update(game,scene){
+    this.object.position.x += this.mvt.x*5;
+    this.object.position.y += this.mvt.y*5;
 
     if (this.collision) {
+      scene.remove(this.object);
+      game.collisionEngine.removeBody(this, "hero_projectil");
+      let index = game.hero.bulletFactory.bullets.indexOf(this);
 
-      scene.remove(this.mesh);
-
-      let index = GameObjects.collidableMesh.indexOf(this);
-      if (index >= 0)
-      {
-        GameObjects.collidableMesh.splice(index,1);
-      }
-
+  		if (index >= 0)
+  		{
+  			game.hero.bulletFactory.bullets.splice(index,1);
+  		}
     }
   }
 
@@ -38,12 +37,12 @@ export class Bullet {
 export default class BulletFactory {
   constructor(game){
     this.bullets = [];
-    this.currentGame = game;
+    this.game = game;
   }
   create(scene){
 
-    var diffX = Mouse.projectPos.x -  this.currentGame.hero.char.object.position.x;
-    var diffY = Mouse.projectPos.y - this.currentGame.hero.char.object.position.y;
+    var diffX = Mouse.projectPos.x -  this.game.hero.char.object.position.x;
+    var diffY = Mouse.projectPos.y - this.game.hero.char.object.position.y;
     var theta = Math.atan2(diffY, diffX);
     var bullet = new Bullet(3,3,3,0x000000);
 
@@ -54,28 +53,28 @@ export default class BulletFactory {
     var decalX = Math.cos(theta)*5;
     var decalY = Math.sin(theta)*5;
 
-    bullet.mesh.position.z = 12;
-    switch(this.currentGame.hero.gunShooting){
+    bullet.object.position.z = 12;
+    switch(this.game.hero.gunShooting){
       case "right":
-        bullet.mesh.position.x = this.currentGame.hero.char.object.position.x + decalY;
-        bullet.mesh.position.y = this.currentGame.hero.char.object.position.y - decalX;
-        this.currentGame.hero.gunShooting = "left";
+        bullet.object.position.x = this.game.hero.char.object.position.x + decalY;
+        bullet.object.position.y = this.game.hero.char.object.position.y - decalX;
+        this.game.hero.gunShooting = "left";
         break;
       case "left":
-        bullet.mesh.position.x = this.currentGame.hero.char.object.position.x - decalY;
-        bullet.mesh.position.y = this.currentGame.hero.char.object.position.y + decalX;
-        this.currentGame.hero.gunShooting = "right";
+        bullet.object.position.x = this.game.hero.char.object.position.x - decalY;
+        bullet.object.position.y = this.game.hero.char.object.position.y + decalX;
+        this.game.hero.gunShooting = "right";
         break;
     }
 
-    scene.add(bullet.mesh);
-    GameObjects.collidableMesh.push(bullet);
+    scene.add(bullet.object);
+    this.game.collisionEngine.addBody(bullet, "hero_projectil");
     this.bullets.push(bullet);
   }
 
   update(scene){
     for (var i = 0; i < this.bullets.length; i++) {
-      this.bullets[i].update(scene);
+      this.bullets[i].update(this.game,scene);
     }
 
   }

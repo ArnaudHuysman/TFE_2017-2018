@@ -12,6 +12,7 @@ export class Scene {
 		this.scene = new THREE.Scene();
 		this.camera;
 		this.lights = [];
+		this.pointLight = null;
 
 	}
 
@@ -60,18 +61,18 @@ export class Scene {
 	}
 
 	createLights(scene){
-		var directionalLight = new THREE.DirectionalLight( 0x956AB5, 1);
+		var directionalLight = new THREE.DirectionalLight( 0x956AB5, 0.5);
 		directionalLight.position.set( 1, 1, 500 );
 
 		var pointLight2 = new THREE.PointLight( 0x16D4F0, 2, 200, 2 );
 		pointLight2.position.set( 0, 0, -100 );
 
-		var pointLight1 = new THREE.PointLight( 0xffffff, 1, 1200, 2 );
-		pointLight1.position.set( 0, -800, 800 );
+		this.pointLight = new THREE.PointLight( 0xffffff, 2, 2000, 2 );
+		this.pointLight.position.set( 0, 0, 800 );
 
 		scene.add( directionalLight );
 		// scene.add( helper );
-		scene.add(pointLight1);
+		scene.add(this.pointLight);
 		scene.add(pointLight2)
 
 		console.log(scene);

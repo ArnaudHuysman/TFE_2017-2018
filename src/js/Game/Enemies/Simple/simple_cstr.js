@@ -14,9 +14,9 @@ export default class SimpleEnemy extends Enemy {
 
     super.update();
 
-    this.path = getPath(map, this.tilePos, hero.tilePos );
+    this.path = getPath(map, this.tilePos, map.drill.tilePos );
 
-    this.targetPosition =  this.path[3] ? getCubePosition(map, this.path[1]) : this.body.object.position;
+    this.targetPosition = this.path[1] ? getCubePosition(map, this.path[1]) : this.targetPosition ;
 
     let diffX = this.targetPosition.x - this.body.object.position.x;
     let diffY = this.targetPosition.y - this.body.object.position.y;
@@ -31,8 +31,8 @@ export default class SimpleEnemy extends Enemy {
     var mvtX = Math.cos(theta);
     var mvtY = Math.sin(theta);
 
-    this.body.object.position.x += mvtX*0.2;
-    this.body.object.position.y += mvtY*0.2;
+    this.body.object.position.x += mvtX*0.4;
+    this.body.object.position.y += mvtY*0.4;
   }
 
   animation(){

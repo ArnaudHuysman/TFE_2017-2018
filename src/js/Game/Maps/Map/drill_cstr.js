@@ -1,52 +1,55 @@
-import {Bodypart} from '../../Heroes/char_cstr';
-import {GameObjects} from '../../Utils/utils';
+import Cube from '../../Utils/cube_cstr';
 import Fragment from '../Fragment/fragment_cstr';
-class DrillPart extends Bodypart {
-  constructor(width, height, depth, color, name){
-    super(width, height, depth, color, name)
-  }
-}
+
 
 export class Drill {
-  constructor(game,scene,gameTime){
-    this.object  = new THREE.Object3D();
+  constructor(game,scene,pos){
+    this.object = new THREE.Object3D();
+    this.tilePos;
 
-    this.support = new DrillPart(20,5,20,0xd90368,"support");
-    this.object.add(this.support.mesh);
+    this.support = new Cube(20,20,5,0xd90368,0x0a2444, "drillSupport");
+    this.object.add(this.support.object);
 
-    this.main = new DrillPart(5,30,5,0x0a2444,"main");
-    this.main.mesh.position.set(0,0,5);
-    this.object.add(this.main.mesh);
+    this.main = new Cube(5,5,30,0x0a2444, 0xd90368, "drillMain");
+    this.object.add(this.main.object);
 
     this.life = 20;
-    this.diff = 30/(gameTime*60);
+    this.diff = 30/(120*60);
 
-    let tile = game.map.mapTiles.filter(tile => tile.tileType === "drill");
-
-    console.log(tile[0]);
-    this.object.position.set(tile[0].position.x , tile[0].position.y ,5);
-
+    this.object.position.set(pos.x , pos.y ,5);
 
     game.threeContainer.add(this.object);
-    GameObjects.collidableMesh.push(this.support);
+    game.collisionEngine.addBody(this ,"drill");
 
-    setInterval( e => this.popCrystal(scene, game) , 3000);
+    //setInterval( e => this.popCrystal(scene, game) , 10000);
 
   }
 
-  update(){
+  update(scene){
     if(this.life <= 0 ) {
       console.log("Defeat");
     }
-    if(this.main.mesh.position.z > -10) {
+
+    game.collisionEngine.testCollision("drill", "enemies");
+
+    if(this.collision) {
+      this.life--;
+      game.collisionEngine.removeBody(this.objectInCollision, "enemies");
+      scene.remove(this.objectInCollision.object);
+
+      this.collision = false;
+      this.objectInCollision = null;
+    }
+
+    if(this.main.object.position.z > -10) {
       this.animate();
     }
   }
 
   animate(){
 
-    this.main.mesh.rotation.z += 0.05;
-    this.main.mesh.position.z -= this.diff;
+    this.main.object.rotation.z += 0.05;
+    this.main.object.position.z -= this.diff;
 
   }
 
@@ -85,7 +88,8 @@ export class Drill {
                        x : frgmt.object.position.x+mvtX*dist,
                        y : frgmt.object.position.y+mvtY*dist,
                        z : 10,
-                       ease: Power0.easeInOut
+                       ease: Power0.easeInOut,
+                       onComplete : function() { game.collisionEngine.addBody(frgmt, "fragment") }
                      })}
                   })
   }
