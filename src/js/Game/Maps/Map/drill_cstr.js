@@ -34,9 +34,6 @@ export class Drill {
 
     if(this.collision) {
       this.life--;
-      game.collisionEngine.removeBody(this.objectInCollision, "enemies");
-      scene.remove(this.objectInCollision.object);
-
       this.collision = false;
       this.objectInCollision = null;
     }

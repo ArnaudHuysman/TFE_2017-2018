@@ -8,7 +8,6 @@ import {maps} from '../../Game/Maps/maps_object'
 
 
 var game, scene;
-console.log("me")
 export default class GameScreen extends Screen{
 	constructor(){
 		super();

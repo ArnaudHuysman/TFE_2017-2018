@@ -5,12 +5,15 @@ var PF = require('pathfinding');
 const finder = new PF.AStarFinder({
     allowDiagonal: true,
     dontCrossCorners: true
-  });
-export function getPath(map, source, target){
-  var grid = new PF.Grid(map.matrix);
+});
+export function getPath(matrix, diagonal, source, target, map){
+  var grid = new PF.Grid(matrix);
+
+  finder.allowDiagonal = diagonal;
+
   var path = finder.findPath(source[0],source[1],target[0],target[1], grid);
 
-  //showPath(map, path);
+  showPath(map, path);
   return path;
 
 }
@@ -35,30 +38,30 @@ export function getCubePosition(map,arrayPos){
 function showPath(map, path){
 
   for (var i = 0; i < map.mapTiles.length; i++) {
-    map.mapTiles[i].material.color.setHex(0x292F36);
+    map.mapTiles[i].material.color.setHex(0xfff);
   }
 
-  for (var i = 0; i < path.length; i++) {
-    let result = map.mapTiles.filter(tile => tile.arrayPos[0] == path[i][0] && tile.arrayPos[1] == path[i][1]);
-    switch(i){
-      case 0 :
-        result[0].material.color.setHex( 0x4ECDC4 );
-        break;
-      case path.length-1 :
-        result[0].material.color.setHex( 0xFF6B6B );
-        break;
-      default :
-        result[0].material.color.setHex( 0xffffff );
-        break;
-    }
-  }
+  // for (var i = 0; i < path.length; i++) {
+  //   let result = map.mapTiles.filter(tile => tile.arrayPos[1] == path[i][0] && tile.arrayPos[0] == path[i][1]);
+  //   switch(i){
+  //     case 0 :
+  //       result[0].material.color.setHex( 0x4ECDC4 );
+  //       break;
+  //     case path.length-1 :
+  //       result[0].material.color.setHex( 0xFF6B6B );
+  //       break;
+  //     default :
+  //       result[0].material.color.setHex( 0xffffff );
+  //       break;
+  //   }
+  // }
 }
 
-export function getRandomTiles(game){
-  var rdm = Math.floor(Math.random() * game.map.mapTiles.length);
+export function getRandomTiles(game, tiles){
+  var rdm = Math.floor(Math.random() * tiles.length);
 
   var vector = new THREE.Vector3();
-  vector.setFromMatrixPosition( game.map.mapTiles[rdm].matrixWorld );
+  vector.setFromMatrixPosition( tiles[rdm].matrixWorld );
 
-  return game.map.mapTiles[rdm];
+  return tiles[rdm];
 }

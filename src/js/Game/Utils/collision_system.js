@@ -22,10 +22,10 @@ export class CollisionEngine {
 					let collision = targetBox.intersectsBox(collideBox);
 
 					if(collision) {
-						console.log(collision);
 						this.bodies[arr1_str][i].collision = true;
 						this.bodies[arr1_str][i].objectInCollision = objCollide;
 						this.bodies[arr2_str][j].collision = true;
+						this.bodies[arr2_str][j].objectInCollision = target;
 					}
 				}
 			}
@@ -44,5 +44,6 @@ export class CollisionEngine {
 		{
 			this.bodies[array_str].splice(index,1);
 		}
+
 	}
 }

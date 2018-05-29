@@ -75,6 +75,5 @@ export class Scene {
 		scene.add(this.pointLight);
 		scene.add(pointLight2)
 
-		console.log(scene);
 	}
 }

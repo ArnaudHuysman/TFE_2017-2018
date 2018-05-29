@@ -1,6 +1,6 @@
 import {getCubeMapValue} from '../Utils/path_functions';
 import Cube from '../Utils/cube_cstr';
-
+import {Bullet} from '../Heroes/bulletFactory'
 
 export default class Enemy {
   constructor(width, height, depth, color, outColor, name, game) {
@@ -33,9 +33,19 @@ export default class Enemy {
     this.tilePos = value !== undefined ? value : this.tilePos ;
 
 
-    if(this.collision) {
-      this.hitAction(this.objectInCollision);
+    if(this.body.collision) {
+      console.log("COLL");
+      if(this.body.objectInCollision instanceof Bullet) {
+        this.lifes-- ;
+        this.currentGame.collisionEngine.removeBody(this.body.objectInCollision, "hero_projectil");
+      } else this.hitAction(this.body.objectInCollision) ;
+
+
+      this.body.collision = false;
+      this.body.objectInColllision = null;
     };
+
+    if(this.lifes <= 0 ) this.currentGame.enemyFactory.removeSelf(this.currentGame, this);
   }
   //Animation of movement and attack
   animation(){

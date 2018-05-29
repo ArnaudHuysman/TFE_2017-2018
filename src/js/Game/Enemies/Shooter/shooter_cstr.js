@@ -12,6 +12,10 @@ export default class ShooterEnemy extends Enemy {
     this.fireRate = 1000;
     this.interval = 0;
 
+    this.matrix = game.map.matrix.map( row => row.map(x => { return x !== 0 ? 1 : 0 }));
+
+    this.lifes = 2;
+
   }
 
   animation(){
@@ -48,9 +52,9 @@ export default class ShooterEnemy extends Enemy {
 
     super.update();
 
-    this.path = getPath(map, this.tilePos, hero.tilePos );
+    this.path = getPath(this.matrix, true, this.tilePos, hero.tilePos, map );
 
-    this.targetPosition =  this.path[5] ? getCubePosition(map, this.path[1]) : this.body.object.position;
+    this.targetPosition =  this.path[5] ? getCubePosition(map, this.path[1]) : getCubePosition(map, this.path[0]);
 
     let diffX = this.targetPosition.x - this.body.object.position.x;
     let diffY = this.targetPosition.y - this.body.object.position.y;

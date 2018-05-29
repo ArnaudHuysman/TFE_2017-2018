@@ -6,9 +6,11 @@ export default class Map {
     this.map = mapUsed;
     this.matrix = this.map.structure;
     this.mapTiles = [];
+    this.spawTiles = [];
     this.tileSize = 24;
     this.size = (24*1.05)*20;
     var geom = new THREE.BoxBufferGeometry(this.tileSize,this.tileSize,this.tileSize);
+    var mat = new THREE.MeshBasicMaterial({color: 0x104F55});
     var basciMat = new THREE.MeshToonMaterial( {
 						bumpScale: 1,
 						color: 0x104F55,
@@ -29,8 +31,6 @@ export default class Map {
     var tampon = 0;
     var tampon2 = 0;
 
-    this.matrix = this.map.structure.map( row => row.map(x => { return x !== 1 ? 0 : 1 }));
-
     let drillPos, drillTilePos;
     let drillTile = false;
 
@@ -43,16 +43,16 @@ export default class Map {
             case 1:
               break;
             case 0:
-              c = new THREE.Mesh(geom,basciMat);
+              c = new THREE.Mesh(geom,mat);
               c.arrayPos = [j,i];
               break;
 
             case 2:
-              c = new THREE.Mesh(geom,drillMat);
+              c = new THREE.Mesh(geom,mat);
               c.arrayPos = [j,i];
               break;
             case 3:
-              c = new THREE.Mesh(geom,drillMat);
+              c = new THREE.Mesh(geom,mat);
               c.arrayPos = [j,i];
               c.tileType = "drill";
               drillTile = true;
@@ -77,6 +77,8 @@ export default class Map {
             }
 
             this.mapTiles.push(c);
+
+            if ( i < 2 || i > 18 || j < 2 || j > 18 ) this.spawTiles.push(c);
 
             let tuiles = Math.floor(Math.random()*(tampon*tampon2/15));
 

@@ -34,6 +34,15 @@ class Hero {
     this.char.object.position.x = -30;
     this.char.object.position.y = 30;
 
+    var geometry = new THREE.BoxBufferGeometry( 2, 2, 2 );
+    var material = new THREE.MeshBasicMaterial( { color: 0xE8DB7D } );
+    this.point = new THREE.Mesh( geometry, material );
+
+    this.point.position.set(0,0,50);
+    scene.add( this.point );
+
+
+
     this.char.object.scale.set(2.5,2.5,2.5);
 
     scene.add(this.char.object);
@@ -96,12 +105,17 @@ class Hero {
 
     this.char.object.up = new THREE.Vector3(0,0,1);
 
+
     let pos = {
       x: this.char.object.position.x,
       y: this.char.object.position.y,
-      z: -10
+      z: -5
     };
+
+    this.point.position.set(pos.x,pos.y, pos.z);
     let value = getCubeMapValue(game,pos)
+
+    if(!value)console.log(value);
     this.tilePos = value !== undefined ? value : this.tilePos ;
     this.char.object.lookAt(lookAtPoint);
 

@@ -7,6 +7,9 @@ import {getPath, getCubePosition} from '../../Utils/path_functions';
 export default class SimpleEnemy extends Enemy {
   constructor(width, height, depth, color, outcolor, name, game){
     super(width, height, depth, color, outcolor, name, game)
+
+    this.lifes = 1;
+    this.matrix = game.map.matrix.map( row => row.map(x => { return x !== 1 ? 0 : 1 }));
   }
 
   update(){
@@ -14,9 +17,9 @@ export default class SimpleEnemy extends Enemy {
 
     super.update();
 
-    this.path = getPath(map, this.tilePos, map.drill.tilePos );
+    this.path = getPath(this.matrix, true, this.tilePos, map.drill.tilePos );
 
-    this.targetPosition = this.path[1] ? getCubePosition(map, this.path[1]) : this.targetPosition ;
+    this.targetPosition = this.path[1] ? getCubePosition(map, this.path[1]) : getCubePosition(map, this.path[0]) ;
 
     let diffX = this.targetPosition.x - this.body.object.position.x;
     let diffY = this.targetPosition.y - this.body.object.position.y;
@@ -70,7 +73,6 @@ export default class SimpleEnemy extends Enemy {
   }
 
   hitAction(hitableObjects){
-    if(hitableObjects instanceof Drill ) drill.life -= 10;
-    this.currentGame.enemyFactory.removeSelf(this);
+    this.currentGame.enemyFactory.removeSelf(this.currentGame,this);
   }
 }

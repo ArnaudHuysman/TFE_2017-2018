@@ -12,6 +12,15 @@ export default class BigEnemy extends Enemy {
     this.popDelay = 10000;
     this.popInterval = this.popDelay;
 
+    this.matrix = game.map.matrix.map( (row,i) => row.map( (x,j) => {
+      if( x !== 0) return 1;
+      else if ( i < 5 || i > 15 || j < 5 || j > 15) return 0;
+      else return 1;
+    }));
+
+    this.lifes = 5;
+
+
   }
 
   update(tp){
@@ -19,7 +28,7 @@ export default class BigEnemy extends Enemy {
     const {hero, map} = this.currentGame;
 
     if( this.mvtInterval < tp){
-      this.target = getRandomTiles(this.currentGame);
+      this.target = getRandomTiles(this.currentGame, map.spawTiles);
       console.log(this.target);
       this.mvtInterval = tp+this.mvtDelay;
     }
@@ -31,9 +40,10 @@ export default class BigEnemy extends Enemy {
 
     super.update();
 
-    this.path = getPath(map, this.tilePos, this.target.arrayPos );
 
-    this.targetPosition =  this.path[1] ? getCubePosition(map, this.path[1]) : this.targetPosition ;
+    this.path = getPath(this.matrix, false, this.tilePos, this.target.arrayPos );
+
+    this.targetPosition = this.path[1] ? getCubePosition(map, this.path[1]) : getCubePosition(map, this.path[0]) ;
 
     let diffX = this.targetPosition.x - this.body.object.position.x;
     let diffY = this.targetPosition.y - this.body.object.position.y;

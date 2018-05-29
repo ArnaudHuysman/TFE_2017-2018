@@ -8,10 +8,10 @@ export default function EnemyFactory(game,scene){
   this.addEntity = function(type,game,pos){
     var enemi = this.getEnemyCstr(type,game);
 
-    var rdm = Math.floor(Math.random() * game.map.mapTiles.length);
+    var rdm = Math.floor(Math.random() * game.map.spawTiles.length);
     if(!pos){
       var vector = new THREE.Vector3();
-      vector.setFromMatrixPosition( game.map.mapTiles[rdm].matrixWorld );
+      vector.setFromMatrixPosition( game.map.spawTiles[rdm].matrixWorld );
       enemi.body.object.position.z = 10;
       enemi.body.object.position.x = vector.x;
       enemi.body.object.position.y = vector.y;
@@ -50,18 +50,17 @@ export default function EnemyFactory(game,scene){
   };
 
 
-  this.removeSelf = function(obj){
+  this.removeSelf = function(game,obj){
 
     scene.remove(obj.body.object);
+    game.collisionEngine.removeBody( obj.body , "enemies");
 
-    let index = GameObjects.enemies.indexOf(obj);
-    if (index >= 0)
-    {
-      GameObjects.enemies.splice(index,1);
-    }
-    game.enemiesCollision.removeBody(obj);
+    let index = game.enemies.indexOf(obj);
 
-    obj.collision = false;
-    obj.objectInColllision = null;
+		if (index >= 0)
+		{
+			game.enemies.splice(index,1);
+		}
+
   };
 }
