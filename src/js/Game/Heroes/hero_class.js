@@ -30,16 +30,15 @@ class Hero {
     this.lifes = 3;
 
     this.char = new Char();
-    this.char.object.position.z = 10;
+    this.char.object.position.z = 12;
     this.char.object.position.x = -30;
     this.char.object.position.y = 30;
 
-    var geometry = new THREE.BoxBufferGeometry( 2, 2, 2 );
-    var material = new THREE.MeshBasicMaterial( { color: 0xE8DB7D } );
-    this.point = new THREE.Mesh( geometry, material );
-
-    this.point.position.set(0,0,50);
-    scene.add( this.point );
+    // var geometry = new THREE.BoxBufferGeometry( 2, 2, 2 );
+    // var material = new THREE.MeshBasicMaterial( { color: 0xE8DB7D } );
+    // this.point = new THREE.Mesh( geometry, material );
+    //
+    // scene.add( this.point );
 
 
 
@@ -109,14 +108,16 @@ class Hero {
     let pos = {
       x: this.char.object.position.x,
       y: this.char.object.position.y,
-      z: -5
+      z: 0
     };
 
-    this.point.position.set(pos.x,pos.y, pos.z);
+
     let value = getCubeMapValue(game,pos)
 
-    if(!value)console.log(value);
-    this.tilePos = value !== undefined ? value : this.tilePos ;
+    if(value && value.name === "empty_tile") console.log("Fall");
+
+    this.tilePos = value !== undefined ? value.arrayPos : this.tilePos ;
+
     this.char.object.lookAt(lookAtPoint);
 
     game.collisionEngine.testCollision("hero", "fragment");

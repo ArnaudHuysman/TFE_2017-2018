@@ -11,7 +11,7 @@ export default function EnemyFactory(game,scene){
     var rdm = Math.floor(Math.random() * game.map.spawTiles.length);
     if(!pos){
       var vector = new THREE.Vector3();
-      vector.setFromMatrixPosition( game.map.spawTiles[rdm].matrixWorld );
+      vector.setFromMatrixPosition( game.map.spawTiles[rdm].mesh.matrixWorld );
       enemi.body.object.position.z = 10;
       enemi.body.object.position.x = vector.x;
       enemi.body.object.position.y = vector.y;

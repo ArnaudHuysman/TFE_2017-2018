@@ -30,7 +30,7 @@ export default class Enemy {
       z: -10
     }
     let value = getCubeMapValue(this.currentGame,pos)
-    this.tilePos = value !== undefined ? value : this.tilePos ;
+    this.tilePos = value !== undefined ? value.arrayPos : this.tilePos ;
 
 
     if(this.body.collision) {

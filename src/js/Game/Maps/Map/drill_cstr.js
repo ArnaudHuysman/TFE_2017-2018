@@ -57,7 +57,7 @@ export class Drill {
 
     let rdm = Math.floor(Math.random() * game.map.mapTiles.length);
     let vector = new THREE.Vector3();
-    vector.setFromMatrixPosition( game.map.mapTiles[rdm].matrixWorld );
+    vector.setFromMatrixPosition( game.map.mapTiles[rdm].mesh.matrixWorld );
 
     var diffX = vector.x - 0;
     var diffY = vector.y - 0;

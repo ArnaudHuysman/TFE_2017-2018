@@ -88,7 +88,7 @@ export class Game {
     document.addEventListener('contextmenu', event => event.preventDefault());
     window.addEventListener('resize', e => Utils.handleWindowResize(SceneInfo,this), false);
 
-    controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
+    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
     //helper = new THREE.AxesHelper(500);
     //scene.add(helper);
 

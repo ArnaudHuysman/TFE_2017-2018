@@ -54,7 +54,8 @@ export default class ShooterEnemy extends Enemy {
 
     this.path = getPath(this.matrix, true, this.tilePos, hero.tilePos, map );
 
-    this.targetPosition =  this.path[5] ? getCubePosition(map, this.path[1]) : getCubePosition(map, this.path[0]);
+    if( this.path.length > 0 ) this.targetPosition =  this.path[5] ? getCubePosition(map, this.path[1]) : getCubePosition(map, this.path[0]);
+
 
     let diffX = this.targetPosition.x - this.body.object.position.x;
     let diffY = this.targetPosition.y - this.body.object.position.y;
