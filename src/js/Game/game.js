@@ -2,6 +2,7 @@
 import {Scene, SceneInfo} from './Scene/Scene';
 import {CollisionEngine} from './Utils/collision_system';
 import Utils,{Player,keys, GameObjects}  from './Utils/utils';
+import {Key}  from './Utils/keys_handler';
 import Map, {createBoardGame} from './Maps/Map/map_cstr';
 import {updateWaves} from './System/waves';
 import {checkPressedKeys} from './Utils/keys_handler';
@@ -80,15 +81,15 @@ export class Game {
         }
     }, false);
     window.addEventListener("keydown", function(evt){
-      keys[evt.keyCode] = true;
+      Key.onKeydown(evt);
     } );
     window.addEventListener("keyup", function(evt){
-      keys[evt.keyCode] = false;
+      Key.onKeyup(evt);
     } );
     document.addEventListener('contextmenu', event => event.preventDefault());
     window.addEventListener('resize', e => Utils.handleWindowResize(SceneInfo,this), false);
 
-    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
+    controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
     //helper = new THREE.AxesHelper(500);
     //scene.add(helper);
 
@@ -138,10 +139,10 @@ export class Game {
     //
     // this.context.camera.lookAt( scene.position );
 
-    this.hero.update(scene,mvtTime,this);
+    this.hero.update(mvtTime,this);
     this.map.drill.update(scene);
     updateWaves(this,scene,mvtTime);
-    checkPressedKeys(this.hero);
+    //checkPressedKeys(this.hero);
 
 
     for (var i = 0; i < this.enemies.length; i++) {

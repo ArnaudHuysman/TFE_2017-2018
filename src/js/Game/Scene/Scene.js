@@ -6,10 +6,14 @@ export const SceneInfo = {
 	HEIGHT : 0,
 	WIDTH : 0
 }
+
+
+export const scene = new THREE.Scene();
+
+
 export class Scene {
 	constructor() {
 
-		this.scene = new THREE.Scene();
 		this.camera;
 		this.lights = [];
 		this.pointLight = null;
@@ -61,7 +65,7 @@ export class Scene {
 	}
 
 	createLights(scene){
-		var directionalLight = new THREE.DirectionalLight( 0x956AB5, 0.5);
+		var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5);
 		directionalLight.position.set( 1, 1, 500 );
 
 		var pointLight2 = new THREE.PointLight( 0x16D4F0, 2, 200, 2 );

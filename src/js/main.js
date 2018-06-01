@@ -10,4 +10,4 @@ import GameScreen from './ScreenSystem/Screens/game_screen';
 const mainContaint = document.querySelector(".app");
 const AppScreens = new ScreenSystem(mainContaint);
 
-AppScreens.setScreen(new GameScreen());
+AppScreens.setScreen(new TitleScreen());

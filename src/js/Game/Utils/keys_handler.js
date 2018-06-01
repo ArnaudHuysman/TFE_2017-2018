@@ -21,3 +21,25 @@ export function checkPressedKeys(hero){
   }
 
 }
+
+
+export const Key = {
+  _pressed: {},
+
+  LEFT: 81,
+  UP: 90,
+  RIGHT: 68,
+  DOWN: 83,
+
+  isDown: function(keyCode) {
+    return this._pressed[keyCode]
+  },
+
+  onKeydown: function(event) {
+    this._pressed[event.keyCode] = true;
+  },
+
+  onKeyup: function(event) {
+    delete this._pressed[event.keyCode];
+  }
+}

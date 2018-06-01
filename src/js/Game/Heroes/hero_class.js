@@ -9,20 +9,26 @@ import {getCubeMapValue} from '../Utils/path_functions';
 import {CollisionEngine} from '../Utils/collision_system';
 import Fragment from '../Maps/Fragment/fragment_cstr'
 import {GameObjects} from '../Utils/utils';
+import {Key} from '../Utils/keys_handler'
 import {Bullet} from '../Enemies/Shooter/bullet_factory';
+import StateMachine from '../Utils/state_machine';
+import {heroWalkState, heroStandState, heroFalling} from './states'
+import {scene} from '../Scene/Scene'
 
 class Hero {
-  constructor(game,scene) {
+  constructor(game) {
 
-    this.currentGame = game;
+    this.game = game;
     this.isShooting = false;
     this.gunShooting = "right";
     this.alreadyMoved = false;
 
     this.bulletFactory = new BulletFactory(game);
 
+
     this.fireRate = 300;
     this.interval = 0;
+    this.time = 0;
 
     this.tilePos = null;
 
@@ -34,11 +40,11 @@ class Hero {
     this.char.object.position.x = -30;
     this.char.object.position.y = 30;
 
-    // var geometry = new THREE.BoxBufferGeometry( 2, 2, 2 );
-    // var material = new THREE.MeshBasicMaterial( { color: 0xE8DB7D } );
-    // this.point = new THREE.Mesh( geometry, material );
-    //
-    // scene.add( this.point );
+    var geometry = new THREE.BoxBufferGeometry( 2, 2, 2 );
+    var material = new THREE.MeshBasicMaterial( { color: 0xE8DB7D } );
+    this.point = new THREE.Mesh( geometry, material );
+
+    scene.add( this.point );
 
 
 
@@ -61,8 +67,11 @@ class Hero {
     this.rightWaepon.mesh.rotation.set(Math.PI/2,0,-Math.PI/2);
     this.char.body.rightArm.object.add( this.rightWaepon.mesh );
 
-    this.armsAnimationSystem = new AnimationSystem(new ArmStandAnimation(this.char.body));
-    this.legsAnimationSystem = new AnimationSystem(new LegStandAnimation(this.char.body));
+    this.armsAnimationSystem = new AnimationSystem();
+    this.legsAnimationSystem = new AnimationSystem();
+
+    this.stateMachine = new StateMachine(new heroStandState(this));
+
   }
 
   model(){
@@ -70,62 +79,33 @@ class Hero {
 
   }
 
-  update(scene,tp,game){
+  update(tp,game){
 
+    this.time = tp;
+
+    // Keys pressed actions
+
+
+
+    // Mouse Action
+    this.isShooting = Player.isRightClick ? true : false;
+
+    this.stateMachine.currentState.update();
     this.bulletFactory.update(scene);
-
-
-    if(this.char.body.mvt && this.alreadyMoved === false){
-
-      this.armsAnimationSystem.changeAnimation(new ArmWalkAnimation(this.char.body));
-      this.legsAnimationSystem.changeAnimation(new LegWalkAnimation(this.char.body));
-      this.alreadyMoved = true;
-
-    }
-
-    if(Player.isRightClick) {
-      this.shoot(scene,tp);
-      if(!this.isShooting){
-        this.armsAnimationSystem.changeAnimation(new ArmShootAnimation(this.char.body));
-        this.isShooting = true;
-      }
-    }
-
-
-    if(!Player.isRightClick && this.isShooting){
-      this.char.body.mvt ?
-        this.armsAnimationSystem.changeAnimation(new ArmWalkAnimation(this.char.body))
-        :
-        this.armsAnimationSystem.changeAnimation(new ArmStandAnimation(this.char.body))
-      this.isShooting = false;
-    }
 
     var lookAtPoint = new THREE.Vector3(Mouse.projectPos.x,Mouse.projectPos.y,12);
 
     this.char.object.up = new THREE.Vector3(0,0,1);
 
-
-    let pos = {
-      x: this.char.object.position.x,
-      y: this.char.object.position.y,
-      z: 0
-    };
-
-
-    let value = getCubeMapValue(game,pos)
-
-    if(value && value.name === "empty_tile") console.log("Fall");
-
-    this.tilePos = value !== undefined ? value.arrayPos : this.tilePos ;
-
     this.char.object.lookAt(lookAtPoint);
+
+
+    // Collision
 
     game.collisionEngine.testCollision("hero", "fragment");
     game.collisionEngine.testCollision("hero", "enemy_projectil");
     game.collisionEngine.testCollision("hero_projectil", "enemies");
 
-
-    // Collision
     if(this.char.collision){
       switch( this.char.objectInCollision.name ){
         case "fragment":
@@ -154,34 +134,14 @@ class Hero {
 
   movement(){
 
-      var diffX = Player.targetPos.x - this.char.object.position.x;
-      var diffY = Player.targetPos.y - this.char.object.position.y;
-
-      var theta = Math.atan2(diffY, diffX);
-
-      var mvtX = Math.cos(theta);
-      var mvtY = Math.sin(theta);
-
-      this.char.object.position.x += mvtX*2;
-      this.char.object.position.y += mvtY*2;
-
-      if( Math.ceil(Player.targetPos.x/10) == Math.ceil(this.char.object.position.x/10)
-      && Math.ceil(Player.targetPos.y/10) == Math.ceil(this.char.object.position.y/10))
-      {
-        this.armsAnimationSystem.changeAnimation(new ArmStandAnimation(this.char.body))
-        this.legsAnimationSystem.changeAnimation(new LegStandAnimation(this.char.body))
-        this.char.body.mvt = false;
-      } else {
-        this.char.body.mvt = true;
-      }
 
 
   }
 
-  shoot(scene,tp){
-    if( this.interval < tp){
+  shoot(){
+    if( this.interval < this.time){
       this.bulletFactory.create(scene);
-      this.interval = tp+this.fireRate;
+      this.interval = this.time+this.fireRate;
     }
   }
 }

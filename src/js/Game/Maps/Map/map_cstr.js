@@ -26,7 +26,7 @@ class InvisibleTile {
     this.geom = new THREE.BoxBufferGeometry(size, size, size);
 
     this.mat = new THREE.MeshBasicMaterial( {
-						color: 0xfff,
+						color: 0xffffff,
 						transparent : true,
             opacity : 0
 		});
@@ -51,32 +51,54 @@ export default class Map {
 
     var basicMat = new THREE.MeshToonMaterial( {
 						bumpScale: 1,
-						color: 0x104F55,
+						color: 0x111D4A,
 						specular: 0x9EC5AB,
 						shininess: 10,
             reflectivity: 0
 		});
 
+    const baseColor = {r:17, g:29, b:74};
+    const finalColor = {r:60, g:70, b:106};
+    var diffR = (baseColor.r-finalColor.r)/(this.map.structure.length/2);
+    var diffG = (baseColor.g-finalColor.g)/(this.map.structure.length/2);
+    var diffB = (baseColor.b-finalColor.b)/(this.map.structure.length/2);
+
+    let changingColor = {r:0, g:0, b:0};
+
+    console.log(diffR, diffG, diffB);
 
 
     var tampon = 0;
-    var tampon2 = 0;
+
 
     let drillPos, drillTilePos;
     let drillTile = false;
 
     for(var i=0; i<this.map.structure.length; i++){
       if(i <= 10) tampon++; else tampon--;
+      let tampon2 = 0;
       for( var j=0; j<this.map.structure[i].length; j++){
           let c;
           if(j <= 10) tampon2++; else tampon2--;
+
+          changingColor.r = finalColor.r + (tampon2+tampon)*diffR;
+          changingColor.r = changingColor.r > 255 ? 255 : changingColor.r < 0  ? 0 : changingColor.r;
+          changingColor.g = finalColor.g + (tampon2+tampon)*diffG;
+          changingColor.g = changingColor.g > 255 ? 255 : changingColor.g < 0  ? 0 : changingColor.g;
+          changingColor.b = finalColor.b + (tampon2+tampon)*diffB;
+          changingColor.b = changingColor.b > 255 ? 255 : changingColor.b < 0  ? 0 : changingColor.b;
+
+
+          let color = rgbToHex(changingColor.r,changingColor.g,changingColor.b);
+          //console.log("pos",i, j, "color", changingColor.r,changingColor.g,changingColor.b, color);
           switch (this.map.structure[i][j]) {
             case 1:
               c = new InvisibleTile(this.tileSize);
               c.arrayPos = [j,i];
               break;
             case 0:
-              c = new MapTile(0x104F55, 10, 0, this.tileSize);
+              let hexColor = rgbToHex( baseColor.r, baseColor.g, baseColor.b);
+              c = new MapTile(color, 10, 0, this.tileSize);
               c.arrayPos = [j,i];
               break;
 
@@ -134,4 +156,13 @@ export default class Map {
     game.threeContainer.add(this.mesh);
 
   }
+}
+
+function componentToHex(c) {
+    var hex = Math.floor(c).toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return parseInt("0x" + componentToHex(r) + componentToHex(g) + componentToHex(b));
 }

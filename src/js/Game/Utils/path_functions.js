@@ -13,7 +13,7 @@ export function getPath(matrix, diagonal, source, target, map){
 
   var path = finder.findPath(source[0],source[1],target[0],target[1], grid);
 
-  showPath(map, path);
+  //showPath(map, path);
   return path;
 
 }

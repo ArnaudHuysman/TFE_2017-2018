@@ -1,13 +1,13 @@
 export class AnimationSystem {
-	constructor(initAnimation){
+	constructor(){
 
-		this.currentAnimation = initAnimation;
-		this.currentAnimation.in();
+		this.currentAnimation = null;
+
 
 	}
 
 	changeAnimation(newAnimation){
-		this.currentAnimation.out();
+		if(this.currentAnimation) this.currentAnimation.out();
 
 		this.currentAnimation = newAnimation;
 
