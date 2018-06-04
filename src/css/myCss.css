@@ -1,4 +1,4 @@
-body{
+body, ul{
   margin : 0;
   padding: 0;
 }
@@ -13,15 +13,28 @@ h3{
   width : 100%;
   height : 100%;
   overflow: hidden;
-  /* background: url("../../dist/assets/img/BG.png") no-repeat; */
   background-size: cover;
+}
+
+#showreel{
+
+  margin: 0 auto;
+  padding-top: 5%;
+  min-width: 500px;
+  width: 80%;
+  height: 500px;
+}
+
+li{
+  list-style: none;
 }
 
 .screen{
   width: 100vw;
   height: 100vh;
-  background: url("../../dist/assets/img/BG.png") no-repeat;
-  background-size: cover;
+  /* background: url("../../dist/assets/img/BG.png") no-repeat; */
+
+  position: relative;
 }
 
 .score{
@@ -31,9 +44,17 @@ h3{
 
 .introScreen{
   text-align: center;
+  display: grid;
+  background: url("../../dist/assets/img/BG.png") no-repeat;
+  background-size: cover;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+
 }
 
 .title{
+  grid-column: 1 /span 3;
+  grid-row : 1;
   margin-bottom: 40px;
   padding-top: 20px;
 }
@@ -42,15 +63,64 @@ h3{
   width: 45%;
 }
 
-.btn span {
+.intro_buttons{
+  grid-column: 2;
+  grid-row : 2;
+  width: 100%;
+  position: relative;
+}
+
+
+
+.playButton{
+  position: absolute;
+  width : 70%;
+  height: 35%;
+  top: 8px;
+
+  background-image: url('../../dist/assets/img/buttons/play_btn-01.png');
+  background-size: cover;
+}
+.playButton:hover{
+  background-image: url('../../dist/assets/img/buttons/play_btn-active-01.png');
+}
+
+.optionButton{
+  position: absolute;
+  width : 40%;
+  height: 25%;
+  top : 120px;
+
+  z-index: 1;
+  background-image: url('../../dist/assets/img/buttons/option_btn-01.png');
+  background-size: cover;
+}
+.optionButton:hover{
+  background-image: url('../../dist/assets/img/buttons/option_btn-active-01.png');
+}
+
+.creditButton{
+  position: absolute;
+  width : 70%;
+  height: 35%;
+  top : 180px;
+  background-image: url('../../dist/assets/img/buttons/credit_btn-01.png');
+  background-size: cover;
+}
+
+.creditButton:hover{
+  background-image: url('../../dist/assets/img/buttons/credit_btn-active-01.png');
+}
+
+/* .btn span {
   background: #FFF;
   display: block;
   padding: 10px 20px;
   border-radius: 2px;
   background: linear-gradient(#147698,#2B0854);
-}
+} */
 
-.btn:hover {
+/* .btn:hover {
   top: 4px;
   padding-bottom: 0px;
   box-shadow: 0 2px 0px 2px #460A7F;
@@ -68,8 +138,113 @@ h3{
   border-radius: 2px;
   box-shadow: 0 2px 0px 2px #460A7F;
   transition: padding 0.1s, box-shadow 0.1s, top 0.1s;
-}
+} */
 
 .fluidimg{
   max-width: 100%;
+}
+
+/* Header / Footer */
+
+.header{
+  position: absolute;
+  width: 100%;
+  top: 5%;
+  z-index: 1;
+}
+
+.header_nav{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+
+
+.screen_footer{
+  position: absolute;
+  width: 100%;
+  bottom:10%;
+  z-index: 1;
+}
+
+.footer_nav{
+  padding: 0 10%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+
+/* .header_nav--item{
+  width: 33%;
+} */
+
+.option_buttons{
+  display: flex;
+  flex-direction: row;
+}
+
+
+
+/*  Maps */
+
+.maps {
+  height: 100vh;
+  background: url("../../dist/assets/img/BG.png") no-repeat;
+  background-size: 100% 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+
+  grid-template-areas :
+    ". . . . . ."
+    ". . . . map6 ."
+    ". one . map3 . map4"
+    ". . two . map5 ."
+    ". . . . . .";
+}
+
+.map1{
+  grid-area : one;
+}
+.map2{
+  grid-area : two;
+}
+.map3{
+  grid-area : map3;
+}
+.map4{
+  grid-area : map4;
+}
+.map5{
+  grid-area : map5;
+}
+.map6{
+  grid-area : map6;
+}
+
+.map {
+  position: relative;
+}
+
+
+
+.map:hover .description{
+  display: block;
+}
+
+.description{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+/* Maps Button  */
+
+.maps.buttons {
+  background-color: red;
+  position: absolute;
 }

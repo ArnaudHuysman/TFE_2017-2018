@@ -13,7 +13,10 @@ var game;
 export default class GameScreen extends Screen{
 	constructor(){
 		super();
-		this.display = document.querySelector('.template').content.querySelector('.gameScreen').cloneNode(true);
+		this.content = document.querySelector('.template').content.querySelector('.gameScreen').cloneNode(true);
+
+		this.display = [];
+		this.display.push(this.content);
 	}
 
 	enter(exitCallback){

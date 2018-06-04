@@ -25,9 +25,9 @@ export const maps = {
                     [ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1 ]
                   ],
                   "waves" : [
-                    { "time" : 30, "enemies" :[ {"type": "simple", "amount": 0},
-                                                {"type": "big", "amount": 0},
-                                                {"type": "shooting", "amount": 0}
+                    { "time" : 160, "enemies" :[ {"type": "simple", "amount": 4},
+                                                {"type": "big", "amount": 1},
+                                                {"type": "shooting", "amount": 2}
                                               ]},
                     { "time" : 60, "enemies" :[ {"type": "simple", "amount": 0},
                                                 {"type": "big", "amount": 0},

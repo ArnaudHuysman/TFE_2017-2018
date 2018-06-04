@@ -119,17 +119,6 @@ const Utils = {
   onDocumentMouseDown : function( event, game ) {
 
     event.preventDefault();
-
-      game.raycaster.setFromCamera( Mouse.pos, game.context.camera );
-
-      var intersects = game.raycaster.intersectObjects( game.map.mapTiles );
-
-      if ( intersects.length > 0 ) {
-
-        Player.targetPos.x = intersects[0].point.x;
-        Player.targetPos.y = intersects[0].point.y;
-
-      }
   }
 }
 

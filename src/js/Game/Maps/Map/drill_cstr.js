@@ -21,7 +21,7 @@ export class Drill {
     game.threeContainer.add(this.object);
     game.collisionEngine.addBody(this ,"drill");
 
-    //setInterval( e => this.popCrystal(scene, game) , 10000);
+    setInterval( e => this.popCrystal(scene, game) , 10000);
 
   }
 
@@ -55,9 +55,9 @@ export class Drill {
 
     let frgmt = new Fragment(scene);
 
-    let rdm = Math.floor(Math.random() * game.map.mapTiles.length);
+    let rdm = Math.floor(Math.random() * game.map.popTiles.length);
     let vector = new THREE.Vector3();
-    vector.setFromMatrixPosition( game.map.mapTiles[rdm].mesh.matrixWorld );
+    vector.setFromMatrixPosition( game.map.popTiles[rdm].mesh.matrixWorld );
 
     var diffX = vector.x - 0;
     var diffY = vector.y - 0;

@@ -28,6 +28,11 @@ export class Game {
     this.threeContainer = new THREE.Object3D();
 
     this.hero = new StandartHero(this,scene);
+    this.hero.char.object.position.z = 12;
+    this.hero.char.object.position.x = -30;
+    this.hero.char.object.position.y = 30;
+
+    this.collisionEngine.addBody(this.hero.char,"hero");
     this.enemies =[];
 
     this.map = new Map(this,map,scene);
@@ -89,7 +94,7 @@ export class Game {
     document.addEventListener('contextmenu', event => event.preventDefault());
     window.addEventListener('resize', e => Utils.handleWindowResize(SceneInfo,this), false);
 
-    controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
+    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
     //helper = new THREE.AxesHelper(500);
     //scene.add(helper);
 

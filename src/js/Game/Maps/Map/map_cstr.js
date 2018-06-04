@@ -45,6 +45,7 @@ export default class Map {
     this.matrix = this.map.structure;
     this.mapTiles = [];
     this.spawTiles = [];
+    this.popTiles = [];
     this.tileSize = 24;
     this.size = (24*1.05)*20;
     var geom = new THREE.BoxBufferGeometry(this.tileSize,this.tileSize,this.tileSize);
@@ -132,6 +133,7 @@ export default class Map {
 
           if( c instanceof MapTile )
           {
+            this.popTiles.push(c);
             if ( i < 2 || i > 18 || j < 2 || j > 18 ) this.spawTiles.push(c);
 
             let tuiles = Math.floor(Math.random()*(tampon*tampon2/15));

@@ -11,7 +11,7 @@ export class Bodypart {
 						color: color,
 						specular: 0x9EC5AB,
 						reflectivity: 0,
-						shininess: 500
+						shininess: 40
 		});
 
     this.mesh = new THREE.Mesh(this.geom, this.mat);
@@ -52,7 +52,8 @@ class Arm extends Bodypart {
     super(width, height, depth, color, name);
 
     this.mesh.geometry.translate(0,0,-1.2);
-    this.mesh.position.z = 0.6;
+    this.mesh.position.z = 0.8;
+    this.mesh.position.y = -0.4;
     this.mesh.position.x = this.name == "leftArm" ? -2.4 : 2.4;
 
     this.outliner.position.set(this.mesh.position.x,this.mesh.position.y,this.mesh.position.z);

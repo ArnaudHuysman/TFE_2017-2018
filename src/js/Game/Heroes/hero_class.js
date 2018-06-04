@@ -36,9 +36,6 @@ class Hero {
     this.lifes = 3;
 
     this.char = new Char();
-    this.char.object.position.z = 12;
-    this.char.object.position.x = -30;
-    this.char.object.position.y = 30;
 
     var geometry = new THREE.BoxBufferGeometry( 2, 2, 2 );
     var material = new THREE.MeshBasicMaterial( { color: 0xE8DB7D } );
@@ -52,17 +49,15 @@ class Hero {
 
     scene.add(this.char.object);
 
-    game.collisionEngine.addBody(this.char,"hero");
-
 
     this.leftWaepon = new TwinsGun();
-    this.leftWaepon.mesh.position.set(-2.4,-1,-2.5);
+    this.leftWaepon.mesh.position.set(-2.4,-1.4,-2);
     this.leftWaepon.mesh.scale.set(0.4,0.4,0.4);
     this.leftWaepon.mesh.rotation.set(Math.PI/2,0,-Math.PI/2);
     this.char.body.leftArm.object.add( this.leftWaepon.mesh );
 
     this.rightWaepon = new TwinsGun();
-    this.rightWaepon.mesh.position.set(2.4,-1,-2.5);
+    this.rightWaepon.mesh.position.set(2.4,-1.4,-2);
     this.rightWaepon.mesh.scale.set(0.4,0.4,0.4);
     this.rightWaepon.mesh.rotation.set(Math.PI/2,0,-Math.PI/2);
     this.char.body.rightArm.object.add( this.rightWaepon.mesh );
