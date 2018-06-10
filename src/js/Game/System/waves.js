@@ -9,9 +9,6 @@ export function initWaves(game){
 export function updateWaves(game,scene,timePassed){
 
   const map = game.map.info;
-
-  console.log(timePassed)
-
   const time = timePassed/100;
 
   if( map.waves[count] && map.waves[count].time < time){
@@ -22,6 +19,6 @@ export function updateWaves(game,scene,timePassed){
       }
     }
     count++;
-    game.screenInfo.waves ++;
+    game.screenInfo.waves++;
   }
 }

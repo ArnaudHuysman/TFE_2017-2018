@@ -18,7 +18,7 @@ export class Scene {
 		this.scene = new THREE.Scene();
 		this.lights = [];
 		this.pointLight = null;
-
+		this.loaded = false;
 	}
 
 	generateScene(){
@@ -41,10 +41,12 @@ export class Scene {
 	    SceneInfo.farPlane
 	  );
 
-		this.camera.position.z = 700;
-		this.camera.position.y = -850;
+		this.camera.position.z = 4000;
+		this.camera.position.y = -4500;
 
-		this.camera.lookAt( 0,0,-100 );
+		this.camera.lookAt( 0,0, -50 );
+
+		this.createLights();
 
 		var path = "dist/assets/img/textures/";
 		var format = '.png';
@@ -53,16 +55,16 @@ export class Scene {
 				path + 'py' + format, path + 'ny' + format,
 				path + 'pz' + format, path + 'nz' + format
 			];
-		var reflectionCube = new THREE.CubeTextureLoader().load( urls );
-		reflectionCube.format = THREE.RGBFormat;
-		var refractionCube = new THREE.CubeTextureLoader().load( urls );
-		refractionCube.mapping = THREE.CubeRefractionMapping;
-		refractionCube.format = THREE.RGBFormat;
 
-		this.scene.background = reflectionCube;
+		let self = this;
+		var refractionCube = new THREE.CubeTextureLoader().load( urls, function(){
+			refractionCube.mapping = THREE.CubeRefractionMapping;
+			refractionCube.format = THREE.RGBFormat;
+			self.scene.background = refractionCube;
+			self.loaded = true;
+		});
 
 
-		this.createLights()
 	}
 
 	createLights(){

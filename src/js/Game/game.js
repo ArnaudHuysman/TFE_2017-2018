@@ -6,6 +6,9 @@ import {Key}  from './Utils/keys_handler';
 import Map, {createBoardGame} from './Maps/Map/map_cstr';
 import {initWaves, updateWaves} from './System/waves';
 import EnemyFactory from './Enemies/enemy_factory';
+import StateMachine from './Utils/state_machine';
+import GameLoadingState from './Game_States/gameLoading_state';
+
 
 
 
@@ -38,22 +41,16 @@ export class Game {
       antialias: true
     });
     this.raycaster = new THREE.Raycaster();
-
-
     this.collisionEngine = new CollisionEngine();
+    this.stateMachine = new StateMachine(new GameLoadingState(this));
+
     this.threeContainer = new THREE.Object3D();
 
-    this.hero = new StandartHero(this,this.context.scene);
-    this.hero.char.object.position.z = 12;
-    this.hero.char.object.position.x = -30;
-    this.hero.char.object.position.y = 30;
-
-    this.collisionEngine.addBody(this.hero.char,"hero");
+    this.hero = null;
+    this.enemyFactory = null;
     this.enemies =[];
 
     this.map = new Map(this,map,this.context.scene);
-
-    this.enemyFactory = new EnemyFactory(this,this.context.scene);
 
     this.pivot = new THREE.Object3D();
     this.threeContainer.position.y = - (map.structure.length/2)*(24);
@@ -64,15 +61,13 @@ export class Game {
     this.context.scene.add( this.pivot );
     this.pivot.rotation.z = -45* Math.PI / 180;
     //this.threeContainer.updateMatrixWorld();
-  }
-
-  load(){
 
   }
 
   init(){
     //GENERATE SCENE
-    this.context.generateScene();
+    //this.context.generateScene();
+
     // --------- EVENT LISTENER ------------ //
     window.addEventListener('mousemove', e => Utils.handleMouseMove(e , SceneInfo, this), false);
     window.addEventListener('mousedown', e => {
@@ -101,7 +96,7 @@ export class Game {
     document.addEventListener('contextmenu', event => event.preventDefault());
     window.addEventListener('resize', e => Utils.handleWindowResize(SceneInfo,this), false);
 
-    controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
+    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
     //helper = new THREE.AxesHelper(500);
     //this.context.scene.add(helper);
 
@@ -116,9 +111,8 @@ export class Game {
     this.container.style.display = "block";
     this.container.appendChild(this.renderer.domElement);
 
-    initWaves(this);
+    //initWaves(this);
     //LAUNCH ANIMATION
-
     newTime = Date.now(),
     oldTime = Date.now();
     this.animation();
@@ -140,11 +134,10 @@ export class Game {
 
     var timer = Date.now() * 0.00025;
 
-
 		this.context.pointLight.position.x = Math.sin( timer ) * 800;
 		this.context.pointLight.position.y = Math.cos( timer ) * 800;
 
-
+    this.stateMachine.currentState.update(mvtTime);
 
     //Makes caera turns around the map;
     // var x = this.context.camera.position.x;
@@ -155,10 +148,6 @@ export class Game {
     // this.context.camera.up = new THREE.Vector3(0,0,1);
     //
     // this.context.camera.lookAt( this.context.scene.position );
-
-    this.hero.update(mvtTime,this);
-    this.map.drill.update(this,this.context.scene);
-    updateWaves(this,this.context.scene,mvtTime);
 
 
     for (var i = 0; i < this.enemies.length; i++) {

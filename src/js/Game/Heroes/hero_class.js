@@ -68,6 +68,8 @@ class Hero {
 
     this.stateMachine = new StateMachine(new heroStandState(this));
 
+    this.char.object.lookAt(0,0,12);
+
   }
 
   model(){
@@ -119,17 +121,6 @@ class Hero {
       this.char.collision = false;
       this.char.objectInCollision = null;
     }
-  }
-
-  animation(){
-
-
-  }
-
-  movement(){
-
-
-
   }
 
   shoot(){
