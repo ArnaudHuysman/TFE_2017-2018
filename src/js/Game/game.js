@@ -4,39 +4,34 @@ import {CollisionEngine} from './Utils/collision_system';
 import Utils,{Player,keys, GameObjects}  from './Utils/utils';
 import {Key}  from './Utils/keys_handler';
 import Map, {createBoardGame} from './Maps/Map/map_cstr';
-import {updateWaves} from './System/waves';
-import {checkPressedKeys} from './Utils/keys_handler';
+import {initWaves, updateWaves} from './System/waves';
 import EnemyFactory from './Enemies/enemy_factory';
-import {StandartHero} from './Heroes/hero_class';
-import Fragment from './Maps/Fragment/fragment_cstr';
+
+
 
 var raycaster, intersectPoint;
 var deltaTime,
     mvtTime = 0,
-    newTime = Date.now(),
-    oldTime = Date.now();
+    newTime = 0,
+    oldTime = 0;
 
-const gameTime = 120;
 
 var controls, helper;
 
 
 export class Game {
-  constructor(map, scene){
+  constructor(map,hero){
 
-    this.collisionEngine = new CollisionEngine();
-    this.threeContainer = new THREE.Object3D();
+    this.screenInfo = {
+      fragment : 0,
+      waves : 0,
+      totalWaves : 0,
+      drill_lifes: 10,
+      hero_lifes: 3,
 
-    this.hero = new StandartHero(this,scene);
-    this.hero.char.object.position.z = 12;
-    this.hero.char.object.position.x = -30;
-    this.hero.char.object.position.y = 30;
+    }
 
-    this.collisionEngine.addBody(this.hero.char,"hero");
-    this.enemies =[];
-
-    this.map = new Map(this,map,scene);
-    this.context = new Scene(scene,this.map);
+    this.context = new Scene();
     this.container = document.getElementById('world');
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -44,17 +39,29 @@ export class Game {
     });
     this.raycaster = new THREE.Raycaster();
 
-    this.enemyFactory = new EnemyFactory(this,scene);
 
+    this.collisionEngine = new CollisionEngine();
+    this.threeContainer = new THREE.Object3D();
 
+    this.hero = new StandartHero(this,this.context.scene);
+    this.hero.char.object.position.z = 12;
+    this.hero.char.object.position.x = -30;
+    this.hero.char.object.position.y = 30;
+
+    this.collisionEngine.addBody(this.hero.char,"hero");
+    this.enemies =[];
+
+    this.map = new Map(this,map,this.context.scene);
+
+    this.enemyFactory = new EnemyFactory(this,this.context.scene);
 
     this.pivot = new THREE.Object3D();
-    this.threeContainer.position.y = -10.5*(24);
-    this.threeContainer.position.x = -10.5*(24);
+    this.threeContainer.position.y = - (map.structure.length/2)*(24);
+    this.threeContainer.position.x = - (map.structure[0].length/2)*(24);
 
     this.pivot.add( this.threeContainer );
 
-    scene.add( this.pivot );
+    this.context.scene.add( this.pivot );
     this.pivot.rotation.z = -45* Math.PI / 180;
     //this.threeContainer.updateMatrixWorld();
   }
@@ -63,9 +70,9 @@ export class Game {
 
   }
 
-  init(scene){
+  init(){
     //GENERATE SCENE
-    this.context.generateScene(scene);
+    this.context.generateScene();
     // --------- EVENT LISTENER ------------ //
     window.addEventListener('mousemove', e => Utils.handleMouseMove(e , SceneInfo, this), false);
     window.addEventListener('mousedown', e => {
@@ -94,9 +101,9 @@ export class Game {
     document.addEventListener('contextmenu', event => event.preventDefault());
     window.addEventListener('resize', e => Utils.handleWindowResize(SceneInfo,this), false);
 
-    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
+    controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
     //helper = new THREE.AxesHelper(500);
-    //scene.add(helper);
+    //this.context.scene.add(helper);
 
     //SET RENDERER SETTINGS
     this.renderer.setPixelRatio( window.devicePixelRatio );
@@ -109,21 +116,26 @@ export class Game {
     this.container.style.display = "block";
     this.container.appendChild(this.renderer.domElement);
 
+    initWaves(this);
     //LAUNCH ANIMATION
-    this.animation(scene);
+
+    newTime = Date.now(),
+    oldTime = Date.now();
+    this.animation();
   }
 
-  animation(scene){
-    this.update(scene);
-    this.render(scene);
-    requestAnimationFrame(this.animation.bind(this,scene))
+  animation(){
+    this.update();
+    this.render();
+    requestAnimationFrame(this.animation.bind(this))
   }
 
-  update(scene){
+  update(){
 
+    newTime = Date.now();
     deltaTime = newTime - oldTime;
     oldTime = newTime;
-    newTime = Date.now();
+
     mvtTime += deltaTime;
 
     var timer = Date.now() * 0.00025;
@@ -142,21 +154,20 @@ export class Game {
     //
     // this.context.camera.up = new THREE.Vector3(0,0,1);
     //
-    // this.context.camera.lookAt( scene.position );
+    // this.context.camera.lookAt( this.context.scene.position );
 
     this.hero.update(mvtTime,this);
-    this.map.drill.update(scene);
-    updateWaves(this,scene,mvtTime);
-    //checkPressedKeys(this.hero);
+    this.map.drill.update(this,this.context.scene);
+    updateWaves(this,this.context.scene,mvtTime);
 
 
     for (var i = 0; i < this.enemies.length; i++) {
-      this.enemies[i].update(mvtTime,scene);
+      this.enemies[i].update(mvtTime,this.context.scene);
     }
   }
 
-  render(scene){
+  render(){
     this.renderer.clear();
-    this.renderer.render(scene, this.context.camera);
+    this.renderer.render(this.context.scene, this.context.camera);
   }
 }

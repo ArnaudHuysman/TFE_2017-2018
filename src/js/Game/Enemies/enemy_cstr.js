@@ -34,15 +34,15 @@ export default class Enemy {
 
 
     if(this.body.collision) {
-      console.log("COLL");
       if(this.body.objectInCollision instanceof Bullet) {
         this.lifes-- ;
         this.currentGame.collisionEngine.removeBody(this.body.objectInCollision, "hero_projectil");
+        this.body.collision = false;
+        this.body.objectInColllision = null;
       } else this.hitAction(this.body.objectInCollision) ;
 
 
-      this.body.collision = false;
-      this.body.objectInColllision = null;
+
     };
 
     if(this.lifes <= 0 ) this.currentGame.enemyFactory.removeSelf(this.currentGame, this);

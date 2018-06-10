@@ -41,8 +41,8 @@ class InvisibleTile {
 export default class Map {
   constructor(game,mapUsed,scene){
     this.mesh = new THREE.Object3D();
-    this.map = mapUsed;
-    this.matrix = this.map.structure;
+    this.info = mapUsed;
+    this.matrix = this.info.structure;
     this.mapTiles = [];
     this.spawTiles = [];
     this.popTiles = [];
@@ -60,13 +60,12 @@ export default class Map {
 
     const baseColor = {r:17, g:29, b:74};
     const finalColor = {r:60, g:70, b:106};
-    var diffR = (baseColor.r-finalColor.r)/(this.map.structure.length/2);
-    var diffG = (baseColor.g-finalColor.g)/(this.map.structure.length/2);
-    var diffB = (baseColor.b-finalColor.b)/(this.map.structure.length/2);
+    var diffR = (baseColor.r-finalColor.r)/(this.info.structure.length/2);
+    var diffG = (baseColor.g-finalColor.g)/(this.info.structure.length/2);
+    var diffB = (baseColor.b-finalColor.b)/(this.info.structure.length/2);
 
     let changingColor = {r:0, g:0, b:0};
 
-    console.log(diffR, diffG, diffB);
 
 
     var tampon = 0;
@@ -75,10 +74,10 @@ export default class Map {
     let drillPos, drillTilePos;
     let drillTile = false;
 
-    for(var i=0; i<this.map.structure.length; i++){
+    for(var i=0; i<this.info.structure.length; i++){
       if(i <= 10) tampon++; else tampon--;
       let tampon2 = 0;
-      for( var j=0; j<this.map.structure[i].length; j++){
+      for( var j=0; j<this.info.structure[i].length; j++){
           let c;
           if(j <= 10) tampon2++; else tampon2--;
 
@@ -92,7 +91,7 @@ export default class Map {
 
           let color = rgbToHex(changingColor.r,changingColor.g,changingColor.b);
           //console.log("pos",i, j, "color", changingColor.r,changingColor.g,changingColor.b, color);
-          switch (this.map.structure[i][j]) {
+          switch (this.info.structure[i][j]) {
             case 1:
               c = new InvisibleTile(this.tileSize);
               c.arrayPos = [j,i];

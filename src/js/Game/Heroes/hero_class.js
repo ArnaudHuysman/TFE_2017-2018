@@ -16,9 +16,10 @@ import {heroWalkState, heroStandState, heroFalling} from './states'
 import {scene} from '../Scene/Scene'
 
 class Hero {
-  constructor(game) {
+  constructor(game,scene) {
 
     this.game = game;
+    this.scene = scene;
     this.isShooting = false;
     this.gunShooting = "right";
     this.alreadyMoved = false;
@@ -41,13 +42,13 @@ class Hero {
     var material = new THREE.MeshBasicMaterial( { color: 0xE8DB7D } );
     this.point = new THREE.Mesh( geometry, material );
 
-    scene.add( this.point );
+    this.scene.add( this.point );
 
 
 
     this.char.object.scale.set(2.5,2.5,2.5);
 
-    scene.add(this.char.object);
+    this.scene.add(this.char.object);
 
 
     this.leftWaepon = new TwinsGun();
@@ -78,15 +79,11 @@ class Hero {
 
     this.time = tp;
 
-    // Keys pressed actions
-
-
-
     // Mouse Action
     this.isShooting = Player.isRightClick ? true : false;
 
     this.stateMachine.currentState.update();
-    this.bulletFactory.update(scene);
+    this.bulletFactory.update(this.scene);
 
     var lookAtPoint = new THREE.Vector3(Mouse.projectPos.x,Mouse.projectPos.y,12);
 
@@ -104,18 +101,20 @@ class Hero {
     if(this.char.collision){
       switch( this.char.objectInCollision.name ){
         case "fragment":
-          this.ressource += 1;
+          this.ressource++;
+          game.screenInfo.fragment++;
           game.collisionEngine.removeBody( this.char.objectInCollision, "fragment");
           console.log("ressource",this.ressource, game.collisionEngine.bodies["fragment"]);
           break;
         case "enemy_bullet":
-          this.lifes -= 1;
+          this.lifes--;
+          game.screenInfo.hero_lifes--;
           game.collisionEngine.removeBody( this.char.objectInCollision, "enemy_projectil");
           console.log("lifes", this.lifes);
           break;
       }
 
-      scene.remove(this.char.objectInCollision.object);
+      this.scene.remove(this.char.objectInCollision.object);
 
       this.char.collision = false;
       this.char.objectInCollision = null;
@@ -135,7 +134,7 @@ class Hero {
 
   shoot(){
     if( this.interval < this.time){
-      this.bulletFactory.create(scene);
+      this.bulletFactory.create(this.scene);
       this.interval = this.time+this.fireRate;
     }
   }

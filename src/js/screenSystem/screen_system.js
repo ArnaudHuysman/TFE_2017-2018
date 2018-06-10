@@ -4,6 +4,7 @@ export default class ScreenSystem {
 
 	constructor(container){
 		this.container = container;
+
 		this.currentScreen = null;
 	}
 
@@ -15,13 +16,20 @@ export default class ScreenSystem {
 		if( this.previousScreen){
 			this.removeScreen(this.previousScreen);
 		}
-		console.log(this.currentScreen.display);
 
+		this.currentScreen.resumeLoading(this.enterScreen.bind(this));
+	}
+
+	enterScreen(){
 		for (var i = 0; i < this.currentScreen.display.length; i++) {
 			this.container.appendChild(this.currentScreen.display[i]);
 		}
 
 		this.currentScreen.enter(this.setScreen.bind(this))
+	}
+
+	updateScreen(){
+		if(this.currentScreen.pageReady) this.currentScreen.update();
 	}
 
 	removeScreen(previousScreen){
@@ -35,9 +43,11 @@ export default class ScreenSystem {
 
 export class Screen {
 	constructor(){
+		this.pageReady = false;
 		this.display = null;
 		this.moduleContainer = document.querySelector(".module");
 		this.moduleSystem = new ModuleSystem(this.moduleContainer);
+
 	}
 
 	enter(){};
@@ -45,4 +55,19 @@ export class Screen {
 	exit(){};
 
 	update(){};
+
+	resumeLoading(enterCallback){
+		this.enterCallback = enterCallback;
+		if(this.images.length <= 0){
+				this.pageReady = true;
+		} else {
+			let imageSrc = this.images.shift();
+			console.log(imageSrc);
+			let image = new Image();
+			image.addEventListener('load', this.resumeLoading.bind(this,this.enterCallback) )
+			image.src = imageSrc.src;
+		}
+
+		if(this.pageReady) this.enterCallback();
+	}
 }

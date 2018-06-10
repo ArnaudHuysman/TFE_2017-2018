@@ -22,7 +22,7 @@ export class ScreenScene {
 
 	}
 
-	generateScene(scene,map){
+	generateScene(map){
 
 		//scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
@@ -48,18 +48,18 @@ export class ScreenScene {
 
 		this.camera.lookAt( 0,5,0 );
 
-		this.createLights(scene)
+		this.createLights()
 	}
 
-	createLights(scene){
+	createLights(){
 		var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5);
 		directionalLight.position.set( 1, 1, 1 );
 
 		var pointLight2 = new THREE.PointLight( 0x16D4F0, 2, 200, 2 );
 		pointLight2.position.set( 0, 0, -100 );
 
-		scene.add( directionalLight );
-		scene.add(pointLight2)
+		this.scene.add( directionalLight );
+		this.scene.add(pointLight2)
 
 	}
 }

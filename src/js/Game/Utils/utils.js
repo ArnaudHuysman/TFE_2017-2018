@@ -24,12 +24,6 @@ export const Player = {
   score: 0,
 }
 
-export const GameObjects = {
-  updatableMesh : [],
-  collidableMesh : [],
-  enemies: []
-}
-
 export const keys = [];
 
 export const Heroes = [

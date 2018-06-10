@@ -36,17 +36,15 @@ export class heroWalkState extends State {
     let value = getCubeMapValue(this.hero.game,pos)
 
     if(value && value.name === "empty_tile") {
-			console.log("fall");
       this.hero.stateMachine.changeState(new heroFallingState(this.hero))
     };
 
-    this.hero.tilePos = value !== undefined ? value.arrayPos : this.tilePos ;
+    this.hero.tilePos = value !== undefined ? value.arrayPos : this.hero.tilePos ;
 
     let shootAnim  = this.hero.armsAnimationSystem.currentAnimation instanceof ArmShootAnimation;
 
     if(this.hero.isShooting){
       this.hero.shoot();
-      console.log("Shoot");
       if(!(shootAnim)){
         this.hero.armsAnimationSystem.changeAnimation(new ArmShootAnimation(this.hero.char.body));
       }
@@ -86,7 +84,6 @@ export class heroStandState extends State {
 
     if(this.hero.isShooting){
       this.hero.shoot();
-      console.log("Shoot");
       if(!(shootAnim)){
         this.hero.armsAnimationSystem.changeAnimation(new ArmShootAnimation(this.hero.char.body));
       }

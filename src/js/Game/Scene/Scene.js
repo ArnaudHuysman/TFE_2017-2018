@@ -8,21 +8,22 @@ export const SceneInfo = {
 }
 
 
-export const scene = new THREE.Scene();
+
 
 
 export class Scene {
 	constructor() {
 
 		this.camera;
+		this.scene = new THREE.Scene();
 		this.lights = [];
 		this.pointLight = null;
 
 	}
 
-	generateScene(scene,map){
+	generateScene(){
 
-		//scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
+		//this.scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
 		SceneInfo.HEIGHT = window.innerHeight;
 	  SceneInfo.WIDTH = window.innerWidth;
@@ -58,13 +59,13 @@ export class Scene {
 		refractionCube.mapping = THREE.CubeRefractionMapping;
 		refractionCube.format = THREE.RGBFormat;
 
-		scene.background = reflectionCube;
+		this.scene.background = reflectionCube;
 
 
-		this.createLights(scene)
+		this.createLights()
 	}
 
-	createLights(scene){
+	createLights(){
 		var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5);
 		directionalLight.position.set( 1, 1, 500 );
 
@@ -74,10 +75,10 @@ export class Scene {
 		this.pointLight = new THREE.PointLight( 0xffffff, 2, 2000, 2 );
 		this.pointLight.position.set( 0, 0, 800 );
 
-		scene.add( directionalLight );
-		// scene.add( helper );
-		scene.add(this.pointLight);
-		scene.add(pointLight2)
+		this.scene.add( directionalLight );
+		// this.scene.add( helper );
+		this.scene.add(this.pointLight);
+		this.scene.add(pointLight2)
 
 	}
 }

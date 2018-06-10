@@ -25,22 +25,17 @@
 				<ul class="header_nav">
 					<li class="header_nav--item">
 						<div class="option_buttons">
-							<div class="sound buttons" alt="exit">
-								<a href="#" class="btn"><span> - / + </span></a>
+							<div class="sound buttons" alt="sound">
+								<a href="#" class="btn"></a>
 							</div>
-							<div class="param buttons" alt="exit">
-								<a href="#" class="btn"><span> O </span></a>
+							<div class="music buttons" alt="music">
+								<a href="#" class="btn"></a>
 							</div>
 						</div>
 					</li>
 					<li class="header_nav--item">
-						<div class="header_title" alt="exit">
-							<!-- <p>Hero Level</p> -->
-						</div>
-					</li>
-					<li class="header_nav--item">
-						<div class="option buttons" alt="exit">
-							<a href="#" class="btn"><span> < - </span></a>
+						<div class="option buttons" alt="option">
+							<a href="#" class="btn"></a>
 						</div>
 					</li>
 				</ul>
@@ -127,12 +122,11 @@
 					<ul class="footer_nav">
 						<li class="footer_nav--item">
 							<div class="exit buttons" alt="exit">
-								<a href="#" class="btn"><span> Return to menu </span></a>
+								<a href="#" class="btn"></a>
 							</div>
 						</li>
 						<li class="footer_nav--item">
 							<div class="char_choice buttons">
-								<a href="#" class="btn"><span>Choose your Character </span></a>
 							</div>
 						</li>
 					</ul>
@@ -166,8 +160,23 @@
 
 			<!-- Ecran de jeux -->
 			<div class="screen gameScreen">
-				<div class="score"> Score : 0 </div>
 				<div class="world" id="world"></div>
+				<div class="screen_footer">
+					<ul class="footer_nav">
+						<li class="footer_nav--item">
+							<div class="fragment footer--item"></div>
+							<div class="lifes footer--item"></div>
+						</li>
+						<li class="footer_nav--item">
+							<div class="drilllifes footer--item"></div>
+						</li>
+						<li class="footer_nav--item">
+							<div class="waves footer--item">
+								<p> Waves </p>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 
 		</template>

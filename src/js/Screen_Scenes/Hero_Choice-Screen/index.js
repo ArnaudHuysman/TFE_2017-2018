@@ -1,4 +1,4 @@
-import {ScreenScene, SceneInfo} from './showreel_this.context.scene';
+import {ScreenScene, SceneInfo} from './showreel_scene';
 
 import Utils,{Player,keys, GameObjects} from '../../Game/Utils/utils';
 import {Key}  from '../../Game/Utils/keys_handler';
@@ -41,7 +41,7 @@ export class HeroShowreel {
 
   init(){
     //GENERATE SCENE
-    this.context.generateScene(this.context.scene);
+    this.context.generateScene();
     // --------- EVENT LISTENER ------------ //
     window.addEventListener('mousemove', e => Utils.handleMouseMove(e , SceneInfo, this), false);
     window.addEventListener('mousedown', e => {
@@ -76,7 +76,6 @@ export class HeroShowreel {
 
     //SET RENDERER SETTINGS
     this.renderer.setPixelRatio( window.devicePixelRatio );
-    console.log(SceneInfo);
     this.renderer.setSize(SceneInfo.WIDTH,SceneInfo.HEIGHT);
 
     this.renderer.shadowMap.enabled = true;

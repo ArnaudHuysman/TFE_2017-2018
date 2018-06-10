@@ -1,11 +1,16 @@
 
-import {maps} from '../Maps/maps_object';
-import {GameObjects} from '../Utils/utils';
 
 let count = 0;
+
+export function initWaves(game){
+  game.screenInfo.totalWaves = game.map.info.waves.length;
+}
+
 export function updateWaves(game,scene,timePassed){
 
-  const map = maps.firstMap;
+  const map = game.map.info;
+
+  console.log(timePassed)
 
   const time = timePassed/100;
 
@@ -13,11 +18,10 @@ export function updateWaves(game,scene,timePassed){
 
     for (var i = 0; i < map.waves[count].enemies.length; i++) {
       for (var j = 0; j < map.waves[count].enemies[i].amount; j++) {
-
         game.enemyFactory.addEntity(map.waves[count].enemies[i].type,game);
-
       }
     }
     count++;
+    game.screenInfo.waves ++;
   }
 }

@@ -53,7 +53,7 @@ export default function EnemyFactory(game,scene){
   this.removeSelf = function(game,obj){
 
     scene.remove(obj.body.object);
-    game.collisionEngine.removeBody( obj.body , "enemies");
+    
 
     let index = game.enemies.indexOf(obj);
 

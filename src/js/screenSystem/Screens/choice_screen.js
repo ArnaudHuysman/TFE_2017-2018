@@ -12,8 +12,10 @@ export default class ChoiceScreen extends Screen{
 		this.buttons = this.content.querySelectorAll('.buttons');
 
 		this.display = [];
+		this.display.push(this.header);
 		this.display.push(this.content);
 
+		this.images = [];
 	}
 
 	enter(exitCallback){
@@ -21,8 +23,6 @@ export default class ChoiceScreen extends Screen{
 		for (var button of this.buttons) {
 			button.addEventListener('click', this.navigate.bind(this, button));
 		}
-
-		console.log(HeroShowreel);
 
 		showreel = new HeroShowreel();
 		showreel.init();

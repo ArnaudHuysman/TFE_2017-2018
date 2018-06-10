@@ -7,36 +7,28 @@ import MapScreen from './ScreenSystem/Screens/map_screen';
 import GameScreen from './ScreenSystem/Screens/game_screen';
 import Images from './img_load.js'
 
+var newTime, deltaTime, lastTime;
 
+var App = (function(){
 
-function preloader() {
-	if (document.images) {
+	return {
+		init: function () {
+			this.container = document.querySelector(".app");
+			this.appScreens = new ScreenSystem(this.container);
+			this.appScreens.setScreen(new TitleScreen());
+			this.update();
+		},
+		update: function() {
 
-    for (var i = 0; i < Images.length; i++) {
-      var img = new Image();
-      img.src = Images[i].src;
-    }
-	}
+			newTime = Date.now();
+			deltaTime = newTime - lastTime ;
+			lastTime = newTime;
 
-  const mainContaint = document.querySelector(".app");
-  const AppScreens = new ScreenSystem(mainContaint);
+			this.appScreens.updateScreen();
 
-  AppScreens.setScreen(new TitleScreen());
-}
-
-
-function addLoadEvent(func) {
-	var oldonload = window.onload;
-	if (typeof window.onload != 'function') {
-		window.onload = func;
-	} else {
-		window.onload = function() {
-			if (oldonload) {
-				oldonload();
-			}
-			func();
+			requestAnimationFrame(this.update.bind(this));
 		}
 	}
-}
+})();
 
-addLoadEvent(preloader);
+App.init()

@@ -29,7 +29,6 @@ export default class BigEnemy extends Enemy {
 
     if( this.mvtInterval < tp){
       this.target = getRandomTiles(this.currentGame, map.spawTiles);
-      console.log(this.target);
       this.mvtInterval = tp+this.mvtDelay;
     }
 

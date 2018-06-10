@@ -1,6 +1,7 @@
 import {Screen} from '../screen_system';
 import TitleScreen from './title_screen';
 import ChoiceScreen from './choice_screen'
+import GameScreen from './game_screen'
 
 import MenuModule from '../Modules/Game/menu_module';
 export default class MapScreen extends Screen{
@@ -16,17 +17,18 @@ export default class MapScreen extends Screen{
 		this.display.push(this.header);
 		this.display.push(this.content);
 
+		this.images = [];
+
 	}
 
 	enter(exitCallback){
 
 		let maps = this.content.querySelectorAll('.map');
 
-		console.log(maps);
+
 		this.exitCallback = exitCallback;
 
     for (var button of this.buttons) {
-      console.log(button)
       button.addEventListener('click', this.navigate.bind(this, button));
     }
 	  //this.button.addEventListener('click', this.navigate.bind(this));
@@ -39,7 +41,7 @@ export default class MapScreen extends Screen{
 
     switch (name) {
       case "char_choice":
-        this.exitCallback(new ChoiceScreen());
+        this.exitCallback(new GameScreen());
         break;
       case "exit":
         this.exitCallback(new TitleScreen());

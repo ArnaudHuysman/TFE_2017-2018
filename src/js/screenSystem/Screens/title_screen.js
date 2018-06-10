@@ -12,7 +12,7 @@ export default class TitleScreen extends Screen{
 
 		this.display.push(this.header);
 		this.display.push(this.content);
-
+		this.images = [];
 	}
 
 	//var ca = Array.prototype.slice.call(document.querySelectorAll(".classA")).concat(Array.prototype.slice.call(document.querySelectorAll(".classB")));

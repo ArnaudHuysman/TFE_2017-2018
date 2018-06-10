@@ -7,16 +7,41 @@ export class Drill {
     this.object = new THREE.Object3D();
     this.tilePos;
 
-    this.support = new Cube(20,20,5,0xd90368,0x0a2444, "drillSupport");
+    this.support = new Cube(36,36,3,0xd90368,0x0a2444, "drillSupport");
     this.object.add(this.support.object);
 
-    this.main = new Cube(5,5,30,0x0a2444, 0xd90368, "drillMain");
+    for (var i = 0; i < 4; i++) {
+      let cube = new Cube(5,5,12,0xd90368,0x0a2444, "drillPillar");
+      switch (i) {
+        case 0:
+          cube.object.position.set(18,18,-3);
+          break;
+        case 1:
+          cube.object.position.set(18,-18,-3);
+          break;
+        case 2:
+          cube.object.position.set(-18,18,-3);
+          break;
+        case 3:
+          cube.object.position.set(-18,-18,-3);
+          break;
+        default:
+          break;
+      }
+
+
+      this.object.add(cube.object);
+
+    }
+
+    this.main = new Cube(10,10,30,0x0a2444, 0xd90368, "drillMain");
     this.object.add(this.main.object);
 
     this.life = 20;
+    game.screenInfo.drill_lifes = this.life;
     this.diff = 30/(120*60);
 
-    this.object.position.set(pos.x , pos.y ,5);
+    this.object.position.set(pos.x , pos.y ,10);
 
     game.threeContainer.add(this.object);
     game.collisionEngine.addBody(this ,"drill");
@@ -25,15 +50,13 @@ export class Drill {
 
   }
 
-  update(scene){
-    if(this.life <= 0 ) {
-      console.log("Defeat");
-    }
+  update(game,scene){
 
     game.collisionEngine.testCollision("drill", "enemies");
 
     if(this.collision) {
       this.life--;
+      game.screenInfo.drill_lifes--;
       this.collision = false;
       this.objectInCollision = null;
     }
