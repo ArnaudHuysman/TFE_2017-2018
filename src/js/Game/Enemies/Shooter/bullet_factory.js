@@ -33,16 +33,15 @@ export class Bullet {
 }
 
 export default class BulletFactory {
-  constructor(game,source){
+  constructor(game){
     this.bullets = [];
     this.game = game;
-    this.source = source;
     this.target = this.game.hero.char.object;
   }
-  create(scene){
+  create(scene, source){
 
-    var diffX = this.target.position.x - this.source.position.x;
-    var diffY = this.target.position.y - this.source.position.y;
+    var diffX = this.target.position.x - source.position.x;
+    var diffY = this.target.position.y - source.position.y;
     var theta = Math.atan2(diffY, diffX);
     var bullet = new Bullet(5,5,5,0x9216FF, 0x1E0633);
 
@@ -55,8 +54,8 @@ export default class BulletFactory {
 
     bullet.body.object.position.z = 12;
 
-    bullet.body.object.position.x = this.source.position.x;
-    bullet.body.object.position.y = this.source.position.y;
+    bullet.body.object.position.x = source.position.x;
+    bullet.body.object.position.y = source.position.y;
 
     scene.add(bullet.body.object);
     this.game.collisionEngine.addBody(bullet.body, "enemy_projectil");

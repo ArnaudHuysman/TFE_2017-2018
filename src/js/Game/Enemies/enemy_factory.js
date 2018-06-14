@@ -3,8 +3,14 @@ import SimpleEnemy from './Simple/simple_cstr';
 import BigEnemy from './Big/big_cstr';
 import ShooterEnemy from './Shooter/shooter_cstr';
 import {GameObjects} from '../Utils/utils';
+import BulletFactory from './Shooter/bullet_factory'
 
 export default function EnemyFactory(game,scene){
+
+  this.entities = [];
+
+  this.bulletFactory = new BulletFactory(game);
+
   this.addEntity = function(type,game,pos){
     var enemi = this.getEnemyCstr(type,game);
 
@@ -21,7 +27,7 @@ export default function EnemyFactory(game,scene){
 
     enemi.body.object.scale.set(2,2,2);
 
-    game.enemies.push(enemi);
+    this.entities.push(enemi);
     game.collisionEngine.addBody(enemi.body,"enemies");
     scene.add(enemi.body.object);
 
@@ -41,7 +47,8 @@ export default function EnemyFactory(game,scene){
           break;
 
       case "shooting":
-          enemi = new ShooterEnemy(4,4,10,0x511180, 0x16D4F0, "shootingBlobl", game);
+          console.log(this);
+          enemi = new ShooterEnemy(4,4,10,0x511180, 0x16D4F0, "shootingBlobl", game, this);
           break;
     }
 
@@ -53,14 +60,20 @@ export default function EnemyFactory(game,scene){
   this.removeSelf = function(game,obj){
 
     scene.remove(obj.body.object);
-    
 
-    let index = game.enemies.indexOf(obj);
-
+    let index = this.entities.indexOf(obj);
 		if (index >= 0)
 		{
-			game.enemies.splice(index,1);
+			this.entities.splice(index,1);
 		}
 
   };
+
+  this.update = function(mvtTime, game){
+    for (var i = 0; i < this.entities.length; i++) {
+      this.entities[i].update(mvtTime, game.context.scene);
+    }
+
+    this.bulletFactory.update(game.context.scene);
+  }
 }

@@ -4,10 +4,10 @@ import BulletFactory from './bullet_factory'
 
 
 export default class ShooterEnemy extends Enemy {
-  constructor(width, height, depth, color, outColor, name, game){
+  constructor(width, height, depth, color, outColor, name, game, factory){
     super(width, height, depth, color, outColor, name, game);
 
-    this.bulletFactory = new BulletFactory(game, this.body.object);
+    this.factory = factory;
 
     this.fireRate = 1000;
     this.interval = 0;
@@ -72,8 +72,6 @@ export default class ShooterEnemy extends Enemy {
 
     this.shoot(time,scene);
 
-    this.bulletFactory.update(scene);
-
     if(this.mvt) this.move(theta);
   }
   move(theta){
@@ -97,7 +95,7 @@ export default class ShooterEnemy extends Enemy {
 
   shoot(time,scene){
     if( this.interval < time){
-      this.bulletFactory.create(scene);
+      this.factory.bulletFactory.create(scene, this.body.object);
       this.interval = time+this.fireRate;
     }
   }

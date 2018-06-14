@@ -38,11 +38,9 @@ export default class GameRunningState extends State {
 
       this.game.map.drill.update(this.game,this.game.context.scene, mvtTime);
 
+      this.game.enemyFactory.update(mvtTime, this.game);
       updateWaves(this.game,this.game.context.scene,mvtTime);
 
-      for (var i = 0; i < this.game.enemies.length; i++) {
-        this.game.enemies[i].update(mvtTime,this.game.context.scene);
-      }
     } else {
       oldTime = Date.now();
     }
