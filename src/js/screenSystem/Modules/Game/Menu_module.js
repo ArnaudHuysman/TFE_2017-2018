@@ -1,8 +1,9 @@
 import {Module} from '../Module'
 
 export default class MenuModule extends Module {
-  constructor(){
+  constructor(game){
     super()
+    this.game = game;
     this.display = document.querySelector('.module_template').content.querySelector('.menu_module').cloneNode(true);
     this.buttons = this.display.querySelectorAll('.button');
   }
@@ -20,6 +21,7 @@ export default class MenuModule extends Module {
     switch (name) {
       case "exit":
         this.callback(this.display);
+        this.game.paused = false;
         break;
 
     }

@@ -9,7 +9,7 @@ import Images from './img_load.js'
 
 var newTime, deltaTime, lastTime;
 
-var App = (function(){
+const App = (function(){
 
 	return {
 		init: function () {
@@ -32,3 +32,5 @@ var App = (function(){
 })();
 
 App.init()
+
+export default App;

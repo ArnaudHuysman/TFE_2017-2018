@@ -41,8 +41,8 @@ export class Scene {
 	    SceneInfo.farPlane
 	  );
 
-		this.camera.position.z = 4000;
-		this.camera.position.y = -4500;
+		this.camera.position.z = 2000;
+		this.camera.position.y = -2050;
 
 		this.camera.lookAt( 0,0, -50 );
 

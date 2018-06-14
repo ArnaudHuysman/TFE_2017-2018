@@ -12,6 +12,9 @@ export default class MapScreen extends Screen{
 
 		this.buttons = Array.prototype.slice.call(this.content.querySelectorAll(".buttons")).concat(Array.prototype.slice.call(this.header.querySelectorAll(".buttons")));
 
+		this.maps = this.content.querySelectorAll('.map');
+
+		console.log(this.maps);
 
 		this.display = [];
 		this.display.push(this.header);
@@ -23,25 +26,30 @@ export default class MapScreen extends Screen{
 
 	enter(exitCallback){
 
-		let maps = this.content.querySelectorAll('.map');
-
-
 		this.exitCallback = exitCallback;
 
-    for (var button of this.buttons) {
-      button.addEventListener('click', this.navigate.bind(this, button));
+
+    for (let button of this.buttons) {
+      button.addEventListener('click', this.navigate.bind(this, button), true);
     }
-	  //this.button.addEventListener('click', this.navigate.bind(this));
+
+		this.content.addEventListener('click', this.toggleMaps.bind(this), true);
+
+		for (let map of this.maps) {
+			map.addEventListener('click', this.toggleMaps.bind(this, map), true);
+			// let desc  = map.querySelector('.description');
+			// let btn  = desc.querySelector('.textblock--btn');
+			// btn.addEventListener('click', this.navigate.bind(this, btn));
+		}
+
 	}
 
 	navigate(btn){
-
-
     let name = btn.className.replace(" buttons", "");
 
     switch (name) {
-      case "char_choice":
-        this.exitCallback(new GameScreen());
+      case "textblock--btn":
+        this.exitCallback(new GameScreen(btn.dataset.name));
         break;
       case "exit":
         this.exitCallback(new TitleScreen());
@@ -52,7 +60,19 @@ export default class MapScreen extends Screen{
       default:
 
     }
-
-
 	}
+
+	toggleMaps(currentMap){
+		console.log("toggle");
+
+		for (let map of this.maps) {
+			if(map.querySelector('.description').style.display === "block") map.querySelector('.description').style.display = "none";
+		}
+
+		if(!(currentMap instanceof MouseEvent )){
+			let map  = currentMap.querySelector('.description');
+			map.style.display = "block";
+		}
+	}
+
 }

@@ -28,10 +28,7 @@ export class Drill {
         default:
           break;
       }
-
-
       this.object.add(cube.object);
-
     }
 
     this.main = new Cube(10,10,30,0x0a2444, 0xd90368, "drillMain");
@@ -46,13 +43,24 @@ export class Drill {
     game.threeContainer.add(this.object);
     game.collisionEngine.addBody(this ,"drill");
 
+    this.interval = 10000;
+
     setInterval( e => this.popCrystal(scene, game) , 10000);
 
   }
 
-  update(game,scene){
+  update(game,scene,time){
 
     game.collisionEngine.testCollision("drill", "enemies");
+
+
+    if(this.interval < time ){
+      this.popCrystal(scene, game);
+      let rdm = Math.random()*(20000-12000)+12000;
+
+      this.interval += rdm;
+      console.log(rdm);
+    }
 
     if(this.collision) {
       this.life--;

@@ -14,6 +14,7 @@ export default class ModuleSystem {
 
   removeModule(display){
     this.container.removeChild(display);
+    this.module = null;
   }
 
 }

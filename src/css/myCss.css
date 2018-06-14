@@ -1,10 +1,14 @@
-body, ul{
+body, ul,h1,h2,h3,h4,h5,h4{
   margin : 0;
   padding: 0;
+
+  font-family: sans-serif;
 }
 
-h3{
-  margin: 0;
+
+a{
+  text-decoration: none;
+  color: white;
 }
 
 .app {
@@ -37,7 +41,7 @@ li{
   width: 100vw;
   height: 100vh;
   /* background: url("../../dist/assets/img/BG.png") no-repeat; */
-
+  overflow: hidden;
   position: relative;
 }
 
@@ -280,22 +284,96 @@ li{
   grid-area : map6;
 }
 
-.map {
-  position: relative;
+
+.map_icon{
+  text-align: center;
+}
+.map_title{
+  display: none;
+  text-align: center;
+  margin-top: -2.5em;
+  padding: 1em 1em;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.3em;
 }
 
-
-
-.map:hover .description{
+.map:hover .map_title{
   display: block;
 }
 
+/* ---- Map description --- */
 .description{
+
   position: absolute;
-  top: 0;
-  left: 0;
+
+  left: 20%;
+  right: 20%;
+  top: 20%;
+  bottom: 20%;
   display: none;
 }
+
+.description_block{
+  padding: 2.5em;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  background-color: #011936;
+  border: 3px solid #00A4C9;
+
+}
+
+.description_img{
+  width: 750px;
+  background-color: darkgrey;
+}
+
+.description_textblock{
+  width: 750px;
+  color: white;
+  margin-left: 32px;
+}
+
+.textblock--title h2{
+  margin-bottom: 32px;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+}
+
+.textblock--waves{
+  font-size:24px;
+  font-weight: 600;
+}
+
+.textblock--text{
+  font-size: 16px;
+  font-weight: 200;
+  color: lightgrey;
+}
+
+.textblock--btn{
+  display: inline-block;
+  margin-top: 32px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  padding: 1em 10%;
+  border : 1px solid #00A4C9;
+  color : #00A4C9;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.textblock--btn:hover{
+  color : #011936;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
 
 .char_choice{
   width : 300px;
@@ -322,14 +400,6 @@ li{
 .exit:active{
   background-position: 200px 0px;
 }
-
-/* Maps Button  */
-
-.maps.buttons {
-  background-color: red;
-  position: absolute;
-}
-
 /* Modules */
 
 .module{

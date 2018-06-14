@@ -1,5 +1,5 @@
 export const maps = {
-              "firstMap" : {
+              "premium" : {
                   "name" : "moon",
                   "structure" : [
                     [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
@@ -27,23 +27,23 @@ export const maps = {
                     [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
                   ],
                   "waves" : [
-                    { "time" : 40, "enemies" :[ {"type": "simple", "amount": 5},
+                    { "time" : 40, "enemies" :[ {"type": "simple", "amount": 1},
+                                                {"type": "big", "amount": 1},
+                                                {"type": "shooting", "amount": 1}
+                                              ]},
+                    { "time" : 120, "enemies" :[ {"type": "simple", "amount": 0},
                                                 {"type": "big", "amount": 0},
                                                 {"type": "shooting", "amount": 0}
                                               ]},
-                    { "time" : 120, "enemies" :[ {"type": "simple", "amount": 5},
+                    { "time" : 200, "enemies" :[ {"type": "simple", "amount": 0},
                                                 {"type": "big", "amount": 0},
                                                 {"type": "shooting", "amount": 0}
                                               ]},
-                    { "time" : 200, "enemies" :[ {"type": "simple", "amount": 5},
+                    { "time" : 280, "enemies" :[ {"type": "simple", "amount": 0},
                                                 {"type": "big", "amount": 0},
                                                 {"type": "shooting", "amount": 0}
                                               ]},
-                    { "time" : 280, "enemies" :[ {"type": "simple", "amount": 5},
-                                                {"type": "big", "amount": 0},
-                                                {"type": "shooting", "amount": 0}
-                                              ]},
-                    { "time" : 350, "enemies" :[ {"type": "simple", "amount": 5},
+                    { "time" : 350, "enemies" :[ {"type": "simple", "amount": 0},
                                                 {"type": "big", "amount": 0},
                                                 {"type": "shooting", "amount": 0}
                                               ]}

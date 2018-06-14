@@ -72,45 +72,177 @@
 					<div class="maps">
 
 						<div class="map map1">
-							<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							<div class="map_icon">
+								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							</div>
+							<h3 class="map_title"> Premium </h3>
 							<div class="description">
-								<h3 class="description_title"> Premium </h3>
-								<div class="map_vie"> <img src="./dist/assets/img/icons/icon_map.png" alt=""> </div>
+								<div class="description_block">
+									<div class="description_img">
+										<img src="" alt="">
+									</div>
+									<div class="description_textblock">
+										<div class="textblock--title">
+											<h2> Premium </h2>
+										</div>
+										<div class="textblock--waves">
+											<p> Waves : 10 </p>
+										</div>
+										<div class="textblock--text">
+											<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+										</div>
+										<a class="textblock--btn buttons" data-name="premium" href="#">
+											<div>
+												Play
+											</div>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="map map2">
-							<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							<div class="map_icon">
+								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							</div>
+							<h3 class="map_title"> Derivium </h3>
 							<div class="description">
-								<h3 class="description_title"> Derivium </h3>
-								<div class="map_vie"> <img src="./dist/assets/img/icons/icon_map.png" alt=""> </div>
+								<div class="description_block">
+									<div class="description_img">
+										<img src="" alt="">
+									</div>
+									<div class="description_textblock">
+										<div class="textblock--title">
+											<h2> DERIVIUM </h2>
+										</div>
+										<div class="textblock--waves">
+											<p> Waves : 10 </p>
+										</div>
+										<div class="textblock--text">
+											<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+										</div>
+										<a class="textblock--btn buttons" data-name="derivium" href="#">
+											<div>
+												Play
+											</div>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="map map3">
-							<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							<div class="map_icon">
+									<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							</div>
+							<h3 class="map_title"> Trilium </h3>
 							<div class="description">
-								<h3 class="description_title"> Trilium </h3>
-								<div class="map_vie"> <img src="./dist/assets/img/icons/icon_map.png" alt=""> </div>
+								<div class="description_block">
+									<div class="description_img">
+										<img src="" alt="">
+									</div>
+									<div class="description_textblock">
+										<div class="textblock--title">
+											<h2> Trilium </h2>
+										</div>
+										<div class="textblock--waves">
+											<p> Waves : 10 </p>
+										</div>
+										<div class="textblock--text">
+											<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+										</div>
+										<a class="textblock--btn buttons" data-name="trilium" href="#">
+											<div>
+												Play
+											</div>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="map map4">
-							<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							<div class="map_icon">
+								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							</div>
+							<h3 class="map_title"> Strium </h3>
 							<div class="description">
-								<h3 class="description_title"> Strium </h3>
-								<div class="map_vie"> <img src="./dist/assets/img/icons/icon_map.png" alt=""> </div>
+								<div class="description_block">
+									<div class="description_img">
+										<img src="" alt="">
+									</div>
+									<div class="description_textblock">
+										<div class="textblock--title">
+											<h2> Strium </h2>
+										</div>
+										<div class="textblock--waves">
+											<p> Waves : 10 </p>
+										</div>
+										<div class="textblock--text">
+											<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+										</div>
+										<a class="textblock--btn buttons" data-name="strium" href="#">
+											<div>
+												Play
+											</div>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="map map5">
-							<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							<div class="map_icon">
+								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							</div>
+							<h3 class="map_title"> Delightium </h3>
 							<div class="description">
-								<h3 class="description_title"> Delightium </h3>
-								<div class="map_vie"> <img src="./dist/assets/img/icons/icon_map.png" alt=""> </div>
+								<div class="description_block">
+									<div class="description_img">
+										<img src="" alt="">
+									</div>
+									<div class="description_textblock">
+										<div class="textblock--title">
+											<h2> Delightium </h2>
+										</div>
+										<div class="textblock--waves">
+											<p> Waves : 10 </p>
+										</div>
+										<div class="textblock--text">
+											<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+										</div>
+										<a class="textblock--btn buttons" data-name="delightium" href="#">
+											<div>
+												Play
+											</div>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="map map6">
-							<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							<div class="map_icon">
+								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
+							</div>
+							<h3 class="map_title"> Bloom </h3>
 							<div class="description">
-								<h3 class="description_title"> Bloom </h3>
-								<div class="map_vie"> <img src="./dist/assets/img/icons/icon_map.png" alt=""> </div>
+								<div class="description_block">
+									<div class="description_img">
+										<img src="" alt="">
+									</div>
+									<div class="description_textblock">
+										<div class="textblock--title">
+											<h2> Bloom </h2>
+										</div>
+										<div class="textblock--waves">
+											<p> Waves : 10 </p>
+										</div>
+										<div class="textblock--text">
+											<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+										</div>
+										<a class="textblock--btn buttons" data-name="bloom" href="#">
+											<div>
+										 		Play
+											</div>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
