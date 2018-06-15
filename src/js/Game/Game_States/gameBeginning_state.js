@@ -16,7 +16,7 @@ export default class GameBeginningState extends State {
     console.log("Game Beginning")
 
     let self = this;
-    TweenMax.to(this.game.context.camera.position, 1, {
+    TweenMax.to(this.game.context.camera.position, 2, {
         z : -800,
         ease: Power0.easeInOut,
         repeat: 1,

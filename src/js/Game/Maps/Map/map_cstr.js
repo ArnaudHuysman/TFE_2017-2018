@@ -66,8 +66,6 @@ export default class Map {
 
     let changingColor = {r:0, g:0, b:0};
 
-
-
     var tampon = 0;
 
 
@@ -107,7 +105,7 @@ export default class Map {
               c.arrayPos = [j,i];
               break;
             case 3:
-              c = new MapTile(0x16D4F0, 40, 1, this.tileSize);
+              c = new InvisibleTile(this.tileSize);
               c.arrayPos = [j,i];
               c.tileType = "drill";
               drillTile = true;

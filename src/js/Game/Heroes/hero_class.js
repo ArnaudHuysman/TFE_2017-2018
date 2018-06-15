@@ -106,13 +106,11 @@ class Hero {
           this.ressource++;
           game.screenInfo.fragment++;
           game.collisionEngine.removeBody( this.char.objectInCollision, "fragment");
-          console.log("ressource",this.ressource, game.collisionEngine.bodies["fragment"]);
           break;
         case "enemy_bullet":
           this.lifes--;
           game.screenInfo.hero_lifes--;
           game.collisionEngine.removeBody( this.char.objectInCollision, "enemy_projectil");
-          console.log("lifes", this.lifes);
           break;
       }
 

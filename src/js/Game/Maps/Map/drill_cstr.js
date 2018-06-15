@@ -2,50 +2,45 @@ import Cube from '../../Utils/cube_cstr';
 import Fragment from '../Fragment/fragment_cstr';
 
 
-export class Drill {
-  constructor(game,scene,pos){
+class Drill_Cstr {
+  constructor(){
     this.object = new THREE.Object3D();
-    this.tilePos;
 
-    this.support = new Cube(36,36,3,0xd90368,0x0a2444, "drillSupport");
-    this.object.add(this.support.object);
-
-    for (var i = 0; i < 4; i++) {
-      let cube = new Cube(5,5,12,0xd90368,0x0a2444, "drillPillar");
-      switch (i) {
-        case 0:
-          cube.object.position.set(18,18,-3);
-          break;
-        case 1:
-          cube.object.position.set(18,-18,-3);
-          break;
-        case 2:
-          cube.object.position.set(-18,18,-3);
-          break;
-        case 3:
-          cube.object.position.set(-18,-18,-3);
-          break;
-        default:
-          break;
-      }
+    // this.main = new Cube(10,10,30,0x0a2444, 0xd90368, "drillMain");
+    // this.object.add(this.main.object);
+    for (var i = 0; i < 15; i++) {
+      let size = 1.5*i + Math.random();
+      let depth = 4+ Math.random() ;
+      let cube = new Cube(size,size,depth,0x0a2444, 0xd90368, "drillMain");
+      cube.object.position.z += i*4;
+      cube.object.rotation.z += i;
       this.object.add(cube.object);
     }
 
-    this.main = new Cube(10,10,30,0x0a2444, 0xd90368, "drillMain");
-    this.object.add(this.main.object);
+    this.object.position.z -= 50;
+
+  }
+
+
+}
+
+export class Drill {
+  constructor(game,scene,pos){
+    this.drill_cstr = new Drill_Cstr();
+    this.tilePos;
+
 
     this.life = 20;
     game.screenInfo.drill_lifes = this.life;
     this.diff = 30/(120*60);
 
-    this.object.position.set(pos.x , pos.y ,10);
+    this.drill_cstr.object.position.set(pos.x , pos.y , -20);
 
-    game.threeContainer.add(this.object);
-    game.collisionEngine.addBody(this ,"drill");
+    game.threeContainer.add(this.drill_cstr.object);
+    game.collisionEngine.addBody(this.drill_cstr ,"drill");
 
     this.interval = 10000;
-
-    setInterval( e => this.popCrystal(scene, game) , 10000);
+    this.limit = -(15*4.5)+20;
 
   }
 
@@ -69,15 +64,15 @@ export class Drill {
       this.objectInCollision = null;
     }
 
-    if(this.main.object.position.z > -10) {
+    if(this.drill_cstr.object.position.z > this.limit) {
       this.animate();
     }
   }
 
   animate(){
 
-    this.main.object.rotation.z += 0.05;
-    this.main.object.position.z -= this.diff;
+    this.drill_cstr.object.rotation.z += 0.05;
+    this.drill_cstr.object.position.z -= 0.05;
 
   }
 
