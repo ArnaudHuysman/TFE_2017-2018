@@ -306,7 +306,7 @@ li{
 .description{
 
   position: absolute;
-
+  z-index : 2;
   left: 20%;
   right: 20%;
   top: 20%;
@@ -320,20 +320,23 @@ li{
   flex-flow: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-  background-color: #011936;
-  border: 3px solid #00A4C9;
+  background: linear-gradient(#80D9ED, #8457B2);
+  border: 8px solid #2F0042;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3) inset, 10px 20px 20px 1px rgba(0, 0, 0, 0.3);
 
 }
 
 .description_img{
   width: 750px;
-  background-color: darkgrey;
+  background-color: white;
+  box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.3);
 }
 
 .description_textblock{
   width: 750px;
   color: white;
   margin-left: 32px;
+  text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .textblock--title h2{
@@ -341,6 +344,7 @@ li{
   font-size: 32px;
   font-weight: 400;
   letter-spacing: 0.3em;
+
 }
 
 .textblock--waves{
@@ -363,14 +367,16 @@ li{
   letter-spacing: 0.3em;
   text-transform: uppercase;
   padding: 1em 10%;
-  border : 1px solid #00A4C9;
-  color : #00A4C9;
+  border : 1px solid #80D9ED;
+  color : #80D9ED;
   background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: -2px 2px 8px 1px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease-in-out;
 }
 
 .textblock--btn:hover{
-  color : #011936;
+  color : #2F0042;
+  border : 1px solid #2F0042;
   background-color: rgba(255, 255, 255, 0.6);
 }
 
@@ -402,18 +408,39 @@ li{
 }
 /* Modules */
 
-.module{
+.menu_module {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
   z-index :10;
-  top: 0;
+  top: 40%;
   left: 0;
   right: 0;
-}
-.menu_module {
+
   width : 768px;
   height: 1024px;
   background-image: url('../../dist/assets/img/interfaces/menu_module.png');
   background-position: 0px 0px;
+}
+
+.state_module{
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  z-index :10;
+  top: 40%;
+  left: 0;
+  right: 0;
+
+  height: 192px;
+  transform: skew(20deg);
+  background: linear-gradient(0.25turn, rgba(128, 217, 237, 0.2), rgba(128, 217, 237, 0.9), rgba(255, 255, 255, 0.9), rgba(128, 217, 237, 0.9), rgba(128, 217, 237, 0.2));
+
+}
+
+.state_module--text{
+  text-transform: uppercase;
+  color: white;
+  font-size: 64px;
+  font-weight: 400;
 }

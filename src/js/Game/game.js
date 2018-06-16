@@ -62,10 +62,11 @@ export class Game {
 
   }
 
-  init(){
+  init(screen){
     //GENERATE SCENE
     //this.context.generateScene();
     let self = this;
+    this.screen = screen;
     // --------- EVENT LISTENER ------------ //
     window.addEventListener('mousemove', e => Utils.handleMouseMove(e , SceneInfo, this), false);
     window.addEventListener('mousedown', e => {
@@ -97,7 +98,7 @@ export class Game {
       console.log(this, self);
     }
 
-    controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
+    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
     //helper = new THREE.AxesHelper(500);
     //this.context.scene.add(helper);
 

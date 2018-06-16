@@ -319,6 +319,9 @@
 				<p> Menu </p>
 				<a class="exit button" href="#"> Exit </a>
 			</div>
+			<div class="state_module module">
+				<p class="state_module--text"> Empty </p>
+			</div>
 		</template>
 
 	<script type="text/javascript" src="dist/js/app.js?cb=<?php echo mt_rand(1000, 100000);?>"/></script>

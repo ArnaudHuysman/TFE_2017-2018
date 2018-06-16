@@ -33,7 +33,7 @@ export default class GameScreen extends Screen{
 	enter(exitCallback){
 		this.game = new Game(maps[this.mapName]);
 		window.game = game;
-		this.game.init();
+		this.game.init(this);
 
 		for (var button of this.buttons) {
       button.addEventListener('click', this.navigate.bind(this, button));

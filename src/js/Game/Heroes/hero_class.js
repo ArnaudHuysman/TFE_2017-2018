@@ -12,7 +12,7 @@ import {GameObjects} from '../Utils/utils';
 import {Key} from '../Utils/keys_handler'
 import {Bullet} from '../Enemies/Shooter/bullet_factory';
 import StateMachine from '../Utils/state_machine';
-import {heroWalkState, heroStandState, heroFalling} from './states'
+import {heroStandState, heroBasicState} from './states'
 import {scene} from '../Scene/Scene'
 
 class Hero {
@@ -66,8 +66,9 @@ class Hero {
     this.armsAnimationSystem = new AnimationSystem();
     this.legsAnimationSystem = new AnimationSystem();
 
-    this.stateMachine = new StateMachine(new heroStandState(this));
-
+    this.stateMachine = new StateMachine(new heroBasicState(this));
+    this.movementStateMachine = new StateMachine(new heroStandState(this));
+    this.char.object.up = new THREE.Vector3(0,0,1);
     this.char.object.lookAt(0,0,12);
 
   }
@@ -85,6 +86,7 @@ class Hero {
     this.isShooting = Player.isRightClick ? true : false;
 
     this.stateMachine.currentState.update();
+    this.movementStateMachine.currentState.update();
     this.bulletFactory.update(this.scene);
 
     var lookAtPoint = new THREE.Vector3(Mouse.projectPos.x,Mouse.projectPos.y,12);
@@ -92,6 +94,7 @@ class Hero {
     this.char.object.up = new THREE.Vector3(0,0,1);
 
     this.char.object.lookAt(lookAtPoint);
+    console.log(lookAtPoint);
 
 
     // Collision
@@ -100,25 +103,6 @@ class Hero {
     game.collisionEngine.testCollision("hero", "enemy_projectil");
     game.collisionEngine.testCollision("hero_projectil", "enemies");
 
-    if(this.char.collision){
-      switch( this.char.objectInCollision.name ){
-        case "fragment":
-          this.ressource++;
-          game.screenInfo.fragment++;
-          game.collisionEngine.removeBody( this.char.objectInCollision, "fragment");
-          break;
-        case "enemy_bullet":
-          this.lifes--;
-          game.screenInfo.hero_lifes--;
-          game.collisionEngine.removeBody( this.char.objectInCollision, "enemy_projectil");
-          break;
-      }
-
-      this.scene.remove(this.char.objectInCollision.object);
-
-      this.char.collision = false;
-      this.char.objectInCollision = null;
-    }
   }
 
   shoot(){

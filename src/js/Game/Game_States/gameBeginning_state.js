@@ -1,5 +1,6 @@
 import StateMachine, {State} from '../Utils/state_machine';
-import GameRunningState from './gameRunning_state'
+import GameRunningState from './gameRunning_state';
+import GameBetweenWavesState from './gameBetweenWaves_state'
 import {StandartHero} from '../Heroes/hero_class';
 import {initWaves, updateWaves} from '../System/waves';
 import EnemyFactory from '../Enemies/enemy_factory';
@@ -14,8 +15,7 @@ export default class GameBeginningState extends State {
 
   enter(){
     console.log("Game Beginning")
-
-    let self = this;
+    initWaves(this.game);
     TweenMax.to(this.game.context.camera.position, 2, {
         z : -800,
         ease: Power0.easeInOut,
@@ -58,13 +58,13 @@ export default class GameBeginningState extends State {
     this.game.hero.char.object.position.z = 12;
     this.game.hero.char.object.position.x = -30;
     this.game.hero.char.object.position.y = 30;
+    this.game.hero.char.object.lookAt(0,0,12);
 
     this.game.collisionEngine.addBody(this.game.hero.char,"hero");
 
     this.game.enemyFactory = new EnemyFactory(this.game,this.game.context.scene);
-    initWaves(this.game);
 
-    this.game.stateMachine.changeState(new GameRunningState(this.game));
+    this.game.stateMachine.changeState(new GameBetweenWavesState(this.game));
 
   }
 
