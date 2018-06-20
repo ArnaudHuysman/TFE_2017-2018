@@ -36,10 +36,8 @@ class InvisibleTile {
   }
 }
 
-
-
 export default class Map {
-  constructor(game,mapUsed,scene){
+  constructor(game,mapUsed,scene,drill){
     this.mesh = new THREE.Object3D();
     this.info = mapUsed;
     this.matrix = this.info.structure;
@@ -149,13 +147,17 @@ export default class Map {
 
     this.mesh.position.z = -10;
 
-    this.drill = new Drill(game,scene,drillPos);
-    this.drill.tilePos = drillTilePos;
+    if(drill){
+      this.drill = new Drill(game,scene,drillPos);
+      this.drill.tilePos = drillTilePos;
+    }
+
 
     game.threeContainer.add(this.mesh);
 
   }
 }
+
 
 function componentToHex(c) {
     var hex = Math.floor(c).toString(16);

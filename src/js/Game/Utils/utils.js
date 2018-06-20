@@ -21,7 +21,7 @@ export const Player = {
   isRightClick: false,
   isLeftClick: false,
   targetPos : { x: 0, y: 0 },
-  score: 0,
+  fragments: 0,
 }
 
 export const keys = [];
@@ -62,8 +62,8 @@ const Utils = {
 
   handleWindowResize : function(SceneInfo,game){
   	// update height and width of the renderer and the camera
-  	SceneInfo.HEIGHT = window.innerHeight;
-  	SceneInfo.WIDTH = window.innerWidth;
+    SceneInfo.HEIGHT = game.container.offsetHeight;
+	  SceneInfo.WIDTH = game.container.offsetWidth;
   	game.renderer.setSize(SceneInfo.WIDTH, SceneInfo.HEIGHT);
   	game.context.camera.aspect = SceneInfo.WIDTH / SceneInfo.HEIGHT;
   	game.context.camera.updateProjectionMatrix();
@@ -72,7 +72,9 @@ const Utils = {
   handleMouseMove : function(event,SceneInfo, game){
     var tx = -1 + (event.clientX / SceneInfo.WIDTH)*2;
     var ty = 1 - (event.clientY / SceneInfo.HEIGHT)*2;
+
     Mouse.pos = {x:tx, y:ty};
+
     Mouse.projectPos = this.toWorldPosition(event, Mouse.pos, game);
   },
 
@@ -111,7 +113,6 @@ const Utils = {
   },
 
   onDocumentMouseDown : function( event, game ) {
-
     event.preventDefault();
   }
 }

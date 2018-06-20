@@ -2,7 +2,7 @@ import Cube from '../../Utils/cube_cstr';
 import Fragment from '../Fragment/fragment_cstr';
 
 
-class Drill_Cstr {
+export class Drill_Cstr {
   constructor(){
     this.object = new THREE.Object3D();
 
@@ -54,14 +54,13 @@ export class Drill {
       let rdm = Math.random()*(20000-12000)+12000;
 
       this.interval += rdm;
-      console.log(rdm);
     }
 
-    if(this.collision) {
+    if(this.drill_cstr.collision) {
       this.life--;
       game.screenInfo.drill_lifes--;
-      this.collision = false;
-      this.objectInCollision = null;
+      this.drill_cstr.collision = false;
+      this.drill_cstr.objectInCollision = null;
     }
 
     if(this.drill_cstr.object.position.z > this.limit) {

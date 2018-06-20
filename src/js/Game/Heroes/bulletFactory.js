@@ -1,12 +1,11 @@
 import {Mouse, GameObjects} from '../Utils/utils'
 import Cube from '../Utils/cube_cstr';
 
-
 export class Bullet {
-  constructor(width,height,depth,color,outColor){
+  constructor(width,height,depth,color,outColor, callback){
 
-    this.name ="hero_bullet"
-
+    this.name = "hero_bullet";
+    this.callback = callback;
     this.body = new Cube(width, height, depth, color, outColor, this.name);
 
     this.collision = false;
@@ -14,15 +13,17 @@ export class Bullet {
       x :0,
       z :0
     };
+
+    setTimeout(this.callback.bind(this,this), 3000);
   }
 
   update(game,scene){
     this.body.object.position.x += this.mvt.x*5;
     this.body.object.position.y += this.mvt.y*5;
 
-    if (this.collision) {
+    if (this.body.collision) {
       scene.remove(this.body.object);
-      game.collisionEngine.removeBody(this, "hero_projectil");
+      game.collisionEngine.removeBody(this.body, "hero_projectil");
       let index = game.hero.bulletFactory.bullets.indexOf(this);
 
   		if (index >= 0)
@@ -44,7 +45,7 @@ export default class BulletFactory {
     var diffX = Mouse.projectPos.x -  this.game.hero.char.object.position.x;
     var diffY = Mouse.projectPos.y - this.game.hero.char.object.position.y;
     var theta = Math.atan2(diffY, diffX);
-    var bullet = new Bullet(5,5,5,0x119DA4,0x3A015C);
+    var bullet = new Bullet(5,5,5,0x119DA4,0x3A015C, this.removeSelf.bind(this));
 
 
     bullet.mvt.x = Math.cos(theta)*1.5;
@@ -78,5 +79,17 @@ export default class BulletFactory {
     }
 
   }
+
+  removeSelf(obj){
+
+    this.game.context.scene.remove(obj.body.object);
+    this.game.collisionEngine.removeBody(obj.body, "hero_projectil");
+    let index = this.bullets.indexOf(obj);
+		if (index >= 0)
+		{
+			this.bullets.splice(index,1);
+		}
+
+  };
 
 }

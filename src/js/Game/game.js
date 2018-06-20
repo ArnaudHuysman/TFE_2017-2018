@@ -30,8 +30,8 @@ export class Game {
 
     }
 
-    this.context = new Scene();
     this.container = document.getElementById('world');
+    this.context = new Scene(this.container);
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true
@@ -46,7 +46,7 @@ export class Game {
     this.enemyFactory = null;
     this.enemies =[];
 
-    this.map = new Map(this,map,this.context.scene);
+    this.map = new Map(this,map,this.context.scene,true);
 
     this.pivot = new THREE.Object3D();
     this.threeContainer.position.y = - (map.structure.length/2)*(24);
@@ -94,17 +94,16 @@ export class Game {
     } );
     document.addEventListener('contextmenu', event => event.preventDefault());
     window.addEventListener('resize', e => Utils.handleWindowResize(SceneInfo,this), false);
-    window.onbeforeunload = function(){
-      console.log(this, self);
-    }
 
-    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
+    controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
     //helper = new THREE.AxesHelper(500);
     //this.context.scene.add(helper);
 
     //SET RENDERER SETTINGS
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize(SceneInfo.WIDTH,SceneInfo.HEIGHT);
+
+    Utils.handleWindowResize(SceneInfo,this)
 
     this.renderer.shadowMap.enabled = true;
 

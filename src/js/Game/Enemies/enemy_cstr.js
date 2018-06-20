@@ -34,15 +34,12 @@ export default class Enemy {
 
 
     if(this.body.collision) {
-      if(this.body.objectInCollision instanceof Bullet) {
+      if(this.body.objectInCollision.name == "hero_bullet") {
         this.lifes-- ;
         this.currentGame.collisionEngine.removeBody(this.body.objectInCollision, "hero_projectil");
         this.body.collision = false;
         this.body.objectInColllision = null;
-      } else this.hitAction(this.body.objectInCollision) ;
-
-
-
+      }
     };
 
     if(this.lifes <= 0 ) this.currentGame.enemyFactory.removeSelf(this.currentGame, this);
@@ -55,7 +52,4 @@ export default class Enemy {
   move(){
   }
 
-  hitAction(hitableObjects){
-  //  this.mvt = false;
-  }
 }

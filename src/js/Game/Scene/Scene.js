@@ -7,14 +7,11 @@ export const SceneInfo = {
 	WIDTH : 0
 }
 
-
-
-
-
 export class Scene {
-	constructor() {
+	constructor(container) {
 
 		this.camera;
+		this.container = container;
 		this.scene = new THREE.Scene();
 		this.lights = [];
 		this.pointLight = null;
@@ -24,9 +21,12 @@ export class Scene {
 	generateScene(){
 
 		//this.scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
+		console.log(window, this.container);
+		// SceneInfo.HEIGHT = window.innerHeight;
+	  // SceneInfo.WIDTH = window.innerWidth;
 
-		SceneInfo.HEIGHT = window.innerHeight;
-	  SceneInfo.WIDTH = window.innerWidth;
+		SceneInfo.HEIGHT = this.container.offsetHeight;
+	  SceneInfo.WIDTH = this.container.offsetWidth;
 
 
 		SceneInfo.aspectRatio = SceneInfo.WIDTH/SceneInfo.HEIGHT;

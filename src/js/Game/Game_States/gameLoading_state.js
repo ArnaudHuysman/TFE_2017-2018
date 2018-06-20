@@ -8,7 +8,7 @@ export default class GameLoadingState extends State {
   }
 
   enter(){
-    console.log("Game loading")
+
       this.game.context.generateScene();
   }
 

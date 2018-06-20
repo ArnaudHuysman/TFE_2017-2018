@@ -33,7 +33,7 @@ class Hero {
 
     this.tilePos = null;
 
-    this.ressource = 0;
+    this.fragments = 0;
     this.lifes = 3;
 
     this.char = new Char();
@@ -94,9 +94,6 @@ class Hero {
     this.char.object.up = new THREE.Vector3(0,0,1);
 
     this.char.object.lookAt(lookAtPoint);
-    console.log(lookAtPoint);
-
-
     // Collision
 
     game.collisionEngine.testCollision("hero", "fragment");

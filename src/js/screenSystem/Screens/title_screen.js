@@ -1,10 +1,11 @@
 import {Screen} from '../screen_system';
 import MapScreen from './map_screen';
 
+import Images from '../../img_load';
+
 export default class TitleScreen extends Screen{
-	constructor(){
-		super();
-		this.header = document.querySelector('.header_template').content.querySelector('.header').cloneNode(true);
+	constructor(app){
+		super(app);
 		this.content = document.querySelector('.template').content.querySelector('.introScreen').cloneNode(true);
 		this.buttons = this.content.querySelectorAll('.buttons');
 
@@ -12,16 +13,30 @@ export default class TitleScreen extends Screen{
 
 		this.display.push(this.header);
 		this.display.push(this.content);
-		this.images = [];
+		this.images = Images;
+
+		this.volume = 0;
 	}
 
 	//var ca = Array.prototype.slice.call(document.querySelectorAll(".classA")).concat(Array.prototype.slice.call(document.querySelectorAll(".classB")));
 
 	enter(exitCallback){
 
+		super.enter()
 		this.exitCallback = exitCallback;
+
+		this.app.sources[0].source.loop = true;
+
 		for (var button of this.buttons) {
 			button.addEventListener('click', this.navigate.bind(this, button));
+		}
+	}
+
+	update(dt){
+
+		if( this.volume <= 1){
+			this.app.sources[0].gainNode.gain.value = this.volume;
+			this.volume += dt/3200;
 		}
 	}
 
@@ -30,10 +45,7 @@ export default class TitleScreen extends Screen{
 
     switch (name) {
       case "playButton":
-        this.exitCallback(new MapScreen());
-        break;
-      case "exit":
-        this.exitCallback(new TitleScreen());
+        this.exitCallback(new MapScreen(this.app));
         break;
       default:
 

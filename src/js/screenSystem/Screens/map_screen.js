@@ -2,16 +2,16 @@ import {Screen} from '../screen_system';
 import TitleScreen from './title_screen';
 import ChoiceScreen from './choice_screen'
 import GameScreen from './game_screen'
+import {MapScene} from '../../Screen_Scenes/Hero_Choice-Screen/index'
 
 import MenuModule from '../Modules/Game/menu_module';
 export default class MapScreen extends Screen{
-	constructor(){
-		super();
-		this.header = document.querySelector('.header_template').content.querySelector('.header').cloneNode(true);
+	constructor(app){
+		super(app);
+
+
 		this.content = document.querySelector('.template').content.querySelector('.mapScreen').cloneNode(true);
-
-		this.buttons = Array.prototype.slice.call(this.content.querySelectorAll(".buttons")).concat(Array.prototype.slice.call(this.header.querySelectorAll(".buttons")));
-
+		this.buttons = Array.prototype.slice.call(this.content.querySelectorAll(".buttons"));
 		this.maps = this.content.querySelectorAll('.map');
 
 		console.log(this.maps);
@@ -26,8 +26,9 @@ export default class MapScreen extends Screen{
 
 	enter(exitCallback){
 
-		this.exitCallback = exitCallback;
+		super.enter()
 
+		this.exitCallback = exitCallback;
 
     for (let button of this.buttons) {
       button.addEventListener('click', this.navigate.bind(this, button), true);
@@ -36,12 +37,19 @@ export default class MapScreen extends Screen{
 		this.content.addEventListener('click', this.toggleMaps.bind(this), true);
 
 		for (let map of this.maps) {
-			map.addEventListener('click', this.toggleMaps.bind(this, map), true);
-			// let desc  = map.querySelector('.description');
-			// let btn  = desc.querySelector('.textblock--btn');
-			// btn.addEventListener('click', this.navigate.bind(this, btn));
+			let icon = map.querySelector(".map_icon");
+			let name = map.querySelector('.buttons').dataset.name;
+			if(!this.app.maps[name].bought) {
+				icon.style.filter = "grayscale(100%)";
+			} else {
+				icon.style.filter = "none";
+				map.addEventListener('click', this.toggleMaps.bind(this, map), true);
+			}
 		}
 
+	}
+
+	exit(){
 	}
 
 	navigate(btn){
@@ -49,14 +57,12 @@ export default class MapScreen extends Screen{
 
     switch (name) {
       case "textblock--btn":
-        this.exitCallback(new GameScreen(btn.dataset.name));
+				this.app.mapSelected = this.app.maps[btn.dataset.name]
+        this.exitCallback(new GameScreen(this.app));
         break;
       case "exit":
-        this.exitCallback(new TitleScreen());
+        this.exitCallback(new TitleScreen(this.app));
         break;
-			case "option":
-				this.moduleSystem.setModule(new MenuModule());
-				break;
       default:
 
     }
@@ -72,7 +78,18 @@ export default class MapScreen extends Screen{
 		if(!(currentMap instanceof MouseEvent )){
 			let map  = currentMap.querySelector('.description');
 			map.style.display = "block";
+			let mapSceneCtx = map.querySelector('.description_img');
+			let mapName  = map.querySelector('.buttons').dataset.name;
+			console.log(mapSceneCtx);
+
+			if(mapSceneCtx.children.length === 0){
+				let showreel = new MapScene(mapSceneCtx, this.app.maps[mapName]);
+				showreel.init();
+			}
+			console.log(mapSceneCtx);
+
 		}
+
 	}
 
 }

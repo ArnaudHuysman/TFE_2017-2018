@@ -28,12 +28,12 @@ export default class ScreenSystem {
 		this.currentScreen.enter(this.setScreen.bind(this))
 	}
 
-	updateScreen(){
-		if(this.currentScreen.pageReady) this.currentScreen.update();
+	updateScreen(dt){
+		if(this.currentScreen.pageReady) this.currentScreen.update(dt);
 	}
 
 	removeScreen(previousScreen){
-
+		previousScreen.exit();
 		for (var i = 0; i < previousScreen.display.length; i++) {
 			this.container.removeChild(previousScreen.display[i]);
 		}
@@ -42,19 +42,53 @@ export default class ScreenSystem {
 }
 
 export class Screen {
-	constructor(){
+	constructor(app){
+		this.app = app;
 		this.pageReady = false;
 		this.display = null;
+
+		this.header = document.querySelector('.header_template').content.querySelector('.header').cloneNode(true);
+		this.headerButtons = this.header.querySelectorAll('.buttons');
+
+		console.log(this.headerButtons)
+
 		this.moduleContainer = document.querySelector(".module");
 		this.moduleSystem = new ModuleSystem(this.moduleContainer);
 
 	}
 
-	enter(){};
+	enter(){
+		console.log("enter")
+		for (var button of this.headerButtons) {
+			button.addEventListener('click', this.headerNavigate.bind(this, button));
+		}
+
+	};
 
 	exit(){};
 
 	update(){};
+
+	headerNavigate(btn){
+
+		let name = btn.className.replace(" buttons", "");
+		console.log(name)
+    switch (name) {
+      case "music":
+        this.app.sources.map( source => source.gainNode.gain.value = this.app.music ? 0 : 1 );
+				this.app.music = !this.app.music;
+        break;
+      case "sound":
+        this.exitCallback(new TitleScreen(this.app));
+        break;
+			case "option":
+				this.exitCallback(new TitleScreen(this.app));
+				break;
+      default:
+
+    }
+
+	};
 
 	resumeLoading(enterCallback){
 		this.enterCallback = enterCallback;

@@ -27,8 +27,8 @@ export class ScreenScene {
 		//scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
 
-		SceneInfo.HEIGHT = this.container.clientHeight;
-	  SceneInfo.WIDTH = this.container.clientWidth;
+		SceneInfo.HEIGHT = this.container.offsetHeight;
+	  SceneInfo.WIDTH = this.container.offsetWidth;
 
 
 		SceneInfo.aspectRatio = SceneInfo.WIDTH/SceneInfo.HEIGHT;
@@ -43,8 +43,8 @@ export class ScreenScene {
 	    SceneInfo.farPlane
 	  );
 
-		this.camera.position.z = 100;
-		this.camera.position.y = 20;
+		this.camera.position.z = 1000;
+		this.camera.position.y = -1000;
 
 		this.camera.lookAt( 0,5,0 );
 
@@ -53,12 +53,17 @@ export class ScreenScene {
 
 	createLights(){
 		var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5);
-		directionalLight.position.set( 1, 1, 1 );
+		directionalLight.position.set( 1, 1, 500 );
 
 		var pointLight2 = new THREE.PointLight( 0x16D4F0, 2, 200, 2 );
 		pointLight2.position.set( 0, 0, -100 );
 
+		this.pointLight = new THREE.PointLight( 0xffffff, 1, 2000, 2 );
+		this.pointLight.position.set( 0, 0, 800 );
+
 		this.scene.add( directionalLight );
+		// this.scene.add( helper );
+		this.scene.add(this.pointLight);
 		this.scene.add(pointLight2)
 
 	}

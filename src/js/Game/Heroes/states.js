@@ -129,13 +129,16 @@ export class heroBasicState extends State{
 		if(this.hero.char.collision){
 			switch( this.hero.char.objectInCollision.name ){
 				case "fragment":
-					this.hero.ressource++;
+					this.hero.fragments++;
 					this.hero.game.screenInfo.fragment++;
 					this.hero.game.collisionEngine.removeBody( this.hero.char.objectInCollision, "fragment");
 					break;
 				case "enemy_bullet":
 					this.hero.game.collisionEngine.removeBody( this.hero.char.objectInCollision, "enemy_projectil");
 					this.hero.stateMachine.changeState(new heroDamagedState(this.hero));
+					break;
+				case "enemies":
+					console.log("kqjrgsnrmgqjnerùp voja")
 					break;
 			}
 
@@ -145,9 +148,6 @@ export class heroBasicState extends State{
 			this.hero.char.objectInCollision = null;
 		}
 	}
-
-
-
 }
 
 export class heroFallingState extends State {
@@ -165,10 +165,6 @@ export class heroFallingState extends State {
 
 		if( this.hero.char.object.position.z < -500 ) this.hero.stateMachine.changeState(new heroSpawnState(this.hero))
 	}
-
-	exit(){
-		this.hero.lifes--;
-	}
 }
 
 export class heroDamagedState extends State {
@@ -176,16 +172,18 @@ export class heroDamagedState extends State {
 		super()
 		this.hero = hero;
 		this.time = 2000;
-		this.interval = 120;
+		this.interval = 200;
+		this.flashed = false;
 	}
 
 	enter(){
 		this.intervalTime = this.hero.time;
 		this.endTime = this.hero.time + this.time;
-		
+
 		this.hero.lifes--;
 		this.hero.game.screenInfo.hero_lifes--;
-		console.log("Damage In");
+
+		this.flash();
 	}
 	update(){
 
@@ -207,12 +205,12 @@ export class heroDamagedState extends State {
 
     this.hero.tilePos = value !== undefined ? value.arrayPos : this.hero.tilePos ;
 
-		this.flash();
+
 
 		if(this.hero.char.collision){
 			switch( this.hero.char.objectInCollision.name ){
 				case "fragment":
-					this.hero.ressource++;
+					this.hero.fragments++;
 					this.hero.game.screenInfo.fragment++;
 					this.hero.game.collisionEngine.removeBody( this.hero.char.objectInCollision, "fragment");
 					break;
@@ -222,21 +220,28 @@ export class heroDamagedState extends State {
 			this.hero.char.objectInCollision = null;
 		}
 
-		if(this.hero.time > this.endTime ){
-			this.hero.stateMachine.changeState(new heroBasicState(this.hero));
-		}
-
 	}
 
 	exit(){
-		console.log("Damage Out");
 		this.hero.char.body.head.mesh.material.opacity = 1;
 	}
 
 	flash(){
-		if(this.intervalTime < this.hero.time) {
-			this.hero.char.body.head.mesh.material.opacity = this.hero.char.body.head.mesh.material.opacity === 1 ? 0 : 1;
-			this.intervalTime += this.interval;
+
+
+
+		if(this.flashed) {
+			this.hero.char.body.head.mesh.material.color.setHex(0xffffff)
+		}	else{
+			this.hero.char.body.head.mesh.material.color.setHex(0x0a2444);
+		}
+
+		this.flashed = !this.flashed;
+
+		if( this.hero.time < this.endTime ) setTimeout(this.flash.bind(this), 120);
+		else {
+			this.hero.char.body.head.mesh.material.color.setHex(0x0a2444);
+			this.hero.stateMachine.changeState(new heroBasicState(this.hero));
 		}
 	}
 

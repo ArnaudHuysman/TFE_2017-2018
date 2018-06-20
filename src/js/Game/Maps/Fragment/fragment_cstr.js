@@ -18,10 +18,16 @@ export default class Fragment {
 
   build(){
     let geom = new THREE.BoxGeometry(this.size,this.size,this.size);
-    let mat = new THREE.MeshPhongMaterial({
-		  color:0x003785,
-	  });
-    let outlinerMat = new THREE.MeshBasicMaterial({ color:0x249FF0, side: THREE.BackSide })
+
+    let mat = new THREE.MeshToonMaterial( {
+						bumpScale: 1,
+						color: 0x16D4F0,
+						specular: 0x9EC5AB,
+						reflectivity: 1,
+						shininess: 40
+		});
+
+    let outlinerMat = new THREE.MeshBasicMaterial({ color:0x3A015C, side: THREE.BackSide })
 
     let simpleGeometry = new THREE.Geometry();
 

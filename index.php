@@ -6,7 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Just A Game</title>
     <link rel="stylesheet" type="text/css" href="src/css/myCss.css" />
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Titillium+Web:200,400,600,700" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
 		<script type="text/javascript" src="dist/js/package/three.min.js"></script>
 		<script type="text/javascript" src="dist/js/package/OrbitControls.js"></script>
 
@@ -26,16 +27,16 @@
 					<li class="header_nav--item">
 						<div class="option_buttons">
 							<div class="sound buttons" alt="sound">
-								<a href="#" class="btn"></a>
+								<a href="#" class="btn">  </a>
 							</div>
 							<div class="music buttons" alt="music">
-								<a href="#" class="btn"></a>
+								<a href="#" class="btn">  </a>
 							</div>
 						</div>
 					</li>
 					<li class="header_nav--item">
-						<div class="option buttons" alt="option">
-							<a href="#" class="btn"></a>
+						<div class="pause buttons" alt="option">
+							<a href="#" class="btn">  </a>
 						</div>
 					</li>
 				</ul>
@@ -79,14 +80,16 @@
 							<div class="description">
 								<div class="description_block">
 									<div class="description_img">
-										<img src="" alt="">
+
 									</div>
 									<div class="description_textblock">
 										<div class="textblock--title">
 											<h2> Premium </h2>
 										</div>
 										<div class="textblock--waves">
-											<p> Waves : 10 </p>
+											<p> <span> 10 </span> Waves </p>
+											<p> <span> Easy </span> Level </p>
+
 										</div>
 										<div class="textblock--text">
 											<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
@@ -108,11 +111,11 @@
 							<div class="description">
 								<div class="description_block">
 									<div class="description_img">
-										<img src="" alt="">
+
 									</div>
 									<div class="description_textblock">
 										<div class="textblock--title">
-											<h2> DERIVIUM </h2>
+											<h2> Derivium </h2>
 										</div>
 										<div class="textblock--waves">
 											<p> Waves : 10 </p>
@@ -137,7 +140,7 @@
 							<div class="description">
 								<div class="description_block">
 									<div class="description_img">
-										<img src="" alt="">
+
 									</div>
 									<div class="description_textblock">
 										<div class="textblock--title">
@@ -166,7 +169,7 @@
 							<div class="description">
 								<div class="description_block">
 									<div class="description_img">
-										<img src="" alt="">
+
 									</div>
 									<div class="description_textblock">
 										<div class="textblock--title">
@@ -195,7 +198,7 @@
 							<div class="description">
 								<div class="description_block">
 									<div class="description_img">
-										<img src="" alt="">
+
 									</div>
 									<div class="description_textblock">
 										<div class="textblock--title">
@@ -224,7 +227,7 @@
 							<div class="description">
 								<div class="description_block">
 									<div class="description_img">
-										<img src="" alt="">
+
 									</div>
 									<div class="description_textblock">
 										<div class="textblock--title">
@@ -257,12 +260,7 @@
 								<a href="#" class="btn"></a>
 							</div>
 						</li>
-						<li class="footer_nav--item">
-							<div class="char_choice buttons">
-							</div>
-						</li>
 					</ul>
-
 
 				</div>
 			</div>
@@ -296,8 +294,17 @@
 				<div class="screen_footer">
 					<ul class="footer_nav">
 						<li class="footer_nav--item">
-							<div class="fragment footer--item"></div>
-							<div class="lifes footer--item"></div>
+							<div class="fragment footer--item">
+								<div class="fragment-img">
+									<div class="fragment-text">
+									</div>
+								</div>
+							</div>
+							<div class="lifes footer--item">
+								<div class="life"></div>
+								<div class="life"></div>
+								<div class="life"></div>
+							</div>
 						</li>
 						<li class="footer_nav--item">
 							<div class="drilllifes footer--item"></div>
@@ -321,6 +328,27 @@
 			</div>
 			<div class="state_module module">
 				<p class="state_module--text"> Empty </p>
+			</div>
+			<div class="end_module victory module">
+				<h1 class="end_module--title"> Victory </h1>
+				<div class="end-module--info fragment">
+					<div class="fragment-img">
+						<div class="fragment-text">
+							100
+						</div>
+					</div>
+				</div>
+				<div class="end_module--buttons">
+					<div class="end_module--btn button return"> <a href="#" ></a> </div>
+					<div class="end_module--btn button replay"> <a href="#" ></a> </div>
+				</div>
+			</div>
+			<div class="end_module defeat module">
+				<h1 class="end_module--title"> Defeat </h1>
+				<div class="end_module--buttons">
+					<div class="end_module--btn button return"> <a href="#"></a></div>
+					<div class="end_module--btn button replay"> <a href="#"></a></div>
+				</div>
 			</div>
 		</template>
 

@@ -1,6 +1,6 @@
 import {State} from '../../Utils/state_machine';
 import {SimpleWalkAnimation, SimpleDeathAnimation} from './simple_animations'
-import {Drill} from '../../Maps/Map/drill_cstr';
+import {Drill_Cstr} from '../../Maps/Map/drill_cstr';
 
 
 export class simpleWalkState extends State {
@@ -31,7 +31,7 @@ export class simpleWalkState extends State {
     this.enemi.body.object.position.x += mvtX*0.4;
     this.enemi.body.object.position.y += mvtY*0.4;
 
-    if(this.enemi.body.collision && this.enemi.body.objectInCollision instanceof Drill) {
+    if(this.enemi.body.collision && this.enemi.body.objectInCollision instanceof Drill_Cstr) {
       this.enemi.stateMachine.changeState(new simpleDeadState(this.enemi));
     }
   };

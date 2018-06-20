@@ -28,6 +28,7 @@ export default function EnemyFactory(game,scene){
     enemi.body.object.scale.set(2,2,2);
 
     this.entities.push(enemi);
+    game.wavesSystem.currentWave.enemiesLeft++;
     game.collisionEngine.addBody(enemi.body,"enemies");
     scene.add(enemi.body.object);
 
@@ -38,17 +39,16 @@ export default function EnemyFactory(game,scene){
 
     switch(type) {
       case "simple" :
-          enemi = new SimpleEnemy(4,4,4,0x154E95, 0x16D4F0, "blobl", game);
+          enemi = new SimpleEnemy(5,5,5,0x154E95, 0x16D4F0, "blobl", game);
           enemi.target = game.drill;
           break;
 
       case "big":
-          enemi = new BigEnemy(8,8,8,0x0D5762, 0x16D4F0, "bigBlobl", game);
+          enemi = new BigEnemy(10,10,10,0x0D5762, 0x16D4F0, "bigBlobl", game);
           break;
 
       case "shooting":
-          console.log(this);
-          enemi = new ShooterEnemy(4,4,10,0x511180, 0x16D4F0, "shootingBlobl", game, this);
+          enemi = new ShooterEnemy(5,5,10,0x511180, 0x16D4F0, "shootingBlobl", game, this);
           break;
     }
 
@@ -61,6 +61,8 @@ export default function EnemyFactory(game,scene){
 
     scene.remove(obj.body.object);
 
+    game.collisionEngine.removeBody(obj.body, "enemies");
+    game.wavesSystem.currentWave.enemiesLeft--;
     let index = this.entities.indexOf(obj);
 		if (index >= 0)
 		{
