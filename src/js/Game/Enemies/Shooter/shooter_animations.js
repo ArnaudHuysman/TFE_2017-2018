@@ -1,4 +1,6 @@
 import {Animation} from '../../../animations/animationSystem';
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
 
 export class ShooterWalkAnimation extends Animation {
   constructor(object){

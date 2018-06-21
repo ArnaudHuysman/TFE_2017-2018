@@ -1,6 +1,9 @@
 import {Module} from '../Module'
 import TitleScreen from '../../Screens/title_screen'
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
+
 export default class VictoryModule extends Module {
   constructor(game){
     super()

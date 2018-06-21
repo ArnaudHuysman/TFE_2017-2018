@@ -10,7 +10,7 @@ export default class Cube {
     this.outlinerCube = new OutlinerCube(width, height, depth, outColor);
     this.object.add(this.outlinerCube.mesh);
   }
-}
+} 
 
 class InnerCube {
   constructor(width, height, depth, color){

@@ -23,7 +23,13 @@ gulp.task('js:copy', function(){
 	var OrbitControls = gulp.src('./node_modules/three/examples/js/controls/OrbitControls.js')
 		.pipe(gulp.dest('dist/js/package/'));
 
-  return merge(PathFinding, OrbitControls);
+	var TweenMax = gulp.src('./node_modules/gsap/src/minified/TweenMax.min.js')
+		.pipe(gulp.dest('dist/js/package/'));
+
+	var TimelineMax = gulp.src('./node_modules/gsap/src/minified/TimelineMax.min.js')
+		.pipe(gulp.dest('dist/js/package/'));
+
+  return merge(PathFinding, OrbitControls, TweenMax, TimelineMax);
 })
 
 

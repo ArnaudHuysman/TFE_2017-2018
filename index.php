@@ -7,7 +7,7 @@
 		<title>Just A Game</title>
     <link rel="stylesheet" type="text/css" href="src/css/myCss.css" />
 		<link href="https://fonts.googleapis.com/css?family=Titillium+Web:200,400,600,700" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script> -->
 		<script type="text/javascript" src="dist/js/package/three.min.js"></script>
 		<script type="text/javascript" src="dist/js/package/OrbitControls.js"></script>
 

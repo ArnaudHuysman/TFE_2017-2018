@@ -14,8 +14,6 @@ export default class TitleScreen extends Screen{
 		this.display.push(this.header);
 		this.display.push(this.content);
 		this.images = Images;
-
-		this.volume = 0;
 	}
 
 	//var ca = Array.prototype.slice.call(document.querySelectorAll(".classA")).concat(Array.prototype.slice.call(document.querySelectorAll(".classB")));
@@ -25,19 +23,13 @@ export default class TitleScreen extends Screen{
 		super.enter()
 		this.exitCallback = exitCallback;
 
-		this.app.sources[0].source.loop = true;
-
 		for (var button of this.buttons) {
 			button.addEventListener('click', this.navigate.bind(this, button));
 		}
 	}
 
 	update(dt){
-
-		if( this.volume <= 1){
-			this.app.sources[0].gainNode.gain.value = this.volume;
-			this.volume += dt/3200;
-		}
+		
 	}
 
 	navigate(btn){

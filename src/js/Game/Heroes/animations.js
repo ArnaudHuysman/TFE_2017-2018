@@ -1,5 +1,8 @@
 import {Animation} from '../../animations/animationSystem'
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
+
 //Arms
 export class ArmWalkAnimation extends Animation {
   constructor(object){

@@ -9,6 +9,9 @@ import Images from './img_load.js';
 import BufferLoader from './Utils/loader'
 import {maps} from './Game/Maps/maps_object'
 
+import AudioRessource from './Utils/audio_ressource'
+import Audios from './Utils/audios';
+
 var newTime, deltaTime, lastTime;
 
 export default class App {
@@ -16,27 +19,11 @@ export default class App {
 
 		this.container = document.querySelector(".app");
 		this.appScreens = new ScreenSystem(this.container);
-
-		this.audioContext = new AudioContext();
-		this.sources = [];
 		this.music = true;
-		let self = this;
-		this.bufferLoader = new BufferLoader(
-			this.audioContext,
-			[
-				'./src/sound/The-Creeping-Blob_Looping.mp3',
-				'./src/sound/Sci-Fi-Open_Looping.mp3',
-				'./src/sound/Solar-Storm_Looping.mp3',
-			],
-			this.loaded.bind(this)
-		);
+		this.audioRessource = new AudioRessource(Audios, this.loaded.bind(this));
 
 		this.maps = maps;
 		this.mapSelected = null;
-	}
-
-	init(){
-		this.bufferLoader.load();
 	}
 
 	update(){
@@ -49,33 +36,13 @@ export default class App {
 		requestAnimationFrame(this.update.bind(this));
 	}
 
-	loaded(bufferList){
+	loaded(){
 
-		for (var i = 0; i < bufferList.length; i++) {
-			let source = this.audioContext.createBufferSource();
-			source = createSource(bufferList[i], this.audioContext)
-			this.sources.push(source);
-		}
-
-		this.sources[0].gainNode.gain.value = 0;
-		this.sources[0].source.start(0);
-		
+		this.audioRessource.play("menu-music", true);
+		this.audioRessource.mix(1, "menu-music" );
 		this.appScreens.setScreen(new TitleScreen(this));
 		this.update();
 	}
 }
 
-function createSource(buffer, context) {
-  var source = context.createBufferSource();
-  var gainNode = context.createGain ? context.createGain() : context.createGainNode();
-  source.buffer = buffer;
-  source.loop = true;
-  source.connect(gainNode);
-  gainNode.connect(context.destination);
-  return {
-    source: source,
-    gainNode: gainNode
-  };
-}
 const app = new App();
-app.init();

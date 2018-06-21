@@ -11,7 +11,6 @@ import GameLoadingState from './Game_States/gameLoading_state';
 
 
 
-
 var raycaster, intersectPoint;
 
 

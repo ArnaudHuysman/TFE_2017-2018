@@ -1,6 +1,8 @@
 import Cube from '../../Utils/cube_cstr';
 import Fragment from '../Fragment/fragment_cstr';
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
 
 export class Drill_Cstr {
   constructor(){

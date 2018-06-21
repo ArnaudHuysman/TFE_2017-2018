@@ -1,6 +1,9 @@
 import Enemy from '../enemy_cstr';
 import {getPath, getCubePosition, getRandomTiles} from '../../Utils/path_functions';
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
+
 
 export default class BigEnemy extends Enemy {
   constructor(width, height, depth, color, outcolor, name, game){

@@ -57,7 +57,10 @@ export default class MapScreen extends Screen{
 
     switch (name) {
       case "textblock--btn":
-				this.app.mapSelected = this.app.maps[btn.dataset.name]
+
+				let map = this.app.maps[btn.dataset.name];
+				this.app.mapSelected = 	JSON.parse(JSON.stringify(map));
+
         this.exitCallback(new GameScreen(this.app));
         break;
       case "exit":

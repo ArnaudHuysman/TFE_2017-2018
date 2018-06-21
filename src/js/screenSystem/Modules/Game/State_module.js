@@ -1,5 +1,8 @@
 import {Module} from '../Module'
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
+
 export default class MenuModule extends Module {
   constructor(game, text){
     super()

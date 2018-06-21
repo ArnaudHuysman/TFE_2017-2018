@@ -2,6 +2,9 @@ import Enemy from '../enemy_cstr';
 import {getPath, getCubePosition} from '../../Utils/path_functions';
 import BulletFactory from './bullet_factory'
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
+
 
 export default class ShooterEnemy extends Enemy {
   constructor(width, height, depth, color, outColor, name, game, factory){

@@ -9,6 +9,9 @@ import Utils,{Player,keys, GameObjects}  from '../Utils/utils';
 import {Scene, SceneInfo} from '../Scene/Scene';
 import StateModule from '../../ScreenSystem/Modules/Game/State_module'
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
+
 
 export default class GameBeginningState extends State {
   constructor(game){
@@ -32,8 +35,8 @@ export default class GameBeginningState extends State {
   }
 
   exit(){
-    this.game.app.sources[1].gainNode.gain.value = 0;
-    this.game.app.sources[1].source.start(0);
+    this.game.app.audioRessource.play("game-music", true);
+    this.game.app.audioRessource.mix(2.5, "game-music");
   }
 
   update(){
