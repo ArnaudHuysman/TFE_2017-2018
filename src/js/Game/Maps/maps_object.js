@@ -33,10 +33,10 @@ export const maps = {
                                                           {"type": "big", "amount": 0},
                                                           {"type": "shooting", "amount": 1}
                                                         ]},
-                    // { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0},
-                    //                                       {"type": "big", "amount": 0},
-                    //                                       {"type": "shooting", "amount": 0}
-                    //                                     ]},
+                    { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 5},
+                                                          {"type": "big", "amount": 0},
+                                                          {"type": "shooting", "amount": 0}
+                                                        ]},
                     // { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0},
                     //                                       {"type": "big", "amount": 0},
                     //                                       {"type": "shooting", "amount": 1}

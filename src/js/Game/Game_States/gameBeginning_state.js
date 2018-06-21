@@ -2,7 +2,6 @@ import StateMachine, {State} from '../Utils/state_machine';
 import GameRunningState from './gameRunning_state';
 import GameBetweenWavesState from './gameBetweenWaves_state'
 import {StandartHero} from '../Heroes/hero_class';
-import {initWaves, updateWaves} from '../System/waves';
 import Waves_System from '../System/wave_cstr';
 import EnemyFactory from '../Enemies/enemy_factory';
 import Utils,{Player,keys, GameObjects}  from '../Utils/utils';
@@ -19,6 +18,7 @@ export default class GameBeginningState extends State {
     this.game = game;
     this.tween = false;
     this.tweens = [];
+    this.passed = false;
   }
 
   enter(){
@@ -41,9 +41,10 @@ export default class GameBeginningState extends State {
 
   update(){
     //Makes caera turns around the map;
-    if(Player.isLeftClick) {
+    if(!this.passed && Player.isLeftClick) {
       this.tweens[0].kill();
       this.stopTween();
+      this.passed = true;
     }
 
     if(!this.tween){
