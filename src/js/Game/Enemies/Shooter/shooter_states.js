@@ -44,7 +44,7 @@ export class shooterDeadState extends State {
 	}
 
 	enter(){
-    this.enemi.currentGame.collisionEngine.removeBody( this.enemi.body , "enemies");
+    this.enemi.game.collisionEngine.removeBody( this.enemi.body , "enemies");
     this.enemi.animationSystem.changeAnimation(new SimpleDeathAnimation(this.enemi.body.object,this.enemi));
   };
 

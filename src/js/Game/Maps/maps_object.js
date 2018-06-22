@@ -1,6 +1,7 @@
 export const maps = {
               "premium" : {
-                  "name" : "premium",
+                  "name" : "Premium",
+                  "difficulty" : "easy",
                   "cost" : 0,
                   "bought" : true,
                   "structure" : [
@@ -29,30 +30,31 @@ export const maps = {
                     [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
                   ],
                   "waves" : [
-                    { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 0},
-                                                          {"type": "big", "amount": 0},
-                                                          {"type": "shooting", "amount": 1}
+                    { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 5, lifes: 1, speed : 0.5},
+                                                          {"type": "big", "amount": 0, lifes: 5, speed : 0.5},
+                                                          {"type": "shooting", "amount": 0, lifes: 2, speed : 0.5}
                                                         ]},
-                    { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 5},
-                                                          {"type": "big", "amount": 0},
-                                                          {"type": "shooting", "amount": 0}
+                    { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0, lifes: 2, speed : 0.5},
+                                                          {"type": "big", "amount": 0, lifes: 2, speed : 0.5},
+                                                          {"type": "shooting", "amount": 1, lifes: 5, speed : 0.5}
                                                         ]},
-                    // { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0},
-                    //                                       {"type": "big", "amount": 0},
-                    //                                       {"type": "shooting", "amount": 1}
-                    //                                     ]},
-                    // { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 2},
-                    //                                       {"type": "big", "amount": 0},
-                    //                                       {"type": "shooting", "amount": 0}
-                    //                                     ]},
-                    // { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 5},
-                    //                                       {"type": "big", "amount": 0},
-                    //                                       {"type": "shooting", "amount": 0}
-                    //                                     ]}
+                    { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 10, "lifes": 2, "speed" : 0.5 },
+                                                          {"type": "big", "amount": 0, "lifes": 2, "speed" : 0.5 },
+                                                          {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
+                                                        ]},
+                    { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 10, "lifes": 2, "speed" : 0.5 },
+                                                          {"type": "big", "amount": 1, "lifes": 2, "speed" : 0.5 },
+                                                          {"type": "shooting", "amount": 0, "lifes": 10, "speed" : 0.5 }
+                                                        ]},
+                    { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 10, "lifes": 2, "speed" : 2 },
+                                                          {"type": "big", "amount": 0, "lifes": 2, "speed" : 0.5 },
+                                                          {"type": "shooting", "amount": 0, "lifes": 10, "speed" : 0.5 }
+                                                        ]}
                   ]
                 },
                 "derivium" : {
                     "name" : "derivium",
+                    "difficulty" : "medium",
                     "cost" : 100,
                     "bought" : true,
                     "structure" : [
@@ -81,25 +83,25 @@ export const maps = {
                       [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
                     ],
                     "waves" : [
-                      { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 10},
-                                                            {"type": "big", "amount": 0},
-                                                            {"type": "shooting", "amount": 0}
+                      { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 1, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                           ]},
-                      { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0},
-                                                            {"type": "big", "amount": 1},
-                                                            {"type": "shooting", "amount": 0}
+                      { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "big", "amount": 1, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                           ]},
-                      { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0},
-                                                            {"type": "big", "amount": 0},
-                                                            {"type": "shooting", "amount": 4}
+                      { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "shooting", "amount": 4, "lifes": 5, "speed" : 0.5 }
                                                           ]},
-                      { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0},
-                                                            {"type": "big", "amount": 0},
-                                                            {"type": "shooting", "amount": 0}
+                      { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                           ]},
-                      { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0},
-                                                            {"type": "big", "amount": 0},
-                                                            {"type": "shooting", "amount": 0}
+                      { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                            {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                           ]}
                     ]
                   },
@@ -133,25 +135,25 @@ export const maps = {
                         [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
                       ],
                       "waves" : [
-                        { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 10},
-                                                              {"type": "big", "amount": 0},
-                                                              {"type": "shooting", "amount": 0}
+                        { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 1, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                             ]},
-                        { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0},
-                                                              {"type": "big", "amount": 1},
-                                                              {"type": "shooting", "amount": 0}
+                        { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "big", "amount": 1, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                             ]},
-                        { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0},
-                                                              {"type": "big", "amount": 0},
-                                                              {"type": "shooting", "amount": 4}
+                        { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "shooting", "amount": 4, "lifes": 5, "speed" : 0.5 }
                                                             ]},
-                        { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0},
-                                                              {"type": "big", "amount": 0},
-                                                              {"type": "shooting", "amount": 0}
+                        { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                             ]},
-                        { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0},
-                                                              {"type": "big", "amount": 0},
-                                                              {"type": "shooting", "amount": 0}
+                        { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                              {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                             ]}
                       ]
                     },
@@ -185,25 +187,25 @@ export const maps = {
                           [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
                         ],
                         "waves" : [
-                          { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 10},
-                                                                {"type": "big", "amount": 0},
-                                                                {"type": "shooting", "amount": 0}
+                          { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 1, "lifes": 5, "speed" : 0.5},
+                                                                {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                               ]},
-                          { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                {"type": "big", "amount": 1},
-                                                                {"type": "shooting", "amount": 0}
+                          { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                {"type": "big", "amount": 1, "lifes": 5, "speed" : 0.5 },
+                                                                {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                               ]},
-                          { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                {"type": "big", "amount": 0},
-                                                                {"type": "shooting", "amount": 4}
+                          { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                {"type": "shooting", "amount": 4, "lifes": 5, "speed" : 0.5 }
                                                               ]},
-                          { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                {"type": "big", "amount": 0},
-                                                                {"type": "shooting", "amount": 0}
+                          { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                               ]},
-                          { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                {"type": "big", "amount": 0},
-                                                                {"type": "shooting", "amount": 0}
+                          { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                               ]}
                         ]
                       },
@@ -237,25 +239,25 @@ export const maps = {
                             [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
                           ],
                           "waves" : [
-                            { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 10},
-                                                                  {"type": "big", "amount": 0},
-                                                                  {"type": "shooting", "amount": 0}
+                            { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 1, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                                 ]},
-                            { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                  {"type": "big", "amount": 1},
-                                                                  {"type": "shooting", "amount": 0}
+                            { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "big", "amount": 1, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                                 ]},
-                            { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                  {"type": "big", "amount": 0},
-                                                                  {"type": "shooting", "amount": 4}
+                            { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "shooting", "amount": 4, "lifes": 5, "speed" : 0.5 }
                                                                 ]},
-                            { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                  {"type": "big", "amount": 0},
-                                                                  {"type": "shooting", "amount": 0}
+                            { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                                 ]},
-                            { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                  {"type": "big", "amount": 0},
-                                                                  {"type": "shooting", "amount": 0}
+                            { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                  {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                                 ]}
                           ]
                         },
@@ -289,25 +291,25 @@ export const maps = {
                               [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
                             ],
                             "waves" : [
-                              { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 10},
-                                                                    {"type": "big", "amount": 0},
-                                                                    {"type": "shooting", "amount": 0}
+                              { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 1, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                                   ]},
-                              { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                    {"type": "big", "amount": 1},
-                                                                    {"type": "shooting", "amount": 0}
+                              { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "big", "amount": 1, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                                   ]},
-                              { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                    {"type": "big", "amount": 0},
-                                                                    {"type": "shooting", "amount": 4}
+                              { "n" : 3, "time" : 240, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "shooting", "amount": 4, "lifes": 5, "speed" : 0.5 }
                                                                   ]},
-                              { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                    {"type": "big", "amount": 0},
-                                                                    {"type": "shooting", "amount": 0}
+                              { "n" : 4, "time" : 300, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                                   ]},
-                              { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0},
-                                                                    {"type": "big", "amount": 0},
-                                                                    {"type": "shooting", "amount": 0}
+                              { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
+                                                                    {"type": "shooting", "amount": 0, "lifes": 5, "speed" : 0.5 }
                                                                   ]}
                             ]
                           }

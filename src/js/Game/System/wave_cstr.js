@@ -1,6 +1,11 @@
-export class  Wave {
-  constructor(wave, game, oldWave){
+import GameBetweenWavesState from '../Game_States/gameBetweenWaves_state';
+import GameLostState from '../Game_States/gameLost_state';
+import GameEndedState from '../Game_States/gameEnded_state'
 
+export class  Wave {
+  constructor(wave, game, oldWave, callback){
+
+    this.callback = callback;
     this.wave = wave;
     this.time = this.wave.time*1000;
     this.timePassed = 0;
@@ -26,7 +31,7 @@ export class  Wave {
     }
 
     if(this.timePassed > this.time || (this.allEnemiesPop && this.enemiesLeft == 0)){
-      this.isDone = true;
+      this.callback();
     }
 
   }
@@ -38,7 +43,7 @@ export class  Wave {
         case 0:
           for (var j = 0; j < 5; j++) {
             if(this.enemies[i].amount > 0){
-              game.enemyFactory.addEntity(this.wave.enemies[i].type,game);
+              game.enemyFactory.addEntity(this.wave.enemies[i],game);
               this.enemies[i].amount--;
             }
 
@@ -47,7 +52,7 @@ export class  Wave {
         case 1:
           for (var j = 0; j < 1; j++) {
             if(this.enemies[i].amount > 0){
-              game.enemyFactory.addEntity(this.wave.enemies[i].type,game);
+              game.enemyFactory.addEntity(this.wave.enemies[i],game);
               this.enemies[i].amount--;
             }
           }
@@ -55,7 +60,7 @@ export class  Wave {
         case 2:
           for (var j = 0; j < 2; j++) {
             if(this.enemies[i].amount > 0){
-              game.enemyFactory.addEntity(this.wave.enemies[i].type,game);
+              game.enemyFactory.addEntity(this.wave.enemies[i],game);
               this.enemies[i].amount--;
             }
           }
@@ -81,8 +86,7 @@ export default class Waves_System {
   update(dt){
 
     if(this.hasBegun){
-      if(this.currentWave && !this.currentWave.isDone) this.currentWave.update(this.game,dt);
-      else this.changeWave();
+      if(this.currentWave) this.currentWave.update(this.game,dt);
     }
 
   }
@@ -91,11 +95,14 @@ export default class Waves_System {
 
     if(this.count < this.waves.length){
       console.log("wave ", this.count)
-      this.currentWave = new Wave(this.waves[this.count], this.game, this.currentWave);
+      this.currentWave = new Wave(this.waves[this.count], this.game, this.currentWave, this.changeWave.bind(this));
       this.count++;
     } else {
       this.endWaves();
     }
+
+    if(!this.isFinished) this.game.stateMachine.changeState(new GameBetweenWavesState(this.game,this.currentWave))
+    else this.game.stateMachine.changeState(new GameEndedState(this.game, "victory"));
 
   }
 

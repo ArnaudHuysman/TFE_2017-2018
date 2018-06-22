@@ -1,25 +1,27 @@
 import {keys}  from './utils';
 import { ArmStandAnimation, ArmShootAnimation, LegStandAnimation } from '../Heroes/animations'
 
-export function checkPressedKeys(hero){
+export function updateMvt(){
 
-  if(keys[90]) hero.char.object.position.y += 1.5;
-  if(keys[83]) hero.char.object.position.y -= 1.5;
-  if(keys[68]) hero.char.object.position.x += 1.5;
-  if(keys[81]) hero.char.object.position.x -= 1.5;
-
-  if( keys[90] || keys[83] || keys[68] || keys[81]){
-    hero.char.body.mvt = true;
-
-  } else {
-    hero.char.body.mvt = false;
-    hero.alreadyMoved = false;
-    if(!(hero.armsAnimationSystem.currentAnimation instanceof ArmShootAnimation)) {
-      hero.armsAnimationSystem.changeAnimation(new ArmStandAnimation(hero.char.body));
-    }
-    hero.legsAnimationSystem.changeAnimation(new LegStandAnimation(hero.char.body));
+  let mvt = {
+    x : 0,
+    y : 0
   }
 
+  let nbrKeyPressed = 0;
+
+  let speed = 0; 
+
+  let lgt = Object.keys(Key._pressed).length;
+
+  speed = lgt > 1 ? 2 : 2.5;
+
+  if(Key.isDown(90)) mvt.y = speed;
+  if(Key.isDown(83)) mvt.y = -speed;
+  if(Key.isDown(68)) mvt.x = speed;
+  if(Key.isDown(81)) mvt.x = -speed;
+
+  return mvt;
 }
 
 

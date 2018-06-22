@@ -61,7 +61,7 @@ export class ShooterShootAnimation extends Animation {
                     z:4,
                     ease: Power4.easeIn,
                     onComplete: function(){
-                      self.enemi.currentGame.enemyFactory.removeSelf(self.enemi.currentGame,self.enemi)
+                      self.enemi.game.enemyFactory.removeSelf(self.enemi.game,self.enemi)
                     }
                   }))
 	}

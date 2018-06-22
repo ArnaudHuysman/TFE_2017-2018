@@ -31,10 +31,12 @@ export default class GameScreen extends Screen{
 
 		super.enter()
 
+		this.header.querySelector('.pause').style.display = "block";
 		this.game = new Game(this.app.mapSelected);
 		window.game = game;
 		this.game.init(this);
 		this.game.app = this.app;
+
 
 		for (var button of this.buttons) {
       button.addEventListener('click', this.navigate.bind(this, button));
@@ -65,7 +67,8 @@ export default class GameScreen extends Screen{
 		let name = btn.className.replace(" buttons", "");
 
 		switch (name) {
-			case "option":
+			case "pause":
+					console.log("pause")
 					 this.game.paused = true;
 				break;
 			default:

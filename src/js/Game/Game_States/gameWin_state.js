@@ -13,6 +13,8 @@ export default class GameWinState extends State {
     console.log("GG")
     this.game.screen.moduleSystem.setModule(new VictoryModule(this.game));
 
+    this.game.app.playerFragments += this.game.hero.fragments; 
+
   }
 
 }

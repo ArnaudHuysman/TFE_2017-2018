@@ -3,12 +3,12 @@ import TitleScreen from './title_screen';
 import ChoiceScreen from './choice_screen'
 import GameScreen from './game_screen'
 import {MapScene} from '../../Screen_Scenes/Hero_Choice-Screen/index'
+import MapModule from '../Modules/Menu/Map_module'
 
 import MenuModule from '../Modules/Game/menu_module';
 export default class MapScreen extends Screen{
 	constructor(app){
 		super(app);
-
 
 		this.content = document.querySelector('.template').content.querySelector('.mapScreen').cloneNode(true);
 		this.buttons = Array.prototype.slice.call(this.content.querySelectorAll(".buttons"));
@@ -34,16 +34,20 @@ export default class MapScreen extends Screen{
       button.addEventListener('click', this.navigate.bind(this, button), true);
     }
 
+		this.content.querySelector('.fragment-text').innerText = " : " + this.app.playerFragments;
 		this.content.addEventListener('click', this.toggleMaps.bind(this), true);
 
 		for (let map of this.maps) {
-			let icon = map.querySelector(".map_icon");
-			let name = map.querySelector('.buttons').dataset.name;
+
+			let icon = map.querySelector('.map_icon');
+			let name = map.dataset.name;
+
+			map.querySelector('.map_cost').innerText = this.app.maps[name].cost;
 			if(!this.app.maps[name].bought) {
 				icon.style.filter = "grayscale(100%)";
 			} else {
 				icon.style.filter = "none";
-				map.addEventListener('click', this.toggleMaps.bind(this, map), true);
+				map.addEventListener('click', this.toggleMaps.bind(this, map, name), true);
 			}
 		}
 
@@ -71,27 +75,26 @@ export default class MapScreen extends Screen{
     }
 	}
 
-	toggleMaps(currentMap){
+	toggleMaps(currentMap, name){
 		console.log("toggle");
 
-		for (let map of this.maps) {
-			if(map.querySelector('.description').style.display === "block") map.querySelector('.description').style.display = "none";
-		}
+		if(!this.moduleSystem.module && !(currentMap instanceof MouseEvent )){
+			 this.moduleSystem.setModule(new MapModule( this, this.app.maps[name]));
+		};
 
-		if(!(currentMap instanceof MouseEvent )){
-			let map  = currentMap.querySelector('.description');
-			map.style.display = "block";
-			let mapSceneCtx = map.querySelector('.description_img');
-			let mapName  = map.querySelector('.buttons').dataset.name;
-			console.log(mapSceneCtx);
-
-			if(mapSceneCtx.children.length === 0){
-				let showreel = new MapScene(mapSceneCtx, this.app.maps[mapName]);
-				showreel.init();
-			}
-			console.log(mapSceneCtx);
-
-		}
+		// if(!(currentMap instanceof MouseEvent )){
+		// 	let map  = currentMap.querySelector('.description');
+		// 	map.style.display = "block";
+		// 	let mapSceneCtx = map.querySelector('.description_img');
+		// 	let mapName  = map.querySelector('.buttons').dataset.name;
+		// 	console.log(mapSceneCtx);
+		//
+		// 	if(mapSceneCtx.children.length === 0){
+		// 		let showreel = new MapScene(mapSceneCtx, this.app.maps[mapName]);
+		// 		showreel.init();
+		// 	}
+		// 	console.log(mapSceneCtx);
+		// }
 
 	}
 

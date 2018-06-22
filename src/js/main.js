@@ -24,6 +24,7 @@ export default class App {
 
 		this.maps = maps;
 		this.mapSelected = null;
+		this.playerFragments = 0;
 	}
 
 	update(){

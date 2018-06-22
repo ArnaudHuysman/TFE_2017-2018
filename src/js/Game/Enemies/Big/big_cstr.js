@@ -6,8 +6,8 @@ var TweenMax = gsap.TweenMax;
 
 
 export default class BigEnemy extends Enemy {
-  constructor(width, height, depth, color, outcolor, name, game){
-    super(width, height, depth, color, outcolor, name, game);
+  constructor(width, height, depth, color, outcolor, name, game, lifes, speed){
+    super(width, height, depth, color, outcolor, name, game, lifes, speed);
 
     this.mvtInterval = 0;
     this.mvtDelay = 10000;
@@ -21,17 +21,14 @@ export default class BigEnemy extends Enemy {
       else return 1;
     }));
 
-    this.lifes = 5;
-
-
   }
 
   update(tp){
 
-    const {hero, map} = this.currentGame;
+    const {hero, map} = this.game;
 
     if( this.mvtInterval < tp){
-      this.target = getRandomTiles(this.currentGame, map.spawTiles);
+      this.target = getRandomTiles(this.game, map.spawTiles);
       this.mvtInterval = tp+this.mvtDelay;
     }
 
@@ -59,8 +56,8 @@ export default class BigEnemy extends Enemy {
     var mvtX = Math.cos(theta);
     var mvtY = Math.sin(theta);
 
-    this.body.object.position.x += mvtX*0.3;
-    this.body.object.position.y += mvtY*0.3;
+    this.body.object.position.x += mvtX*this.speed;
+    this.body.object.position.y += mvtY*this.speed;
   }
 
   animation(){
@@ -92,7 +89,7 @@ export default class BigEnemy extends Enemy {
 
   }
   hitAction(hitableObjects){
-    if(hitableObjects instanceof Bullet ) this.currentGame.enemyFactory.removeSelf(this);
+    if(hitableObjects instanceof Bullet ) this.game.enemyFactory.removeSelf(this);
   }
 
   spawnSimple(){
@@ -105,7 +102,7 @@ export default class BigEnemy extends Enemy {
       pos.y = this.body.object.position.y + Math.sin(i)*25;
       pos.z = 10;
 
-      this.currentGame.enemyFactory.addEntity("simple",this.currentGame, pos);
+      this.game.enemyFactory.addEntity(this.game.wavesSystem.currentWave.enemies[0],this.game, pos);
 
     }
   }

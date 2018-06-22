@@ -13,7 +13,7 @@ class Audio {
     this.name = audio.name;
     this.type = audio.type;
     this.on = false;
-    this.mute = false;
+    this.muted = false;
 
     this.createSource();
   }
@@ -46,6 +46,11 @@ class Audio {
     }
   }
 
+  mute(){
+    this.gainNode.gain.value = 0;
+    this.muted = true;
+  }
+
 
 }
 
@@ -75,19 +80,19 @@ export default class AudioRessource{
   }
 
   play(name, loop){
-    let source = this.getSource(name);
+    let source = this.getSourceByName(name);
     source.play(loop);
   }
 
   stop(name){
 
-    let source = this.getSource(name);
+    let source = this.getSourceByName(name);
 
     source.stop();
   }
 
   mix(time, name1, name2){
-    let source1 = this.getSource(name1);
+    let source1 = this.getSourceByName(name1);
 
     TweenMax.to( source1.gainNode.gain, time , {
       value : 1,
@@ -95,7 +100,7 @@ export default class AudioRessource{
     })
 
     if(name2){
-      let source2 = this.getSource(name2);
+      let source2 = this.getSourceByName(name2);
 
       TweenMax.to( source2.gainNode.gain, time , {
         value : 0,
@@ -104,11 +109,28 @@ export default class AudioRessource{
     }
   }
 
-  getSource(name){
+  mute(type){
+    let sources = this.getSourcesByType(type);
+
+    for (var i = 0; i < sources.length; i++) {
+      sources[i].mute();
+    }
+  }
+
+  getSourceByName(name){
     let source
     this.sources.map(src => {
       if(src.name === name ) source = src;
     });
     return source;
+  }
+
+  getSourcesByType(type){
+    let sources = [];
+    this.sources.map(src => {
+      if(src.type === type ) sources.push(src);
+    });
+
+    return sources;
   }
 }

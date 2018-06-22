@@ -28,8 +28,8 @@ export class simpleWalkState extends State {
     var mvtX = Math.cos(theta);
     var mvtY = Math.sin(theta);
 
-    this.enemi.body.object.position.x += mvtX*0.4;
-    this.enemi.body.object.position.y += mvtY*0.4;
+    this.enemi.body.object.position.x += mvtX*this.enemi.speed;
+    this.enemi.body.object.position.y += mvtY*this.enemi.speed;
 
     if(this.enemi.body.collision && this.enemi.body.objectInCollision instanceof Drill_Cstr) {
       this.enemi.stateMachine.changeState(new simpleDeadState(this.enemi));
@@ -45,7 +45,7 @@ export class simpleDeadState extends State {
 
 	enter(){
 
-    this.enemi.currentGame.collisionEngine.removeBody( this.enemi.body , "enemies");
+    this.enemi.game.collisionEngine.removeBody( this.enemi.body , "enemies");
 
     this.enemi.animationSystem.changeAnimation(new SimpleDeathAnimation(this.enemi.body.object,this.enemi));
   };

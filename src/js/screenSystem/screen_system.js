@@ -72,18 +72,13 @@ export class Screen {
 	headerNavigate(btn){
 
 		let name = btn.className.replace(" buttons", "");
-		console.log(name)
     switch (name) {
       case "music":
-        this.app.sources.map( source => source.gainNode.gain.value = this.app.music ? 0 : 1 );
-				this.app.music = !this.app.music;
+        this.app.audioRessource.mute("music");
         break;
       case "sound":
-        this.exitCallback(new TitleScreen(this.app));
+				this.app.audioRessource.mute("sound");
         break;
-			case "option":
-				this.exitCallback(new TitleScreen(this.app));
-				break;
       default:
 
     }

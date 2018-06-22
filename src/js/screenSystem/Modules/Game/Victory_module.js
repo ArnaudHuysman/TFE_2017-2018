@@ -20,6 +20,8 @@ export default class VictoryModule extends Module {
       button.addEventListener('click', this.navigate.bind(this, button));
     }
 
+    this.display.querySelector('.fragment-text').innerText = " : " + this.game.hero.fragments;
+
     TweenMax.to(this.display.style, 0.8, {
       transform : "scale(1)",
       ease: Elastic.easeOut.config(1, 0.5),

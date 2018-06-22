@@ -3,7 +3,7 @@ import {Scene, SceneInfo} from './Scene/Scene';
 import {CollisionEngine} from './Utils/collision_system';
 import Utils,{Player,keys, GameObjects}  from './Utils/utils';
 import {Key}  from './Utils/keys_handler';
-import Map, {createBoardGame} from './Maps/Map/map_cstr'; 
+import Map, {createBoardGame} from './Maps/Map/map_cstr';
 import EnemyFactory from './Enemies/enemy_factory';
 import StateMachine from './Utils/state_machine';
 import GameLoadingState from './Game_States/gameLoading_state';
@@ -93,7 +93,7 @@ export class Game {
     document.addEventListener('contextmenu', event => event.preventDefault());
     window.addEventListener('resize', e => Utils.handleWindowResize(SceneInfo,this), false);
 
-    controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
+    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement ); 
     //helper = new THREE.AxesHelper(500);
     //this.context.scene.add(helper);
 
@@ -128,7 +128,8 @@ export class Game {
 		this.context.pointLight.position.x = Math.sin( timer ) * 800;
 		this.context.pointLight.position.y = Math.cos( timer ) * 800;
 
-    this.stateMachine.currentState.update();
+    if(!this.paused) this.stateMachine.currentState.update();
+
 
   }
 

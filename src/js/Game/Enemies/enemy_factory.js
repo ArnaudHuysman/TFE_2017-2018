@@ -11,8 +11,8 @@ export default function EnemyFactory(game,scene){
 
   this.bulletFactory = new BulletFactory(game);
 
-  this.addEntity = function(type,game,pos){
-    var enemi = this.getEnemyCstr(type,game);
+  this.addEntity = function(entity,game,pos){
+    var enemi = this.getEnemyCstr(entity,game);
 
     var rdm = Math.floor(Math.random() * game.map.spawTiles.length);
     if(!pos){
@@ -34,21 +34,21 @@ export default function EnemyFactory(game,scene){
 
   };
 
-  this.getEnemyCstr = function (type,game){
+  this.getEnemyCstr = function (entity,game){
     let enemi ;
 
-    switch(type) {
+    switch(entity.type) {
       case "simple" :
-          enemi = new SimpleEnemy(5,5,5,0x154E95, 0x16D4F0, "blobl", game);
+          enemi = new SimpleEnemy(5,5,5,0x154E95, 0x16D4F0, "blobl", game, entity.lifes, entity.speed); 
           enemi.target = game.drill;
           break;
 
       case "big":
-          enemi = new BigEnemy(10,10,10,0x0D5762, 0x16D4F0, "bigBlobl", game);
+          enemi = new BigEnemy(10,10,10,0x0D5762, 0x16D4F0, "bigBlobl", game, entity.lifes, entity.speed);
           break;
 
       case "shooting":
-          enemi = new ShooterEnemy(5,5,10,0x511180, 0x16D4F0, "shootingBlobl", game, this);
+          enemi = new ShooterEnemy(5,5,10,0x511180, 0x16D4F0, "shootingBlobl", game, entity.lifes, entity.speed, this);
           break;
     }
 
@@ -60,6 +60,7 @@ export default function EnemyFactory(game,scene){
   this.removeSelf = function(game,obj){
 
     scene.remove(obj.body.object);
+    scene.remove(obj.lifebar.mesh);
 
     game.collisionEngine.removeBody(obj.body, "enemies");
     game.wavesSystem.currentWave.enemiesLeft--;

@@ -11,7 +11,7 @@ const Audios = [
   },
   {
     name : "game-amb",
-    type : "ambiance",
+    type : "sound",
     src : './src/sound/Solar-Storm_Looping.mp3',
   }
 ];

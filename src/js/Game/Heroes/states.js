@@ -1,6 +1,6 @@
 import {State} from '../Utils/state_machine'
 import {ArmStandAnimation,LegStandAnimation,ArmShootAnimation,ArmWalkAnimation,LegWalkAnimation} from './animations';
-import {Key} from '../Utils/keys_handler'
+import {Key, updateMvt} from '../Utils/keys_handler'
 import {getCubeMapValue} from '../Utils/path_functions';
 
 
@@ -21,10 +21,15 @@ export class heroWalkState extends State {
 
   update(){
 
-		if(Key.isDown(90)) this.hero.char.object.position.y += 1.5;
-		if(Key.isDown(83)) this.hero.char.object.position.y -= 1.5;
-		if(Key.isDown(68)) this.hero.char.object.position.x += 1.5;
-		if(Key.isDown(81)) this.hero.char.object.position.x -= 1.5;
+		// if(Key.isDown(90)) this.hero.char.object.position.y += 1.5;
+		// if(Key.isDown(83)) this.hero.char.object.position.y -= 1.5;
+		// if(Key.isDown(68)) this.hero.char.object.position.x += 1.5;
+		// if(Key.isDown(81)) this.hero.char.object.position.x -= 1.5;
+
+		let mvt = updateMvt();
+
+		this.hero.char.object.position.y += mvt.y;
+		this.hero.char.object.position.x += mvt.x;
 
     let shootAnim  = this.hero.armsAnimationSystem.currentAnimation instanceof ArmShootAnimation;
 
@@ -182,6 +187,10 @@ export class heroDamagedState extends State {
 
 		this.hero.lifes--;
 		this.hero.game.screenInfo.hero_lifes--;
+
+		let lifes = this.hero.game.screen.content.querySelectorAll('.life');
+
+		lifes[this.hero.lifes].style.filter = "grayscale(100%)";
 
 		this.flash();
 	}

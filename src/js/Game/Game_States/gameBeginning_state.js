@@ -99,14 +99,14 @@ export default class GameBeginningState extends State {
     let text = "Begin";
     this.game.screen.moduleSystem.setModule(new StateModule(this.game, text));
     this.game.wavesSystem.startWaves();
-    this.game.wavesSystem.update(60);
+
 
     setTimeout( this.lauchWaves.bind(this), 2000);
 
   }
 
   lauchWaves(){
-    this.game.stateMachine.changeState(new GameBetweenWavesState(this.game, this.game.wavesSystem.currentWave))
+    this.game.wavesSystem.changeWave();
   }
 
 }
