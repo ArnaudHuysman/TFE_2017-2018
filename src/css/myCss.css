@@ -480,7 +480,7 @@ li{
   top: 25px;
   right: 50px;
   font-size: 32px;
-  font-weight: 900;
+  font-weight: 600;
 }
 
 
@@ -521,12 +521,19 @@ li{
   right: 0;
 }
 
-.menu_module {
+.menu_module{
+  margin-top: -13.5%;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0, 0.4);
+}
 
-  width : 768px;
-  height: 1024px;
-  background-image: url('../../dist/assets/img/interfaces/menu_module.png');
-  background-position: 0px 0px;
+.menu_module--img {
+  margin: 0 auto;
+  margin-top: 15%;
+  width : 358px;
+  height: 319px;
+  background-image: url('../../dist/assets/img/interfaces/Pause_bg-01.png');
 }
 
 .state_module{
@@ -550,7 +557,6 @@ li{
 .end_module{
   padding: 2.5em;
   width: 50%;
-  height: 250px;
   display: flex;
   flex-flow: column;
   flex-wrap: nowrap;
@@ -563,19 +569,19 @@ li{
 .end_module--title{
   display: flex;
   justify-content: space-around;
-
+  margin-bottom: 18px;
   text-transform: uppercase;
   font-weight: 900;
   font-size: 64px;
   letter-spacing: 0.2em;
-  text-shadow :   0 1px 0 hsl(283,60%,60%),
-                  0 2px 0 hsl(283,60%,55%),
-                  0 3px 0 hsl(283,60%,50%),
-                  0 4px 0 hsl(283,60%,46%),
-                  0 5px 0 hsl(283,60%,44%),
-                  0 6px 0 hsl(283,60%,42%),
-                  0 7px 0 hsl(283,60%,41%),
-                  0 8px 0 hsl(283,60%,40%);
+  text-shadow :     0 1px 0 hsl(217, 41%, 41%),
+                    0 2px 0 hsl(217, 41%, 38%),
+                    0 3px 0 hsl(217, 41%, 36%),
+                    0 4px 0 hsl(217, 41%, 33%),
+                    0 5px 0 hsl(217, 41%, 31%),
+                    0 6px 0 hsl(217, 41%, 26%),
+                    0 7px 0 hsl(217, 41%, 23%),
+                    0 8px 0 hsl(217, 41%, 21%);
   color: #80D9ED;
 }
 
@@ -586,28 +592,44 @@ li{
   flex-flow: row;
   flex-wrap: nowrap;
   justify-content: space-around;
+
+  margin : 18px;
+}
+
+.end_module--text{
+  margin-right: 16px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow :   0 -1px 0 hsl(217, 41%, 31%),
+                  0 -2px 0 hsl(217, 41%, 26%),
+                  0 -3px 0 hsl(217, 41%, 23%),
+                  0 -4px 0 hsl(217, 41%, 21%);
+  color : #80D9ED;
+}
+
+.end_module--interface{
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
 }
 
 .return{
-  width : 150px;
-  height: 150px;
-  background-image: url('../../dist/assets/img/interfaces/back_button.png');
+  width : 90px;
+  height: 60px;
+  background-image: url('../../dist/assets/img/buttons/return_end-btn-01.png');
   background-position: 0px 0px;
 }
 
-.return:active{
-  background-position: 150px 0px;
-}
 
 .replay{
-  width : 150px;
-  height: 150px;
-  background-image: url('../../dist/assets/img/interfaces/retry_button.png');
+  width : 100px;
+  height: 60px;
+  background-image: url('../../dist/assets/img/buttons/replay_end-btn-01.png');
   background-position: 0px 0px;
-}
-
-.replay:active{
-  background-position: 150px 0px;
 }
 
 

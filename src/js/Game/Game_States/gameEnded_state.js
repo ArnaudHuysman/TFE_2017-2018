@@ -13,6 +13,12 @@ export default class GameEndedState extends State {
   enter(){
     console.log("Game Ended");
 
+    for (var i = 0; i < this.game.enemyFactory.entities.length; i++) {
+      if(this.game.enemyFactory.entities[i].stateMachine.currentState.interval) {
+        window.clearInterval(this.game.enemyFactory.entities[i].stateMachine.currentState.interval);
+      }
+    }
+
     switch (this.state) {
       case "defeat":
         this.game.stateMachine.changeState(new GameLostState(this.game));
@@ -28,7 +34,7 @@ export default class GameEndedState extends State {
   exit(){
     const {scene}  = this.game.context
     while(scene.children.length > 0){
-      scene.remove(scene.children[0]); 
+      scene.remove(scene.children[0]);
     }
   }
 }

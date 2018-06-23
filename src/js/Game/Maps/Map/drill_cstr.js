@@ -39,6 +39,12 @@ export class Drill {
     game.threeContainer.add(this.drill_cstr.object);
     game.collisionEngine.addBody(this.drill_cstr ,"drill");
 
+    this.lifebar = new Cube( 35, 5, 5 , 0xFAFF00, 0x3A3A3A, "drill_lifebar");
+
+    this.lifebar.object.position.z += 55;
+
+    scene.add(this.lifebar.object)
+
     this.interval = 10000;
     this.totalTime = total;
     this.limit = -(15*4.5)+20;
@@ -49,6 +55,8 @@ export class Drill {
 
     game.collisionEngine.testCollision("drill", "enemies");
 
+    let lifebarHeight = 1/20*this.life;
+    this.lifebar.innerCube.mesh.scale.set(lifebarHeight,1,1);
 
     if(this.interval < time ){
       this.popCrystal(scene, game);
@@ -86,7 +94,7 @@ export class Drill {
   popCrystal(scene, game){
 
 
-    let frgmt = new Fragment(scene);
+    let frgmt = new Fragment(scene, game.map.info.colors.ressource);
 
     let rdm = Math.floor(Math.random() * game.map.popTiles.length);
     let vector = new THREE.Vector3();

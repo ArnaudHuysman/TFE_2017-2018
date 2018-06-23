@@ -23,7 +23,7 @@ export class MapScene {
   constructor(container,map){
 
     this.container = container;
-    this.context = new ScreenScene(this.container);
+    this.context = new ScreenScene(this.container, map);
 
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,

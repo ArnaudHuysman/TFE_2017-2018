@@ -12,8 +12,9 @@ export const scene = new THREE.Scene();
 
 
 export class ScreenScene {
-	constructor(container) {
+	constructor(container, map) {
 
+		this.map = map;
 		this.container = container;
 		this.camera;
 		this.scene = new THREE.Scene();
@@ -55,7 +56,7 @@ export class ScreenScene {
 		var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5);
 		directionalLight.position.set( 1, 1, 500 );
 
-		var pointLight2 = new THREE.PointLight( 0x16D4F0, 2, 200, 2 );
+		var pointLight2 = new THREE.PointLight( this.map.colors.ressource, 2, 200, 2 );
 		pointLight2.position.set( 0, 0, -100 );
 
 		this.pointLight = new THREE.PointLight( 0xffffff, 1, 2000, 2 );

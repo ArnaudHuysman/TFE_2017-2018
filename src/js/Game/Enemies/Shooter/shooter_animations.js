@@ -8,19 +8,20 @@ export class ShooterWalkAnimation extends Animation {
   }
 
   in(){
+
     this.tweens.push(TweenMax.to(this.object.position, 0.4,
-                              {
-                                  z:16,
-                                  ease: Power2.easeOut,
-                                  repeat: -1,
-                                  yoyo:true,
-                              }))
+                  {
+                      z:20,
+                      ease: Power2.easeOut,
+                      repeat: -1,
+                      yoyo:true,
+                  }))
 
     this.tweens.push(TweenMax.to(this.object.scale, 0.4,
                   {
-                      z: 2.1,
-                      y: 1.9,
-                      x: 1.9,
+                      z: 2.5,
+                      y: 1.6,
+                      x: 1.6,
                       ease: Power2.easeOut,
                       repeat: -1,
                       yoyo:true,
@@ -47,22 +48,31 @@ export class ShooterWalkAnimation extends Animation {
 }
 
 export class ShooterShootAnimation extends Animation {
-  constructor(object, enemi){
+  constructor(object, enemi, callback){
     super(object)
+    this.callback = callback;
     this.enemi = enemi;
   }
 
   in(){
     var self = this;
+    this.tweens.push(TweenMax.to(this.object.position, 0.8,
+                  {
+                      z:8,
+                      ease: Power2.easeOut,
+                      repeat: -1,
+                      yoyo:true
+                  }))
+
     this.tweens.push(TweenMax.to(this.object.scale, 0.8,
                   {
-                    x:4,
-                    y:4,
-                    z:4,
-                    ease: Power4.easeIn,
-                    onComplete: function(){
-                      self.enemi.game.enemyFactory.removeSelf(self.enemi.game,self.enemi)
-                    }
+                      z: 1.6,
+                      y: 2.2,
+                      x: 2.2,
+                      ease: Power2.easeOut,
+                      repeat: -1,
+                      yoyo:true,
+                      onRepeat : self.callback.bind(self)
                   }))
 	}
 

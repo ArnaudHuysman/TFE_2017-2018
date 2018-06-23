@@ -1,10 +1,10 @@
 import {GameObjects} from '../../Utils/utils';
 
 export default class Fragment {
-  constructor(scene){
+  constructor(scene, color){
     this.object = new THREE.Object3D();
     this.size = 8;
-
+    this.color = color;
     this.build();
     this.name = "fragment";
 
@@ -21,7 +21,7 @@ export default class Fragment {
 
     let mat = new THREE.MeshToonMaterial( {
 						bumpScale: 1,
-						color: 0x16D4F0,
+						color: this.color,
 						specular: 0x9EC5AB,
 						reflectivity: 1,
 						shininess: 40

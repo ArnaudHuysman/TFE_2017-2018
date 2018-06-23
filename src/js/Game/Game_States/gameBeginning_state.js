@@ -29,7 +29,7 @@ export default class GameBeginningState extends State {
 
     const {camera} = this.game.context;
 
-    this.tweens.push(TweenMax.to(camera.position, 3.5, {
+    this.tweens.push(TweenMax.to(camera.position, 3.2, {
         z : -600,
         ease: Power2.easeInOut,
         repeat: 1,

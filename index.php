@@ -82,11 +82,11 @@
 								</div>
 							</div>
 						</div>
-						<div data-name="derivium" class="map map2">
+						<div data-name="goldium" class="map map2">
 							<div class="map_icon">
 								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
 								<div class="map_hidden-info">
-									<h3 class="map_title"> Derivium </h3>
+									<h3 class="map_title"> Goldium </h3>
 									<h4 class="map_infoTitle"></h4>
 									<h2 class="map_info"></h2>
 								</div>
@@ -188,8 +188,9 @@
 
 			<!-- Menu Template  -->
 			<div class="menu_module module">
-				<p> Menu </p>
-				<a class="exit button" href="#"> Exit </a>
+				<div class="menu_module--img">
+
+				</div>
 			</div>
 
 			<!-- State Template  -->
@@ -208,21 +209,33 @@
 					</div>
 				</div>
 				<div class="end_module--buttons">
-					<div class="end_module--btn button return"> <a href="#" ></a> </div>
-					<div class="end_module--btn button replay"> <a href="#" ></a> </div>
+					<div class="end_module--interface">
+						<p class="end_module--text"> Menu </p>
+						<div class="end_module--btn button return"> <a href="#"></a></div>
+					</div>
+					<div class="end_module--interface">
+						<div class="end_module--btn button replay"> <a href="#"></a></div>
+						<p class="end_module--text"> Replay </p>
+					</div>
 				</div>
 			</div>
 			<!-- Defeat Template  -->
 			<div class="end_module defeat module">
 				<h1 class="end_module--title"> Defeat </h1>
 				<div class="end_module--buttons">
-					<div class="end_module--btn button return"> <a href="#"></a></div>
-					<div class="end_module--btn button replay"> <a href="#"></a></div>
+					<div class="end_module--interface">
+						<p class="end_module--text"> Menu </p>
+						<div class="end_module--btn button return"> <a href="#"></a></div>
+					</div>
+					<div class="end_module--interface">
+						<div class="end_module--btn button replay"> <a href="#"></a></div>
+						<p class="end_module--text"> Replay </p>
+					</div>
 				</div>
 			</div>
 
 			<!-- Map Module -->
-			<div class="map_module description">
+			<div class="map_module module description">
 				<div class="description_block">
 					<div class="description_img">
 					</div>

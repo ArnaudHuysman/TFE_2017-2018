@@ -38,14 +38,6 @@ class Hero {
 
     this.char = new Char();
 
-    var geometry = new THREE.BoxBufferGeometry( 2, 2, 2 );
-    var material = new THREE.MeshBasicMaterial( { color: 0xE8DB7D } );
-    this.point = new THREE.Mesh( geometry, material );
-
-    this.scene.add( this.point );
-
-
-
     this.char.object.scale.set(2.5,2.5,2.5);
 
     this.scene.add(this.char.object);

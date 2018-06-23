@@ -18,7 +18,7 @@ export default class MapModule extends Module {
 
     this.display.style.transform = "scale(0.1)";
 
-    TweenMax.to(this.display.style, 0.8, {
+    TweenMax.to(this.display.style, 0.6, {
       transform : "scale(1)",
       ease: Elastic.easeOut.config(1, 0.5),
       // onComplete : this.callback.bind(this, this.display)
@@ -38,19 +38,30 @@ export default class MapModule extends Module {
 		}
   }
 
+  exit(){
+    let self = this;
+    TweenMax.to(this.display.style, 0.2, {
+      transform : "scale(0.1)",
+      ease: Power2.easeIn,
+      onComplete : function(){
+        self.callback(self.display);
+      }
+    })
+  }
+
   navigate(btn){
 		let name = btn.className.replace(" button", "");
 
     switch (name) {
       case "textblock--btn":
         this.screen.app.audioRessource.play("btn", false, 1, 1);
-        this.screen.app.mapSelected = 	JSON.parse(JSON.stringify(this.map));
+        this.screen.app.mapSelected = JSON.parse(JSON.stringify(this.map));
         this.screen.exitCallback(new GameScreen(this.screen.app));
         this.callback(this.display);
         break;
 
       case "exit-btn":
-        this.callback(this.display);
+        this.exit();
         break;
 
     }

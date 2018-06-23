@@ -21,11 +21,6 @@ export class heroWalkState extends State {
 
   update(){
 
-		// if(Key.isDown(90)) this.hero.char.object.position.y += 1.5;
-		// if(Key.isDown(83)) this.hero.char.object.position.y -= 1.5;
-		// if(Key.isDown(68)) this.hero.char.object.position.x += 1.5;
-		// if(Key.isDown(81)) this.hero.char.object.position.x -= 1.5;
-
 		let mvt = updateMvt();
 
 		this.hero.char.object.position.y += mvt.y;
@@ -120,8 +115,6 @@ export class heroBasicState extends State{
       z: 0
     };
 
-		this.hero.point.position.set(pos.x,pos.y,30);
-
     let value = getCubeMapValue(this.hero.game,pos)
 
     if(value && value.name === "empty_tile") {
@@ -142,9 +135,6 @@ export class heroBasicState extends State{
 					this.hero.game.app.audioRessource.play("damaged", false, 1, 1);
 					this.hero.game.collisionEngine.removeBody( this.hero.char.objectInCollision, "enemy_projectil");
 					this.hero.stateMachine.changeState(new heroDamagedState(this.hero));
-					break;
-				case "enemies":
-					console.log("kqjrgsnrmgqjnerùp voja")
 					break;
 			}
 
@@ -205,7 +195,6 @@ export class heroDamagedState extends State {
       z: 0
     };
 
-		this.hero.point.position.set(pos.x,pos.y,30);
 
     let value = getCubeMapValue(this.hero.game,pos)
 

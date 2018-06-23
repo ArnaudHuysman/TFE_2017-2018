@@ -16,10 +16,15 @@ export class simpleWalkState extends State {
 	}
 
 	enter(){
-
     this.enemi.animationSystem.changeAnimation(new SimpleWalkAnimation(this.enemi.body.object, this.enemi.game.app));
-
   };
+
+	reload(){
+		let self = this;
+		this.interval = window.setInterval(function () {
+			self.enemi.game.app.audioRessource.play("mvt-small", false, 1, 1);
+		}, 800);
+	}
 
 	exit(){
 		window.clearInterval(this.interval);
