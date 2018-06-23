@@ -4,11 +4,15 @@ import gsap from 'gsap';
 var TweenMax = gsap.TweenMax;
 
 export class SimpleWalkAnimation extends Animation {
-  constructor(object){
+  constructor(object, app){
     super(object)
+
+    this.app = app;
   }
 
   in(){
+
+    let self = this;
     this.tweens.push(TweenMax.to(this.object.position, 0.4,
                               {
                                   z:16,
@@ -62,6 +66,18 @@ export class SimpleDeathAnimation extends Animation {
                     z:4,
                     ease: Power4.easeIn,
                     onComplete: function(){
+                      let pos = self.enemi.game.context.camera.position;
+
+                      self.enemi.game.context.camera.position.x -= 4;
+
+                      TweenMax.to(self.enemi.game.context.camera.position, 0.05, {
+                          x : pos.x+4,
+                          ease: Power2.easeOut,
+                          repeat: 5,
+                          yoyo: true,
+                          onComplete : function() { self.enemi.game.context.camera.position.x = pos.x}
+                      })
+
                       self.enemi.game.enemyFactory.removeSelf(self.enemi.game,self.enemi)
                     }
                   }))

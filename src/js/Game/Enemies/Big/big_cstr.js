@@ -1,6 +1,11 @@
 import Enemy from '../enemy_cstr';
 import {getPath, getCubePosition, getRandomTiles} from '../../Utils/path_functions';
 
+import StateMachine from '../../Utils/state_machine';
+import {simpleWalkState} from './simple_states';
+
+import {AnimationSystem} from '../../../animations/animationSystem';
+
 import gsap from 'gsap';
 var TweenMax = gsap.TweenMax;
 
@@ -15,11 +20,21 @@ export default class BigEnemy extends Enemy {
     this.popDelay = 10000;
     this.popInterval = this.popDelay;
 
+
+    this.animationSystem = new AnimationSystem();
+    this.stateMachine = new StateMachine( new bigWalkState(this));
+
     this.matrix = game.map.matrix.map( (row,i) => row.map( (x,j) => {
       if( x !== 0) return 1;
       else if ( i < 5 || i > 15 || j < 5 || j > 15) return 0;
       else return 1;
     }));
+
+    let self = this;
+
+    this.soundInterval = window.setInterval(function () {
+			self.game.app.audioRessource.play("mvt-big", false, 1, 1);
+		}, 1200);
 
   }
 
@@ -38,6 +53,10 @@ export default class BigEnemy extends Enemy {
     }
 
     super.update();
+
+    if(this.lifes <= 0 ) {
+      window.clearInterval(this.soundInterval);
+    }
 
 
     this.path = getPath(this.matrix, false, this.tilePos, this.target.arrayPos );

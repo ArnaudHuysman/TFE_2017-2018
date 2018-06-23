@@ -29,7 +29,7 @@ export class Game {
     }
 
     this.container = document.getElementById('world');
-    this.context = new Scene(this.container);
+    this.context = new Scene(this.container, map);
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true
@@ -93,7 +93,7 @@ export class Game {
     document.addEventListener('contextmenu', event => event.preventDefault());
     window.addEventListener('resize', e => Utils.handleWindowResize(SceneInfo,this), false);
 
-    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement ); 
+    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
     //helper = new THREE.AxesHelper(500);
     //this.context.scene.add(helper);
 
@@ -112,23 +112,23 @@ export class Game {
 
     //initWaves(this);
     //LAUNCH ANIMATION
-    this.animation();
+    // this.animation();
   }
 
-  animation(){
-    this.update();
+  animation(dt){
+    this.update(dt);
     this.render();
-    requestAnimationFrame(this.animation.bind(this))
+    // requestAnimationFrame(this.animation.bind(this))
   }
 
-  update(){
+  update(dt){
 
     var timer = Date.now() * 0.00025;
 
 		this.context.pointLight.position.x = Math.sin( timer ) * 800;
 		this.context.pointLight.position.y = Math.cos( timer ) * 800;
 
-    if(!this.paused) this.stateMachine.currentState.update();
+    if(!this.paused) this.stateMachine.currentState.update(dt);
 
 
   }

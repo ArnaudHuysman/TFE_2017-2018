@@ -22,7 +22,7 @@ export default class ShooterEnemy extends Enemy {
   animation(){
     TweenMax.to(this.body.object.position, 0.4,
                   {
-                      z:16,
+                      z:20,
                       ease: Power2.easeOut,
                       repeat: -1,
                       yoyo:true,
@@ -103,6 +103,7 @@ export default class ShooterEnemy extends Enemy {
   shoot(time,scene){
     if( this.interval < time){
       this.factory.bulletFactory.create(scene, this.body.object);
+      this.game.app.audioRessource.play("tir-enemi", false, 1, 1);
       this.interval = time+this.fireRate;
     }
   }

@@ -139,6 +139,7 @@ export class heroBasicState extends State{
 					this.hero.game.collisionEngine.removeBody( this.hero.char.objectInCollision, "fragment");
 					break;
 				case "enemy_bullet":
+					this.hero.game.app.audioRessource.play("damaged", false, 1, 1);
 					this.hero.game.collisionEngine.removeBody( this.hero.char.objectInCollision, "enemy_projectil");
 					this.hero.stateMachine.changeState(new heroDamagedState(this.hero));
 					break;
@@ -163,6 +164,7 @@ export class heroFallingState extends State {
 
 	enter(){
 		console.log("Start Falling")
+		this.hero.game.app.audioRessource.play("fall", false, 1, 1);
 	 }
 
 	update(){

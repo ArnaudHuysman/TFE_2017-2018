@@ -7,18 +7,24 @@ export class Bullet {
     this.callback = callback;
     this.body = new Cube(width, height, depth, color, outColor, this.name);
 
+    this.time = 5000;
+
     this.collision = false;
     this.mvt = {
       x :0,
       z :0
     };
-
-    setTimeout(this.callback.bind(this,this), 3000);
   }
 
-  update(game,scene,factory){
+  update(game,scene,factory,dt){
     this.body.object.position.x += this.mvt.x*2;
     this.body.object.position.y += this.mvt.y*2;
+
+    this.time -= dt;
+
+    if(this.time < 0){
+      this.callback(this);
+    }
 
     if (this.body.collision) {
       scene.remove(this.body.object);
@@ -63,9 +69,9 @@ export default class BulletFactory {
     this.bullets.push(bullet);
   }
 
-  update(scene){
+  update(scene,dt){
     for (var i = 0; i < this.bullets.length; i++) {
-      this.bullets[i].update(this.game,scene,this);
+      this.bullets[i].update(this.game,scene,this,dt);
     }
   }
 

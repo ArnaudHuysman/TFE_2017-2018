@@ -1,6 +1,9 @@
 import GameBetweenWavesState from '../Game_States/gameBetweenWaves_state';
 import GameLostState from '../Game_States/gameLost_state';
-import GameEndedState from '../Game_States/gameEnded_state'
+import GameEndedState from '../Game_States/gameEnded_state';
+
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
 
 export class  Wave {
   constructor(wave, game, oldWave, callback){
@@ -23,6 +26,9 @@ export class  Wave {
   }
 
   update(game,dt){
+
+    const {drill} = game.map;
+    let self = this;
     this.timePassed += dt;
 
     if(this.timePassed > this.nextEnemies ){
@@ -31,7 +37,13 @@ export class  Wave {
     }
 
     if(this.timePassed > this.time || (this.allEnemiesPop && this.enemiesLeft == 0)){
-      this.callback();
+      this.isDone = true;
+      TweenMax.to(drill.drill_cstr.object.position, 0.5, {
+        delay : 1,
+        z : drill.drill_cstr.object.position.z - drill.diff ,
+        ease: Power4.easeIn,
+        onComplete : self.callback.bind(self)
+      })
     }
 
   }
@@ -86,7 +98,7 @@ export default class Waves_System {
   update(dt){
 
     if(this.hasBegun){
-      if(this.currentWave) this.currentWave.update(this.game,dt);
+      if(this.currentWave && !this.currentWave.isDone) this.currentWave.update(this.game,dt);
     }
 
   }
@@ -94,7 +106,6 @@ export default class Waves_System {
   changeWave(){
 
     if(this.count < this.waves.length){
-      console.log("wave ", this.count)
       this.currentWave = new Wave(this.waves[this.count], this.game, this.currentWave, this.changeWave.bind(this));
       this.count++;
     } else {

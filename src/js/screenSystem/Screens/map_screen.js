@@ -42,10 +42,14 @@ export default class MapScreen extends Screen{
 			let icon = map.querySelector('.map_icon');
 			let name = map.dataset.name;
 
-			map.querySelector('.map_cost').innerText = this.app.maps[name].cost;
+
 			if(!this.app.maps[name].bought) {
 				icon.style.filter = "grayscale(100%)";
+				map.querySelector('.map_infoTitle').innerText = "Cost";
+				map.querySelector('.map_info').innerText = this.app.maps[name].cost;
 			} else {
+				map.querySelector('.map_infoTitle').innerText = "Difficulty";
+				map.querySelector('.map_info').innerText = this.app.maps[name].difficulty;
 				icon.style.filter = "none";
 				map.addEventListener('click', this.toggleMaps.bind(this, map, name), true);
 			}
@@ -57,6 +61,7 @@ export default class MapScreen extends Screen{
 	}
 
 	navigate(btn){
+		super.navigate()
     let name = btn.className.replace(" buttons", "");
 
     switch (name) {

@@ -75,55 +75,61 @@
 						<div data-name="premium" class="map map1">
 							<div class="map_icon">
 								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
-							</div>
-							<div class="map_hidden-info">
-								<h2 class="map_cost"></h2>
-								<h3 class="map_title"> Premium </h3>
+								<div class="map_hidden-info">
+									<h3 class="map_title"> Premium </h3>
+									<h4 class="map_infoTitle"></h4>
+									<h2 class="map_info"></h2>
+								</div>
 							</div>
 						</div>
 						<div data-name="derivium" class="map map2">
 							<div class="map_icon">
 								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
-							</div>
-							<div class="map_hidden-info">
-								<h2 class="map_cost"></h2>
-								<h3 class="map_title"> Derivium </h3>
+								<div class="map_hidden-info">
+									<h3 class="map_title"> Derivium </h3>
+									<h4 class="map_infoTitle"></h4>
+									<h2 class="map_info"></h2>
+								</div>
 							</div>
 						</div>
 						<div data-name="trilium" class="map map3">
 							<div class="map_icon">
 									<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
-							</div>
-							<div class="map_hidden-info">
-								<h2 class="map_cost"></h2>
-								<h3 class="map_title"> Trilium </h3>
+									<div class="map_hidden-info">
+										<h3 class="map_title"> Trilium </h3>
+										<h4 class="map_infoTitle"></h4>
+										<h2 class="map_info"></h2>
+									</div>
 							</div>
 						</div>
 						<div data-name="strium" class="map map4">
 							<div class="map_icon">
 								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
-							</div>
-							<div class="map_hidden-info">
-								<h2 class="map_cost"></h2>
-								<h3 class="map_title"> Strium </h3>
+								<div class="map_hidden-info">
+									<h3 class="map_title"> Strium </h3>
+									<h4 class="map_infoTitle"></h4>
+									<h2 class="map_info"></h2>
+								</div>
 							</div>
 						</div>
-						<div data-name="delightium" class="map map5">
+						<div data-name="delight" class="map map5">
 							<div class="map_icon">
 								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
-							</div>
-							<div class="map_hidden-info">
-								<h2 class="map_cost"></h2>
-								<h3 class="map_title"> Delightium </h3>
+								<div class="map_hidden-info">
+									<h3 class="map_title"> Delight </h3>
+									<h4 class="map_infoTitle"></h4>
+									<h2 class="map_info"></h2>
+								</div>
 							</div>
 						</div>
 						<div data-name="bloom" class="map map6">
 							<div class="map_icon">
 								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
-							</div>
-							<div class="map_hidden-info">
-								<h2 class="map_cost"></h2>
-								<h3 class="map_title"> Bloom </h3>
+								<div class="map_hidden-info">
+									<h3 class="map_title"> Bloom </h3>
+									<h4 class="map_infoTitle"></h4>
+									<h2 class="map_info"></h2>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -157,12 +163,6 @@
 				<div class="screen_footer">
 					<ul class="footer_nav">
 						<li class="footer_nav--item">
-							<div class="fragment footer--item">
-								<div class="fragment-img">
-									<div class="fragment-text">
-									</div>
-								</div>
-							</div>
 							<div class="lifes footer--item">
 								<div class="life"></div>
 								<div class="life"></div>
@@ -170,11 +170,11 @@
 							</div>
 						</li>
 						<li class="footer_nav--item">
-							<div class="drilllifes footer--item"></div>
-						</li>
-						<li class="footer_nav--item">
-							<div class="waves footer--item">
-								<p> Waves </p>
+							<div class="fragment footer--item">
+								<div class="fragment-img">
+									<div class="fragment-text">
+									</div>
+								</div>
 							</div>
 						</li>
 					</ul>

@@ -8,8 +8,9 @@ export const SceneInfo = {
 }
 
 export class Scene {
-	constructor(container) {
+	constructor(container, map) {
 
+		this.map = map;
 		this.camera;
 		this.container = container;
 		this.scene = new THREE.Scene();
@@ -41,8 +42,8 @@ export class Scene {
 	    SceneInfo.farPlane
 	  );
 
-		this.camera.position.z = 2000;
-		this.camera.position.y = -2050;
+		this.camera.position.z = 1200;
+		this.camera.position.y = 1200;
 
 		this.camera.lookAt( 0,0, -50 );
 
@@ -71,7 +72,7 @@ export class Scene {
 		var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5);
 		directionalLight.position.set( 1, 1, 500 );
 
-		var pointLight2 = new THREE.PointLight( 0x16D4F0, 2, 200, 2 );
+		var pointLight2 = new THREE.PointLight( this.map.colors.ressource, 2, 200, 2 );
 		pointLight2.position.set( 0, 0, -100 );
 
 		this.pointLight = new THREE.PointLight( 0xffffff, 2, 2000, 2 );

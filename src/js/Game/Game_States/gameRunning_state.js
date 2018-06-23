@@ -37,9 +37,9 @@ export default class GameRunningState extends State {
 
     mvtTime += deltaTime;
 
-    hero.update(mvtTime,this.game);
-    map.drill.update(this.game,this.game.context.scene, mvtTime);
-    enemyFactory.update(mvtTime, this.game);
+    hero.update(mvtTime,this.game,deltaTime);
+    map.drill.update(this.game,this.game.context.scene, mvtTime, deltaTime);
+    enemyFactory.update(mvtTime, this.game, deltaTime);
 
     wavesSystem.update(deltaTime);
 

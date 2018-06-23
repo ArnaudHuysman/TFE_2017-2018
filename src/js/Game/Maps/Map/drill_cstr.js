@@ -19,22 +19,20 @@ export class Drill_Cstr {
       this.object.add(cube.object);
     }
 
-    this.object.position.z -= 50;
-
   }
 
 
 }
 
 export class Drill {
-  constructor(game,scene,pos){
+  constructor(game,scene,pos, total){
     this.drill_cstr = new Drill_Cstr();
     this.tilePos;
 
 
     this.life = 20;
     game.screenInfo.drill_lifes = this.life;
-    this.diff = 30/(120*60);
+    this.diff = 30/total;
 
     this.drill_cstr.object.position.set(pos.x , pos.y , -20);
 
@@ -42,11 +40,12 @@ export class Drill {
     game.collisionEngine.addBody(this.drill_cstr ,"drill");
 
     this.interval = 10000;
+    this.totalTime = total;
     this.limit = -(15*4.5)+20;
 
   }
 
-  update(game,scene,time){
+  update(game,scene,time,dt){
 
     game.collisionEngine.testCollision("drill", "enemies");
 
@@ -63,17 +62,24 @@ export class Drill {
       game.screenInfo.drill_lifes--;
       this.drill_cstr.collision = false;
       this.drill_cstr.objectInCollision = null;
+
+      this.colideAction(game);
     }
 
     if(this.drill_cstr.object.position.z > this.limit) {
-      this.animate();
+      this.animate(dt);
     }
   }
 
-  animate(){
+  animate(dt){
 
-    this.drill_cstr.object.rotation.z += 0.05;
-    this.drill_cstr.object.position.z -= 0.05;
+    this.drill_cstr.object.rotation.z += dt/1000;
+    //this.drill_cstr.object.position.z -= dt/(this.totalTime*100);
+
+  }
+
+  colideAction(game){
+
 
   }
 
@@ -107,7 +113,7 @@ export class Drill {
                      x : mvtX*dist,
                      y : mvtY*dist,
                      z : dist/2,
-                     ease: Power0.easeInOut,
+                     ease: Power2.easeInOut,
                      onComplete : function() {TweenMax.to(frgmt.object.position, 0.4, {
                        x : frgmt.object.position.x+mvtX*dist,
                        y : frgmt.object.position.y+mvtY*dist,

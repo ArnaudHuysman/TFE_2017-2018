@@ -69,9 +69,14 @@ export class Screen {
 
 	update(){};
 
+	navigate(){
+		this.app.audioRessource.play("btn", false, 1, 1);
+	};
+
 	headerNavigate(btn){
 
 		let name = btn.className.replace(" buttons", "");
+
     switch (name) {
       case "music":
         this.app.audioRessource.mute("music");

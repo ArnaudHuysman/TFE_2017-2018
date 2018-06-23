@@ -22,7 +22,6 @@ class Audio {
     let source = this.context.createBufferSource();
     let gainNode = this.context.createGain ? this.context.createGain() : this.context.createGainNode();
     source.buffer = this.buffer;
-    source.loop = true;
     source.connect(gainNode);
     gainNode.connect(this.context.destination);
 
@@ -30,18 +29,25 @@ class Audio {
     this.gainNode = gainNode;
   }
 
-  play(loop){
-    if(!this.on){
+  play(loop, volume, time){
+    if(!this.on && loop){
+      this.gainNode.gain.value = volume;
       this.source.start(0);
-      this.gainNode.gain.value = 0;
       this.source.loop = loop;
       this.on = true;
     }
+
+    if(!loop){
+      let source = this.context.createBufferSource();
+      source.buffer = this.buffer;
+      source.connect(this.context.destination);
+      source.start();
+    }
   }
 
-  stop(){
+  stop(time){
     if(this.on){
-      this.source.stop(0);
+      this.source.stop(this.context.currentTime + time);
       this.on = false;
     }
   }
@@ -79,9 +85,9 @@ export default class AudioRessource{
     this.callback();
   }
 
-  play(name, loop){
+  play(name, loop, volume, time){
     let source = this.getSourceByName(name);
-    source.play(loop);
+    source.play(loop, volume, time);
   }
 
   stop(name){

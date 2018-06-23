@@ -7,16 +7,23 @@ export class simpleWalkState extends State {
 	constructor(enemi){
     super()
     this.enemi = enemi;
+
+		let self = this;
+		this.interval = window.setInterval(function () {
+			self.enemi.game.app.audioRessource.play("mvt-small", false, 1, 1);
+		}, 800);
+
 	}
 
 	enter(){
 
-    this.enemi.animationSystem.changeAnimation(new SimpleWalkAnimation(this.enemi.body.object));
-
+    this.enemi.animationSystem.changeAnimation(new SimpleWalkAnimation(this.enemi.body.object, this.enemi.game.app));
 
   };
 
-	exit(){};
+	exit(){
+		window.clearInterval(this.interval);
+	};
 
 	update(){
 
@@ -30,6 +37,7 @@ export class simpleWalkState extends State {
 
     this.enemi.body.object.position.x += mvtX*this.enemi.speed;
     this.enemi.body.object.position.y += mvtY*this.enemi.speed;
+
 
     if(this.enemi.body.collision && this.enemi.body.objectInCollision instanceof Drill_Cstr) {
       this.enemi.stateMachine.changeState(new simpleDeadState(this.enemi));

@@ -39,7 +39,7 @@ export default class App {
 
 	loaded(){
 
-		this.audioRessource.play("menu-music", true);
+		this.audioRessource.play("menu-music", true, 0);
 		this.audioRessource.mix(1, "menu-music" );
 		this.appScreens.setScreen(new TitleScreen(this));
 		this.update();

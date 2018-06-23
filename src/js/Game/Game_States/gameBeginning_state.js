@@ -10,6 +10,7 @@ import StateModule from '../../ScreenSystem/Modules/Game/State_module'
 
 import gsap from 'gsap';
 var TweenMax = gsap.TweenMax;
+var TimelineMax = gsap.TimelineMax;
 
 
 export default class GameBeginningState extends State {
@@ -18,6 +19,7 @@ export default class GameBeginningState extends State {
     this.game = game;
     this.tween = false;
     this.tweens = [];
+
     this.passed = false;
   }
 
@@ -25,9 +27,11 @@ export default class GameBeginningState extends State {
     console.log("Game Beginning");
     Utils.handleWindowResize(SceneInfo,this.game);
 
-    this.tweens.push(TweenMax.to(this.game.context.camera.position, 6, {
-        z : -800,
-        ease: Power0.easeInOut,
+    const {camera} = this.game.context;
+
+    this.tweens.push(TweenMax.to(camera.position, 3.5, {
+        z : -600,
+        ease: Power2.easeInOut,
         repeat: 1,
         yoyo: true,
         onComplete: this.secondTweenCompleted.bind(this)
@@ -35,7 +39,7 @@ export default class GameBeginningState extends State {
   }
 
   exit(){
-    this.game.app.audioRessource.play("game-music", true);
+    this.game.app.audioRessource.play("game-music", true, 0);
     this.game.app.audioRessource.mix(2.5, "game-music");
   }
 
@@ -48,10 +52,11 @@ export default class GameBeginningState extends State {
     }
 
     if(!this.tween){
-      var x = this.game.context.camera.position.x;
-      var y = this.game.context.camera.position.y;
-      this.game.context.camera.position.y = y * Math.cos(0.005) + x * Math.sin(0.005);
-      this.game.context.camera.position.x = x * Math.cos(0.005) - y * Math.sin(0.005);
+
+      const {x,y} = this.game.context.camera.position;
+
+      this.game.context.camera.position.y = y * Math.cos(0.010) - x * Math.sin(0.010);
+      this.game.context.camera.position.x = x * Math.cos(0.010) + y * Math.sin(0.010);
 
       this.game.context.camera.up = new THREE.Vector3(0,0,1);
     }
@@ -61,7 +66,7 @@ export default class GameBeginningState extends State {
 
   secondTweenCompleted(){
     this.tween = true;
-    TweenMax.to(this.game.context.camera.position, 2.5, {
+    TweenMax.to(this.game.context.camera.position, 1.5, {
         y : -850,
         z : 800,
         x : 0,

@@ -63,12 +63,12 @@ export default class Enemy {
     let value = getCubeMapValue(this.game,pos)
     this.tilePos = value !== undefined ? value.arrayPos : this.tilePos ;
 
-
+    //
     // if(this.targetPosition){
     //
-    //   let lookAtPoint = new THREE.Vector3(this.targetPosition,this.targetPosition,10);
+    //   let lookAtPoint = new THREE.Vector3(this.targetPosition.x,this.targetPosition.y,object.position.z);
     //
-    //   this.body.object.up = new THREE.Vector3(0,0,1);
+    //   this.body.object.up = new THREE.Vector3(1,0,0);
     //
     //   this.body.object.lookAt(lookAtPoint);
     //
@@ -91,7 +91,9 @@ export default class Enemy {
       }
     };
 
-    if(this.lifes <= 0 ) this.game.enemyFactory.removeSelf(this.game, this);
+    if(this.lifes <= 0 ) {
+      this.game.enemyFactory.removeSelf(this.game, this);
+    }
   }
   //Animation of movement and attack
   animation(){

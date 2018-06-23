@@ -78,7 +78,7 @@ class Hero {
 
   }
 
-  update(tp,game){
+  update(tp,game,dt){
 
     this.time = tp;
 
@@ -87,7 +87,7 @@ class Hero {
 
     this.stateMachine.currentState.update();
     this.movementStateMachine.currentState.update();
-    this.bulletFactory.update(this.scene);
+    this.bulletFactory.update(this.scene,dt);
 
     var lookAtPoint = new THREE.Vector3(Mouse.projectPos.x,Mouse.projectPos.y,12);
 

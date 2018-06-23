@@ -1,4 +1,6 @@
 import {Module} from '../Module'
+import TitleScreen from '../../Screens/title_screen'
+import GameScreen from '../../Screens/game_screen'
 
 import gsap from 'gsap';
 var TweenMax = gsap.TweenMax;
@@ -31,9 +33,15 @@ export default class DefeatModule extends Module {
 
     switch (name) {
       case "return":
+        this.game.app.appScreens.currentScreen.exitCallback(new TitleScreen(this.game.app))
         this.callback(this.display);
         break;
       case "replay":
+        let nameName = this.game.map.info.name.toLowerCase();
+        let map = this.game.app.maps[ nameName ];
+        console.log(map)
+        this.game.app.mapSelected = 	JSON.parse(JSON.stringify(map));
+        this.game.app.appScreens.currentScreen.exitCallback(new GameScreen(this.game.app))
         this.callback(this.display);
         break;
       default:

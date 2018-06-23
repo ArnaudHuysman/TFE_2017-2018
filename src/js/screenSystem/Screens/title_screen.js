@@ -29,10 +29,11 @@ export default class TitleScreen extends Screen{
 	}
 
 	update(dt){
-		
+
 	}
 
 	navigate(btn){
+		super.navigate()
 		let name = btn.className.replace(" buttons", "");
 
     switch (name) {

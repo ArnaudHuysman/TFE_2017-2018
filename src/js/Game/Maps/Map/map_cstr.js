@@ -41,6 +41,7 @@ export default class Map {
     this.mesh = new THREE.Object3D();
     this.info = mapUsed;
     this.matrix = this.info.structure;
+    this.colors = this.info.colors;
     this.mapTiles = [];
     this.spawTiles = [];
     this.popTiles = [];
@@ -56,8 +57,8 @@ export default class Map {
             reflectivity: 0
 		});
 
-    const baseColor = {r:17, g:29, b:74};
-    const finalColor = {r:60, g:70, b:106};
+    const baseColor = this.colors.base;
+    const finalColor = this.colors.second;
     var diffR = (baseColor.r-finalColor.r)/(this.info.structure.length/2);
     var diffG = (baseColor.g-finalColor.g)/(this.info.structure.length/2);
     var diffB = (baseColor.b-finalColor.b)/(this.info.structure.length/2);
@@ -99,7 +100,7 @@ export default class Map {
               break;
 
             case 2:
-              c = new MapTile(0x16D4F0, 40, 1, this.tileSize);
+              c = new MapTile(this.colors.ressource, 40, 1, this.tileSize);
               c.arrayPos = [j,i];
               break;
             case 3:
@@ -148,7 +149,13 @@ export default class Map {
     this.mesh.position.z = -10;
 
     if(drill){
-      this.drill = new Drill(game,scene,drillPos);
+
+      let totalTime = 0;
+      let totalWaves =  this.info.waves.length;
+      for (var i = 0; i < this.info.waves.length; i++) {
+        totalTime += this.info.waves[i].time;
+      }
+      this.drill = new Drill(game,scene,drillPos, totalWaves);
       this.drill.tilePos = drillTilePos;
     }
 

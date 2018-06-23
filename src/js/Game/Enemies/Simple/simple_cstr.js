@@ -24,6 +24,10 @@ export default class SimpleEnemy extends Enemy {
 
     super.update();
 
+    if(this.lifes <= 0 ) {
+      if(this.stateMachine.currentState.interval) window.clearInterval(this.stateMachine.currentState.interval);
+    }
+    
     this.path = getPath(this.matrix, true, this.tilePos, map.drill.tilePos );
     if(this.path.length > 0) this.targetPosition = this.path[1] ? getCubePosition(map, this.path[1]) : getCubePosition(map, this.path[0]) ;
     else this.targetPosition = [0,0];

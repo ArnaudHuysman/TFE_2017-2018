@@ -18,7 +18,7 @@ export default function EnemyFactory(game,scene){
     if(!pos){
       var vector = new THREE.Vector3();
       vector.setFromMatrixPosition( game.map.spawTiles[rdm].mesh.matrixWorld );
-      enemi.body.object.position.z = 10;
+      enemi.body.object.position.z = 12;
       enemi.body.object.position.x = vector.x;
       enemi.body.object.position.y = vector.y;
     } else {
@@ -39,16 +39,16 @@ export default function EnemyFactory(game,scene){
 
     switch(entity.type) {
       case "simple" :
-          enemi = new SimpleEnemy(5,5,5,0x154E95, 0x16D4F0, "blobl", game, entity.lifes, entity.speed); 
+          enemi = new SimpleEnemy(5,5,5,0x1A8FE3, 0x16D4F0, "blobl", game, entity.lifes, entity.speed);
           enemi.target = game.drill;
           break;
 
       case "big":
-          enemi = new BigEnemy(10,10,10,0x0D5762, 0x16D4F0, "bigBlobl", game, entity.lifes, entity.speed);
+          enemi = new BigEnemy(10,10,10,0x1E3888, 0x16D4F0, "bigBlobl", game, entity.lifes, entity.speed);
           break;
 
       case "shooting":
-          enemi = new ShooterEnemy(5,5,10,0x511180, 0x16D4F0, "shootingBlobl", game, entity.lifes, entity.speed, this);
+          enemi = new ShooterEnemy(5,5,10,0x9216FF, 0x16D4F0, "shootingBlobl", game, entity.lifes, entity.speed, this);
           break;
     }
 
@@ -72,11 +72,11 @@ export default function EnemyFactory(game,scene){
 
   };
 
-  this.update = function(mvtTime, game){
+  this.update = function(mvtTime, game, dt){
     for (var i = 0; i < this.entities.length; i++) {
       this.entities[i].update(mvtTime, game.context.scene);
     }
 
-    this.bulletFactory.update(game.context.scene);
+    this.bulletFactory.update(game.context.scene, dt);
   }
 }

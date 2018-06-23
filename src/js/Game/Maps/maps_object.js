@@ -29,10 +29,15 @@ export const maps = {
                     [ 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 ],
                     [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
                   ],
+                  "colors": {
+                    "ressource" : 0x16D4F0,
+                    "base" : {r:17, g:29, b:74},
+                    "second": {r:60, g:70, b:106}
+                  },
                   "waves" : [
-                    { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 5, lifes: 1, speed : 0.5},
-                                                          {"type": "big", "amount": 0, lifes: 5, speed : 0.5},
-                                                          {"type": "shooting", "amount": 0, lifes: 2, speed : 0.5}
+                    { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 1, lifes: 1, speed : 1},
+                                                          {"type": "big", "amount": 1, lifes: 5, speed : 0.5},
+                                                          {"type": "shooting", "amount": 1, lifes: 2, speed : 0.5}
                                                         ]},
                     { "n" : 2, "time" : 180, "enemies" :[ {"type": "simple", "amount": 0, lifes: 2, speed : 0.5},
                                                           {"type": "big", "amount": 0, lifes: 2, speed : 0.5},
@@ -46,7 +51,7 @@ export const maps = {
                                                           {"type": "big", "amount": 1, "lifes": 2, "speed" : 0.5 },
                                                           {"type": "shooting", "amount": 0, "lifes": 10, "speed" : 0.5 }
                                                         ]},
-                    { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 10, "lifes": 2, "speed" : 2 },
+                    { "n" : 5, "time" : 420, "enemies" :[ {"type": "simple", "amount": 10, "lifes": 2, "speed" : 0.5 },
                                                           {"type": "big", "amount": 0, "lifes": 2, "speed" : 0.5 },
                                                           {"type": "shooting", "amount": 0, "lifes": 10, "speed" : 0.5 }
                                                         ]}
@@ -55,7 +60,7 @@ export const maps = {
                 "derivium" : {
                     "name" : "derivium",
                     "difficulty" : "medium",
-                    "cost" : 100,
+                    "cost" : 25,
                     "bought" : true,
                     "structure" : [
                       [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
@@ -82,6 +87,11 @@ export const maps = {
                       [ 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 ],
                       [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
                     ],
+                    "colors": {
+                      "ressource" : 0xD138BF,
+                      "base" : {r:17, g:29, b:74},
+                      "second": {r:60, g:70, b:106}
+                    },
                     "waves" : [
                       { "n" : 1, "time" : 120, "enemies" :[ {"type": "simple", "amount": 1, "lifes": 5, "speed" : 0.5 },
                                                             {"type": "big", "amount": 0, "lifes": 5, "speed" : 0.5 },
@@ -106,8 +116,9 @@ export const maps = {
                     ]
                   },
                   "trilium" : {
-                      "name" : "derivium",
-                      "cost" : 100,
+                      "name" : "Trilium",
+                      "difficulty" : "easy",
+                      "cost" : 50,
                       "bought" : false,
                       "structure" : [
                         [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
@@ -158,7 +169,8 @@ export const maps = {
                       ]
                     },
                     "strium" : {
-                        "name" : "derivium",
+                        "name" : "Strium",
+                        "difficulty" : "easy",
                         "cost" : 100,
                         "bought" : false,
                         "structure" : [
@@ -209,9 +221,10 @@ export const maps = {
                                                               ]}
                         ]
                       },
-                      "delightium" : {
-                          "name" : "derivium",
-                          "cost" : 100,
+                      "delight" : {
+                          "name" : "Delight",
+                          "difficulty" : "easy",
+                          "cost" : 150,
                           "bought" : false,
                           "structure" : [
                             [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
@@ -262,8 +275,9 @@ export const maps = {
                           ]
                         },
                         "bloom" : {
-                            "name" : "derivium",
-                            "cost" : 100,
+                            "name" : "Bloom",
+                            "difficulty" : "easy",
+                            "cost" : 250,
                             "bought" : false,
                             "structure" : [
                               [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],

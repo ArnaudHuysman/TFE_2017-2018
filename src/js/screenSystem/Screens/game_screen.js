@@ -42,7 +42,7 @@ export default class GameScreen extends Screen{
       button.addEventListener('click', this.navigate.bind(this, button));
     }
 
-		this.app.audioRessource.play("game-amb", true);
+		this.app.audioRessource.play("game-amb", true, 0);
 		this.app.audioRessource.mix(2, "game-amb", "menu-music");
 
 		this.exitCallback = exitCallback;
@@ -51,10 +51,9 @@ export default class GameScreen extends Screen{
 	update(dt){
 
 		this.content.querySelector('.fragment-text').innerHTML = ": " + this.game.screenInfo.fragment;
-		this.content.querySelector('.drilllifes').innerHTML = this.game.screenInfo.drill_lifes ;
-		this.content.querySelector('.waves').innerHTML = this.game.screenInfo.waves + "/" + this.game.screenInfo.totalWaves;
 
-
+		this.game.animation(dt);
+		
 		if(this.game.paused){
 			if(!this.moduleSystem.module){
 				 this.moduleSystem.setModule(new MenuModule(this.game));
@@ -64,6 +63,7 @@ export default class GameScreen extends Screen{
 	}
 	navigate(btn){
 
+		super.navigate()
 		let name = btn.className.replace(" buttons", "");
 
 		switch (name) {

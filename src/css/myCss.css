@@ -59,6 +59,7 @@ li{
 }
 
 .introScreen{
+  margin-top: 3em;
   width: 1180px;
   height: 720px;
   text-align: center;
@@ -282,7 +283,7 @@ li{
   grid-template-areas :
     ". . . map6 . ."
     ". . . map6 . ."
-    "one . map3 . . map4"
+    "one . map3 map3 map4 map4"
     ". two . map5 map5 ."
     ". . . . . .";
 }
@@ -308,29 +309,83 @@ li{
 
 .map{
   position: relative;
+
 }
 
 .map_icon{
   position: absolute;
+  margin: 0 auto;
+  width: 100px;
   left: 0;
   right: 0;
   top: 30%;
-  text-align: center;
+
+  cursor: pointer;
 }
 .map_hidden-info{
-  display: none;
   position: absolute;
-  text-align: center;
+
+  height: 0;
+  overflow: hidden;
+  margin: 0 auto;
+  width: 150px;
+  left: 100px;
+  bottom: 0;
   transform: translate3d(0,0,0);
-  margin-top: -2.5em;
-  padding: 1em 1em;
+  margin-bottom: 1em;
+  padding: 0 1em;
   color: white;
   font-weight: 600;
   letter-spacing: 0.3em;
+  transition: all 0.3s ease-out;
+  /* background: rgba(80, 80, 80, 0.5); */
 }
 
 .map:hover .map_hidden-info{
+  height: 85%;
   display: block;
+}
+
+.map_title{
+  position: relative;
+  text-transform: uppercase;
+  font-size: 24px;
+  margin-bottom: 0.2em;
+  text-shadow :   0 1px 0 hsl(283,60%,60%),
+                  0 2px 0 hsl(283,60%,55%),
+                  0 3px 0 hsl(283,60%,50%),
+                  0 4px 0 hsl(283,60%,46%);
+}
+
+/* .map_title:after{
+  content: " ";
+  position: absolute;
+  width: 50px;
+  bottom: -10px;
+  left: 50%;
+  margin-left: -25px;
+  border-bottom: 1px solid white;
+} */
+
+.map_infoTitle{
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  margin-bottom: -0.2em;
+  padding-left: 12px;
+  border-left: 1px solid white;
+}
+
+.map_info{
+  text-transform: uppercase;
+  padding-left: 12px;
+  font-size: 18px;
+  font-weight: 400;
+  text-shadow :   0 1px 0 hsl(283,60%,60%),
+                  0 2px 0 hsl(283,60%,55%),
+                  0 3px 0 hsl(283,60%,50%),
+                  0 4px 0 hsl(283,60%,46%);
+  border-left: 1px solid white;
 }
 
 /* ---- Map description --- */
@@ -476,7 +531,7 @@ li{
 
 .state_module{
   display: flex;
-
+  margin-top: 100px;
   height: 12em;
   line-height: 12em;
   transform: skew(20deg);
@@ -486,7 +541,7 @@ li{
 .state_module--text{
   margin: 0 auto;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.2em;
   color: #80D9ED;
   font-size: 78px;
   font-weight: 600;
@@ -521,13 +576,6 @@ li{
                   0 6px 0 hsl(283,60%,42%),
                   0 7px 0 hsl(283,60%,41%),
                   0 8px 0 hsl(283,60%,40%);
-
-                  /* 0 0 5px rgba(0,0,0,.05),
-                 0 1px 3px rgba(0,0,0,.2),
-                 0 3px 5px rgba(0,0,0,.2),
-                0 5px 10px rgba(0,0,0,.2),
-               0 10px 10px rgba(0,0,0,.2),
-               0 20px 20px rgba(0,0,0,.3); */
   color: #80D9ED;
 }
 
@@ -573,7 +621,7 @@ li{
   margin-bottom: 0.5em;
   text-align: center;
 
-  background-color: rgba(255, 255, 255, 0.2);
+  /* background-color: rgba(255, 255, 255, 0.2); */
   /* border: 2px solid rgba(47, 0, 66, 0.8); */
 }
 
