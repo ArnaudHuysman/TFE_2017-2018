@@ -1,7 +1,7 @@
 import Enemy from '../enemy_cstr';
 import {getPath, getCubePosition} from '../../Utils/path_functions';
 import BulletFactory from './bullet_factory'
-import {shooterWalkState} from './shooter_states'
+import {shooterWalkState, shooterSpawnState} from './shooter_states'
 
 import StateMachine from '../../Utils/state_machine';
 import {AnimationSystem} from '../../../animations/animationSystem';
@@ -20,7 +20,7 @@ export default class ShooterEnemy extends Enemy {
     this.interval = 0;
 
     this.animationSystem = new AnimationSystem();
-    this.stateMachine = new StateMachine( new shooterWalkState(this));
+    this.stateMachine = new StateMachine( new shooterSpawnState(this));
 
     this.matrix = game.map.matrix.map( row => row.map(x => { return x !== 0 ? 1 : 0 }));
 

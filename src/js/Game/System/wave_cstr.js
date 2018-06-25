@@ -13,7 +13,7 @@ export class  Wave {
     this.time = this.wave.time*1000;
     this.timePassed = 0;
     this.nextEnemies = 600;
-    this.delay = this.time / 12;
+    this.delay = this.time / 6;
 
 
 

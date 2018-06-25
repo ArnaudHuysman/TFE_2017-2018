@@ -11,18 +11,19 @@ export default function EnemyFactory(game,scene){
 
   this.bulletFactory = new BulletFactory(game);
 
-  this.addEntity = function(entity,game,pos){
+  this.addEntity = function(entity,game,pos, posSec){
     var enemi = this.getEnemyCstr(entity,game);
 
     var rdm = Math.floor(Math.random() * game.map.spawTiles.length);
     if(!pos){
       var vector = new THREE.Vector3();
       vector.setFromMatrixPosition( game.map.spawTiles[rdm].mesh.matrixWorld );
-      enemi.body.object.position.z = 12;
+      enemi.body.object.position.z = 600;
       enemi.body.object.position.x = vector.x;
       enemi.body.object.position.y = vector.y;
     } else {
       enemi.body.object.position.set(pos.x,pos.y,pos.z);
+      enemi.posSecours = posSec;
     }
 
     enemi.body.object.scale.set(2,2,2);
@@ -39,12 +40,12 @@ export default function EnemyFactory(game,scene){
 
     switch(entity.type) {
       case "simple" :
-          enemi = new SimpleEnemy(5,5,5,0x1A8FE3, 0x16D4F0, "blobl", game, entity.lifes, entity.speed);
+          enemi = new SimpleEnemy(6,6,6,0x1A8FE3, 0x16D4F0, "blobl", game, entity.lifes, entity.speed);
           enemi.target = game.drill;
           break;
 
       case "big":
-          enemi = new BigEnemy(10,10,10,0x1E3888, 0x16D4F0, "bigBlobl", game, entity.lifes, entity.speed);
+          enemi = new BigEnemy(12,12,12,0x1E3888, 0x16D4F0, "bigBlobl", game, entity.lifes, entity.speed);
           break;
 
       case "shooting":
@@ -59,6 +60,8 @@ export default function EnemyFactory(game,scene){
 
   this.removeSelf = function(game,obj){
 
+
+    window.clearInterval(obj.stateMachine.currentState.interval);
     scene.remove(obj.body.object);
     scene.remove(obj.lifebar.mesh);
 

@@ -32,7 +32,7 @@ const Audios = [
   {
     name : "damaged",
     type : "sound",
-    src : './src/sound/fx/damaged.wav'
+    src : './src/sound/fx/damaged-reduce.wav'
   },
   {
     name : "mvt-big",
@@ -42,12 +42,22 @@ const Audios = [
   {
     name : "mvt-small",
     type : "sound",
-    src : './src/sound/fx/mvt_small.wav'
+    src : './src/sound/fx/mvt_small-reduce.wav'
   },
   {
     name : "tir-enemi",
     type : "sound",
     src : './src/sound/fx/tir_enemi.wav'
+  },
+  {
+    name : "hero-shot",
+    type : "sound",
+    src : './src/sound/fx/hero_shot-reduce.wav'
+  },
+  {
+    name : "explosion2",
+    type : "sound",
+    src : './src/sound/fx/explosion2.wav'
   }
 
 ];

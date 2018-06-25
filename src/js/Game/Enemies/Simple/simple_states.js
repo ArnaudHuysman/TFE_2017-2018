@@ -2,6 +2,36 @@ import {State} from '../../Utils/state_machine';
 import {SimpleWalkAnimation, SimpleDeathAnimation} from './simple_animations'
 import {Drill_Cstr} from '../../Maps/Map/drill_cstr';
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
+
+export class simpleSpawnState extends State{
+	constructor(enemi){
+    super()
+    this.enemi = enemi;
+	}
+
+	enter(){
+
+		let self = this;
+
+		TweenMax.to(this.enemi.body.object.position, 0.8,
+															{
+																	delay :1,
+																	z:12,
+																	ease: Power4.easeOut,
+																	onComplete: function(){
+																		self.enemi.stateMachine.changeState(new simpleWalkState(self.enemi));
+																	}
+															})
+
+  };
+
+	exit(){
+
+	};
+}
+
 
 export class simpleWalkState extends State {
 	constructor(enemi){

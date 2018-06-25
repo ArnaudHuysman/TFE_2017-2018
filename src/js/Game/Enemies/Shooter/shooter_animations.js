@@ -58,7 +58,7 @@ export class ShooterShootAnimation extends Animation {
     var self = this;
     this.tweens.push(TweenMax.to(this.object.position, 0.8,
                   {
-                      z:8,
+                      z:12,
                       ease: Power2.easeOut,
                       repeat: -1,
                       yoyo:true

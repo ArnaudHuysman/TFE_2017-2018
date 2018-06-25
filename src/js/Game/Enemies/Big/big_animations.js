@@ -55,6 +55,15 @@ export class BigPopAnimation extends Animation {
 
   in(){
     var self = this;
+
+    this.tweens.push(TweenMax.to(this.object.position, 0.5,
+                    {
+                        z:12,
+                        ease: Power3.easeOut,
+                        repeat: -1,
+                        yoyo:true,
+                    }))
+
     this.tweens.push(TweenMax.fromTo(this.object.scale, 1,
                     {
                         z: 1.6,

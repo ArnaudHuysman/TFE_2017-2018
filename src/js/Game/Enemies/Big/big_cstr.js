@@ -2,7 +2,7 @@ import Enemy from '../enemy_cstr';
 import {getPath, getCubePosition, getRandomTiles} from '../../Utils/path_functions';
 
 import StateMachine from '../../Utils/state_machine';
-import {bigWalkState} from './big_states';
+import {bigWalkState, bigSpawnState} from './big_states';
 
 import {AnimationSystem} from '../../../animations/animationSystem';
 
@@ -22,7 +22,7 @@ export default class BigEnemy extends Enemy {
 
 
     this.animationSystem = new AnimationSystem();
-    this.stateMachine = new StateMachine( new bigWalkState(this));
+    this.stateMachine = new StateMachine( new bigSpawnState(this));
 
     this.matrix = game.map.matrix.map( (row,i) => row.map( (x,j) => {
       if( x !== 0) return 1;

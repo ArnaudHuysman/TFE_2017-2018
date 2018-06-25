@@ -9,7 +9,7 @@ class MapTile {
     this.mat = new THREE.MeshToonMaterial( {
 						bumpScale: 1,
 						color: color,
-						specular: 0x9EC5AB,
+						specular: 0xffffff,
 						shininess: shininess,
             reflectivity: reflectivity
 		});
@@ -49,19 +49,21 @@ export default class Map {
     this.size = (24*1.05)*20;
     var geom = new THREE.BoxBufferGeometry(this.tileSize,this.tileSize,this.tileSize);
 
+    let fallcolor = rgbToHex(this.colors.base.r,this.colors.base.g,this.colors.base.b);
+
     var basicMat = new THREE.MeshToonMaterial( {
 						bumpScale: 1,
-						color: 0x111D4A,
-						specular: 0x9EC5AB,
+						color: fallcolor,
+						specular: 0xffffff,
 						shininess: 10,
             reflectivity: 0
 		});
 
     const baseColor = this.colors.base;
     const finalColor = this.colors.second;
-    var diffR = (baseColor.r-finalColor.r)/(this.info.structure.length/2);
-    var diffG = (baseColor.g-finalColor.g)/(this.info.structure.length/2);
-    var diffB = (baseColor.b-finalColor.b)/(this.info.structure.length/2);
+    var diffR = (baseColor.r-finalColor.r)/(this.info.structure.length/1.5);
+    var diffG = (baseColor.g-finalColor.g)/(this.info.structure.length/1.5);
+    var diffB = (baseColor.b-finalColor.b)/(this.info.structure.length/1.5);
 
     let changingColor = {r:0, g:0, b:0};
 
@@ -132,7 +134,7 @@ export default class Map {
             this.popTiles.push(c);
             if ( i < 2 || i > 18 || j < 2 || j > 18 ) this.spawTiles.push(c);
 
-            let tuiles = Math.floor(Math.random()*(tampon*tampon2/15));
+            let tuiles = Math.floor(Math.random()*(tampon/2*tampon2/2));
 
             for (var k = 0; k < tuiles; k++) {
               let t = new THREE.Mesh(geom,basicMat);

@@ -30,7 +30,7 @@ export class Drill {
     this.tilePos;
 
 
-    this.life = 20;
+    this.life = 10;
     game.screenInfo.drill_lifes = this.life;
     this.diff = 30/total;
 
@@ -45,7 +45,8 @@ export class Drill {
 
     scene.add(this.lifebar.object)
 
-    this.interval = 10000;
+    this.interval = 0;
+    this.nextFragment = 10000;
     this.totalTime = total;
     this.limit = -(15*4.5)+20;
 
@@ -55,22 +56,22 @@ export class Drill {
 
     game.collisionEngine.testCollision("drill", "enemies");
 
-    let lifebarHeight = 1/20*this.life;
+    let lifebarHeight = 1/10*this.life;
     this.lifebar.innerCube.mesh.scale.set(lifebarHeight,1,1);
 
-    if(this.interval < time ){
+    this.interval += dt;
+
+    if(this.interval > this.nextFragment ){
       this.popCrystal(scene, game);
       let rdm = Math.random()*(20000-12000)+12000;
 
-      this.interval += rdm;
+      this.interval = 0;
+      this.nextFragment = rdm;
     }
 
     if(this.drill_cstr.collision) {
-      this.life--;
-      game.screenInfo.drill_lifes--;
       this.drill_cstr.collision = false;
       this.drill_cstr.objectInCollision = null;
-
       this.colideAction(game);
     }
 

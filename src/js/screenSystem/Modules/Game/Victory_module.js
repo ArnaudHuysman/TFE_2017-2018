@@ -35,6 +35,7 @@ export default class VictoryModule extends Module {
 
     switch (name) {
       case "return":
+        this.game.app.audioRessource.mix(1, "menu-music", "game-music");
         this.callback(this.display);
         this.game.app.appScreens.currentScreen.exitCallback(new TitleScreen(this.game.app))
         break;

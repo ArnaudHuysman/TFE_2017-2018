@@ -75,7 +75,7 @@ export class Scene {
 		var pointLight2 = new THREE.PointLight( this.map.colors.ressource, 2, 200, 2 );
 		pointLight2.position.set( 0, 0, -100 );
 
-		this.pointLight = new THREE.PointLight( 0xffffff, 2, 2000, 2 );
+		this.pointLight = new THREE.PointLight( 0x9160C9, 1.5, 2000, 3 );
 		this.pointLight.position.set( 0, 0, 800 );
 
 		this.scene.add( directionalLight );

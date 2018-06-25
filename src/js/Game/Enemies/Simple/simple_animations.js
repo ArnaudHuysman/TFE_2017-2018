@@ -68,10 +68,14 @@ export class SimpleDeathAnimation extends Animation {
                     onComplete: function(){
                       let pos = self.enemi.game.context.camera.position;
 
-                      self.enemi.game.context.camera.position.x -= 4;
+                      self.enemi.game.context.camera.position.x -= 8;
+
+                      self.enemi.game.app.audioRessource.play("explosion2", false, 1, 1);
+
+                      self.enemi.game.map.drill.life--;
 
                       TweenMax.to(self.enemi.game.context.camera.position, 0.05, {
-                          x : pos.x+4,
+                          x : pos.x+8,
                           ease: Power2.easeOut,
                           repeat: 5,
                           yoyo: true,

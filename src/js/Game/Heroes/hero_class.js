@@ -27,7 +27,7 @@ class Hero {
     this.bulletFactory = new BulletFactory(game);
 
 
-    this.fireRate = 300;
+    this.fireRate = 350;
     this.interval = 0;
     this.time = 0;
 

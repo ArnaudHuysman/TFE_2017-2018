@@ -50,7 +50,7 @@ export default class BulletFactory {
     var diffX = this.target.position.x - source.position.x;
     var diffY = this.target.position.y - source.position.y;
     var theta = Math.atan2(diffY, diffX);
-    var bullet = new Bullet(5,5,5,0x9216FF, 0x1E0633, this.removeSelf.bind(this));
+    var bullet = new Bullet(5,5,5,0xBE7AFF, 0x1E0633, this.removeSelf.bind(this));
 
 
     bullet.mvt.x = Math.cos(theta)*1.5;

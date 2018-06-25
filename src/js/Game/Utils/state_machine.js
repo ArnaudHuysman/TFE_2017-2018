@@ -14,6 +14,10 @@ export default class StateMachine {
     this.currentState.enter();
   }
 
+	out(){
+		this.currentState.exit();
+	}
+
 }
 
 export class State {

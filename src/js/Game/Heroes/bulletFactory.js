@@ -64,11 +64,13 @@ export default class BulletFactory {
     bullet.body.object.position.z = 12;
     switch(this.game.hero.gunShooting){
       case "right":
+        this.game.app.audioRessource.play("hero-shot", false, 1, 1);
         bullet.body.object.position.x = this.game.hero.char.object.position.x + decalY;
         bullet.body.object.position.y = this.game.hero.char.object.position.y - decalX;
         this.game.hero.gunShooting = "left";
         break;
       case "left":
+        this.game.app.audioRessource.play("hero-shot", false, 1, 1);
         bullet.body.object.position.x = this.game.hero.char.object.position.x - decalY;
         bullet.body.object.position.y = this.game.hero.char.object.position.y + decalX;
         this.game.hero.gunShooting = "right";

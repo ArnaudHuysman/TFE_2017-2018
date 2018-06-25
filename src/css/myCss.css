@@ -3,6 +3,7 @@ body {
   padding: 0;
   background-color: #211c4e;
   font-family: 'Titillium Web', sans-serif;
+
 }
 
 ul,h1,h2,h3,h4,h5,h4,p{
@@ -27,6 +28,8 @@ a{
   height : 100%;
   /* overflow: hidden; */
   background-size: cover;
+  filter: brightness(150%);
+  -webkit-filter: brightness(150%);
 }
 
 #showreel{
@@ -447,9 +450,9 @@ li{
 .textblock--text{
   margin-top: 16px;
   font-size: 16px;
-  font-weight: 200;
+  font-weight: 400;
   line-height: 1.2;
-  color: lightgrey;
+  color: white;
 }
 
 .textblock--btn{
@@ -525,15 +528,6 @@ li{
   margin-top: -13.5%;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0, 0.4);
-}
-
-.menu_module--img {
-  margin: 0 auto;
-  margin-top: 15%;
-  width : 358px;
-  height: 319px;
-  background-image: url('../../dist/assets/img/interfaces/Pause_bg-01.png');
 }
 
 .state_module{
@@ -549,7 +543,7 @@ li{
   margin: 0 auto;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: #80D9ED;
+  color: #fff;
   font-size: 78px;
   font-weight: 600;
 }

@@ -10,11 +10,11 @@ export function updateMvt(){
 
   let nbrKeyPressed = 0;
 
-  let speed = 0; 
+  let speed = 0;
 
   let lgt = Object.keys(Key._pressed).length;
 
-  speed = lgt > 1 ? 2 : 2.5;
+  speed = lgt > 1 ? 1.7 : 2.2;
 
   if(Key.isDown(90)) mvt.y = speed;
   if(Key.isDown(83)) mvt.y = -speed;

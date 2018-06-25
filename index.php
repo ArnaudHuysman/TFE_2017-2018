@@ -9,7 +9,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Titillium+Web:200,400,600,700" rel="stylesheet">
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script> -->
 		<script type="text/javascript" src="dist/js/package/three.min.js"></script>
-		<!-- <script type="text/javascript" src="dist/js/package/OrbitControls.js"></script> -->
+		<script type="text/javascript" src="dist/js/package/OrbitControls.js"></script>
 
 		<!--[if IE]>
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,41 +72,41 @@
 
 					<div class="maps">
 
-						<div data-name="premium" class="map map1">
+						<div data-name="derivium" class="map map1">
 							<div class="map_icon">
 								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
 								<div class="map_hidden-info">
-									<h3 class="map_title"> Premium </h3>
+									<h3 class="map_title"> Derivium </h3>
 									<h4 class="map_infoTitle"></h4>
 									<h2 class="map_info"></h2>
 								</div>
 							</div>
 						</div>
-						<div data-name="goldium" class="map map2">
+						<div data-name="talentium" class="map map2">
 							<div class="map_icon">
 								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
 								<div class="map_hidden-info">
-									<h3 class="map_title"> Goldium </h3>
+									<h3 class="map_title"> Talentium </h3>
 									<h4 class="map_infoTitle"></h4>
 									<h2 class="map_info"></h2>
 								</div>
 							</div>
 						</div>
-						<div data-name="trilium" class="map map3">
+						<div data-name="krypton" class="map map3">
 							<div class="map_icon">
 									<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
 									<div class="map_hidden-info">
-										<h3 class="map_title"> Trilium </h3>
+										<h3 class="map_title"> Krypton </h3>
 										<h4 class="map_infoTitle"></h4>
 										<h2 class="map_info"></h2>
 									</div>
 							</div>
 						</div>
-						<div data-name="strium" class="map map4">
+						<div data-name="belgium" class="map map4">
 							<div class="map_icon">
 								<img src="./dist/assets/img/icons/icon_map.png" alt="" width="100" height="100">
 								<div class="map_hidden-info">
-									<h3 class="map_title"> Strium </h3>
+									<h3 class="map_title"> Belgium </h3>
 									<h4 class="map_infoTitle"></h4>
 									<h2 class="map_info"></h2>
 								</div>
@@ -248,7 +248,7 @@
 
 						</div>
 						<div class="textblock--text">
-							<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+							<p> First stage of the journey, spaces marines arrive on the planet Derivium. They discover it a resource which can potentially save the inhabitants of the Earth. They decide to place a drill there to extract this ore. Everything was quiet, too quiet... An indescribable sound was heard, and suddenly extraterrestrials fell of the sky... And they do not look happy !</p>
 						</div>
 						<a class="textblock--btn button" href="#">
 							<div>

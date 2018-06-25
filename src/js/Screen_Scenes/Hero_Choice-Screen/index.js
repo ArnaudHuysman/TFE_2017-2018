@@ -54,7 +54,7 @@ export class MapScene {
     //GENERATE SCENE
     this.context.generateScene();
 
-    //controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement );
+    controls  = new THREE.OrbitControls( this.context.camera, this.renderer.domElement ); 
     //helper = new THREE.AxesHelper(500);
     //this.context.scene.add(helper);
 

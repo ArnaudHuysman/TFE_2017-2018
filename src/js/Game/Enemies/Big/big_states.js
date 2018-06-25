@@ -2,6 +2,36 @@ import {State} from '../../Utils/state_machine';
 import {BigWalkAnimation, BigPopAnimation} from './big_animations'
 
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
+
+export class bigSpawnState extends State{
+	constructor(enemi){
+    super()
+    this.enemi = enemi;
+	}
+
+	enter(){
+
+		let self = this;
+
+		TweenMax.to(this.enemi.body.object.position, 0.8,
+															{
+																	delay: 1,
+																	z:12,
+																	ease: Power4.easeOut,
+																	onComplete: function(){
+																		self.enemi.stateMachine.changeState(new bigWalkState(self.enemi));
+																	}
+															})
+
+  };
+
+	exit(){
+
+	};
+}
+
 export class bigWalkState extends State {
 	constructor(enemi){
     super()
@@ -73,7 +103,7 @@ export class bigPopState extends State {
 			pos.y = this.enemi.body.object.position.y + Math.sin(i)*25;
 			pos.z = 10;
 
-			this.enemi.game.enemyFactory.addEntity(this.enemi.game.wavesSystem.currentWave.enemies[0],this.enemi.game, pos);
+			this.enemi.game.enemyFactory.addEntity(this.enemi.game.wavesSystem.currentWave.enemies[0],this.enemi.game, pos, this.enemi.tilePos);
 
 		}
 

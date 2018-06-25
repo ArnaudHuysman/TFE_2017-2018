@@ -2,6 +2,35 @@ import {State} from '../../Utils/state_machine';
 import {ShooterWalkAnimation, ShooterShootAnimation} from './shooter_animations'
 import {Drill} from '../../Maps/Map/drill_cstr';
 
+import gsap from 'gsap';
+var TweenMax = gsap.TweenMax;
+
+export class shooterSpawnState extends State{
+	constructor(enemi){
+    super()
+    this.enemi = enemi;
+	}
+
+	enter(){
+
+		let self = this;
+
+		TweenMax.to(this.enemi.body.object.position, 0.6,
+															{
+																	delay : 3,
+																	z:12,
+																	ease: Power4.easeOut,
+																	onComplete: function(){
+																		self.enemi.stateMachine.changeState(new shooterWalkState(self.enemi));
+																	}
+															})
+
+  };
+
+	exit(){
+
+	};
+}
 
 export class shooterWalkState extends State {
 	constructor(enemi){
@@ -46,8 +75,10 @@ export class shooterShootState extends State {
   };
 
 	shoot(){
-		this.enemi.factory.bulletFactory.create(this.enemi.game.context.scene, this.enemi.body.object);
-		this.enemi.game.app.audioRessource.play("tir-enemi", false, 1, 1);
+		if(!this.enemi.game.paused){
+			this.enemi.factory.bulletFactory.create(this.enemi.game.context.scene, this.enemi.body.object);
+			this.enemi.game.app.audioRessource.play("tir-enemi", false, 1, 1);
+		}
 	}
 
 	exit(){};

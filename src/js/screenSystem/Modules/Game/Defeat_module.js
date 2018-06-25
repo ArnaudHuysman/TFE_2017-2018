@@ -33,10 +33,12 @@ export default class DefeatModule extends Module {
 
     switch (name) {
       case "return":
+        this.game.app.audioRessource.mix(1, "menu-music", "game-music");
         this.game.app.appScreens.currentScreen.exitCallback(new TitleScreen(this.game.app))
         this.callback(this.display);
         break;
       case "replay":
+
         let nameName = this.game.map.info.name.toLowerCase();
         let map = this.game.app.maps[ nameName ];
         console.log(map)
