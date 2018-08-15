@@ -61,9 +61,9 @@ export default class Map {
 
     const baseColor = this.colors.base;
     const finalColor = this.colors.second;
-    var diffR = (baseColor.r-finalColor.r)/(this.info.structure.length/1.5);
-    var diffG = (baseColor.g-finalColor.g)/(this.info.structure.length/1.5);
-    var diffB = (baseColor.b-finalColor.b)/(this.info.structure.length/1.5);
+    var diffR = (baseColor.r-finalColor.r)/(this.info.structure.length/2);
+    var diffG = (baseColor.g-finalColor.g)/(this.info.structure.length/2);
+    var diffB = (baseColor.b-finalColor.b)/(this.info.structure.length/2);
 
     let changingColor = {r:0, g:0, b:0};
 

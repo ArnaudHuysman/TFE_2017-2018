@@ -25,7 +25,7 @@ export default class SimpleEnemy extends Enemy {
     super.update();
 
     if(this.lifes <= 0 ) {
-      if(this.stateMachine.currentState.interval) window.clearInterval(this.stateMachine.currentState.interval);
+      if(this.animationSystem.currentAnimation && this.animationSystem.currentAnimation.interval) window.clearInterval(this.animationSystem.currentAnimation.interval);
     }
 
     if(!this.tilePos){

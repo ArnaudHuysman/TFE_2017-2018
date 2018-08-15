@@ -46,7 +46,7 @@ export default class BigEnemy extends Enemy {
     }
 
     if(this.lifes <= 0 ) {
-      if(this.stateMachine.currentState.interval) window.clearInterval(this.stateMachine.currentState.interval);
+      if(this.animationSystem.currentAnimation && this.animationSystem.currentAnimation.interval) window.clearInterval(this.animationSystem.currentAnimation.interval);
     }
 
     this.path = getPath(this.matrix, false, this.tilePos, this.target.arrayPos );

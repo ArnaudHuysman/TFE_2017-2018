@@ -10,8 +10,8 @@ export default class MenuModule extends Module {
   enter(callback){
     this.callback = callback;
     for (var i = 0; i < this.game.enemyFactory.entities.length; i++) {
-      if(this.game.enemyFactory.entities[i].stateMachine.currentState.interval) {
-        window.clearInterval(this.game.enemyFactory.entities[i].stateMachine.currentState.interval);
+      if(this.game.enemyFactory.entities[i].animationSystem.currentAnimation.interval) {
+        window.clearInterval(this.game.enemyFactory.entities[i].animationSystem.currentAnimation.interval);
       }
     }
     this.display.addEventListener('click', this.exit.bind(this));

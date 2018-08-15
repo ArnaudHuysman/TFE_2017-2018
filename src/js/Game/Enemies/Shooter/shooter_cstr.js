@@ -41,7 +41,7 @@ export default class ShooterEnemy extends Enemy {
     this.path = getPath(this.matrix, true, this.tilePos, targetPos, map );
 
     if( this.path.length > 0 ) {
-      if(this.path[10]){
+      if(this.path[14]){
         this.canShoot = false;
         this.targetPosition = getCubePosition(map, this.path[1])
       } else {

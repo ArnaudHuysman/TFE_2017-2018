@@ -38,9 +38,9 @@ export class bigWalkState extends State {
     this.enemi = enemi;
 
 		let self = this;
-		this.interval = window.setInterval(function () {
-			self.enemi.game.app.audioRessource.play("mvt-big", false, 1, 1);
-		}, 1200);
+		// this.interval = window.setInterval(function () {
+		// 	self.enemi.game.app.audioRessource.play("mvt-big", false, 1, 1);
+		// }, 1200);
 
 	}
 
@@ -52,13 +52,13 @@ export class bigWalkState extends State {
 
 	reload(){
 		let self = this;
-		this.interval = window.setInterval(function () {
+		this.enemi.animationSystem.currentAnimation.interval = window.setInterval(function () {
 			self.enemi.game.app.audioRessource.play("mvt-big", false, 1, 1);
 		}, 1200);
 	}
 
 	exit(){
-		window.clearInterval(this.interval);
+		//window.clearInterval(this.interval);
 	};
 
 	update(tp){

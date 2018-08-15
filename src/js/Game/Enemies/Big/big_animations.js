@@ -8,6 +8,11 @@ export class BigWalkAnimation extends Animation {
     super(object)
 
     this.app = app;
+
+    let self =this;
+    this.interval = window.setInterval(function () {
+			self.app.audioRessource.play("mvt-big", false, 1, 1);
+		}, 1200);
   }
 
   in(){
@@ -43,6 +48,7 @@ export class BigWalkAnimation extends Animation {
 
 	out(){
 	  super.out()
+    window.clearInterval(this.interval);
 	}
 }
 

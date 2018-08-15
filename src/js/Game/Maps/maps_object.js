@@ -282,7 +282,7 @@ export const maps = {
                                                                 ]}
                           ]
                         },
-                        "bloom" : {
+                        "bloom" :{
                             "name" : "Bloom",
                             "difficulty" : "legendary",
                             "cost" : 250,

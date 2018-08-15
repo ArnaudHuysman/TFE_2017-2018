@@ -59,7 +59,6 @@ const Audios = [
     type : "sound",
     src : './src/sound/fx/explosion2.wav'
   }
-
 ];
 
 

@@ -8,6 +8,10 @@ export class SimpleWalkAnimation extends Animation {
     super(object)
 
     this.app = app;
+    let self = this;
+    this.interval = window.setInterval(function () {
+			self.app.audioRessource.play("mvt-small", false, 1, 1);
+		}, 800);
   }
 
   in(){
@@ -48,6 +52,8 @@ export class SimpleWalkAnimation extends Animation {
 
 	out(){
 	  super.out()
+
+    window.clearInterval(this.interval);
 	}
 }
 
